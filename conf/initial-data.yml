@@ -1,0 +1,40 @@
+# you describe your data using the YAML notation here
+
+Utilisateur(gauderic):
+    email:                  gpledran@gmail.com
+    password:               azerty
+    nom:                    Pledran
+    prenom:                 Gaudéric
+    telephoneMobile:        0632375995
+    telephonePerso:         0950024506
+    rue:                    14 Rue Michel Columb
+    cp:                     44200
+    ville:                  Nantes
+    pays:                   France
+    dateNaissance:          1987-06-02
+
+Utilisateur(philippe):
+    email:                  pchauvelin@gmail.com
+    password:               azerty    
+    nom:                    Chauvelin
+    prenom:                 Philippe
+    telephoneMobile:        0606060606
+    telephonePerso:         0202020202
+    rue:                    Rue...
+    cp:                     44000
+    ville:                  Nantes
+    pays:                   France
+    dateNaissance:          1987-06-02
+    
+Utilisateur(melina):
+    email:                  melinafontaine@gmail.com
+    password:               azerty    
+    nom:                    Fontaine
+    prenom:                 Melina
+    telephoneMobile:        0606060606
+    telephonePerso:         0202020202
+    rue:                    Rue...
+    cp:                     44000
+    ville:                  Nantes
+    pays:                   France
+    dateNaissance:          1987-06-02
