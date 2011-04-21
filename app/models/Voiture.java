@@ -2,24 +2,29 @@ package models;
 
 import java.util.*;
 import javax.persistence.*;
- 
+
 import play.db.jpa.*;
 import play.data.validation.*;
 
 @Entity
-public class Voiture extends Model{
+public class Voiture extends Model {
 	@Required
 	public String type;
-	
-	@Required 
+
+	@Required
 	public String nbPlaces;
 
-	public Voiture(String type, String nbPlaces) {
+	@Required
+	public String gabarit;
+
+	public Voiture(String type, String nbPlaces, String gabarit) {
+		super();
 		this.type = type;
 		this.nbPlaces = nbPlaces;
+		this.gabarit = gabarit;
 	}
-	
-    public String toString() {
-        return this.type + " - " + this.nbPlaces + " places.";
-    }
+
+	public String toString() {
+		return this.type + " - " + this.nbPlaces + " places.";
+	}
 }
