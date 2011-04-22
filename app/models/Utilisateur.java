@@ -10,6 +10,7 @@ import play.data.validation.*;
 @Entity
 public class Utilisateur extends Model {
 	@Required
+	@Email
 	public String email;
 
 	@Required

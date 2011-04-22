@@ -1,7 +1,18 @@
-*{ You can use plain selenium command using the selenium tag }*
+#{fixture delete:'all', load:'data.yml' /}
 
-#{selenium}
-    // Open the home page, and check that no error occured
+#{selenium 'Test connexion utilisateur'}
+	// Permet de demarrer avec une session neuve, c'est ˆ dire sans cookies
+	clearSession()
+    // Ouvre la page d'accueil et verifie qu'il n'y ait pas d'erreur
     open('/')
+    waitForPageToLoad(1000)
     assertNotTitle('Application error')
+    // Clique sur connexion pour se rendre sur le formulaire de login
+    clickAndWait('link=Connexion')
+    // Rempli le formulaire de connexion
+    type('username', 'gpledran@gmail.com')
+    type('password', 'azerty')
+    clickAndWait('css=input[type=submit]')
+    // Verifie que l'on est bien connecte
+    assertTextPresent('D&eacute;connexion [gpledran@gmail.com]')
 #{/selenium}
