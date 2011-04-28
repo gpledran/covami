@@ -486,6 +486,49 @@ input[type=submit]:active,input[type=submit]:focus,a.submit:active,a.submit:focu
 	font-size: 10px;
 }
 
+a{
+	color:#333;
+	text-decoration:underline;
+}
+
+/** Details **/
+#details {
+	margin-top: 10px;
+/* 	float: left; */
+/* 	position: relative; */
+	background-color: #fff;
+	width: 860px;
+/* 	padding: 10px; */
+	-webkit-border-radius: 16px;
+	-moz-border-radius: 16px;
+}
+
+#details .nom_label {
+	background-color: #828282;
+	border-bottom: #C4C4C4 3px solid;
+	width: 320px;
+	height: 14px;
+	padding: 8px 10px;
+	color: #fff;
+	float: left;
+	position: relative;
+}
+
+#details .nom {
+	background-color: #C4C4C4;
+	border-bottom: #828282 3px solid;
+	width: 500px;
+	height: 14px;
+	padding: 8px 10px;
+	color: black;
+	float: left;
+	position: relative;
+}
+
+#details a {
+	margin-top: 20px;
+}
+
 /** Pagination **/
 #pagination {
 	list-style: none;

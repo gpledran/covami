@@ -9,51 +9,28 @@
     </p>
 #{/if}
 
-<table>
-  <tr>
-    <td>E-mail</td>
-    <td>${user.email}</td>
-  </tr>
-  <tr>
-    <td>Mot de passe</td>
-    <td>${user.password}</td>
-  </tr>
-  <tr>
-    <td>Nom</td>
-    <td>${user.nom}</td>
-  </tr>
-  <tr>
-    <td>Pr&eacute;nom</td>
-    <td>${user.prenom}</td>
-  </tr>
-  <tr>
-    <td>T&eacute;l. mobile</td>
-    <td>${user.telephoneMobile}</td>
-  </tr>
-  <tr>
-    <td>T&eacute;l. personnel</td>
-    <td>${user.telephonePerso}</td>
-  </tr>
-  <tr>
-    <td>Date de naissance</td>
-    <td>${user.dateNaissance}</td>
-  </tr>
-  <tr>
-    <td>Rue</td>
-    <td>${user.rue}</td>
-  </tr>
-  <tr>
-    <td>Code postal</td>
-    <td>${user.cp}</td>
-  </tr>
-  <tr>
-    <td>Ville</td>
-    <td>${user.ville}</td>
-  </tr>
-  <tr>
-    <td>Pays</td>
-    <td>${user.pays}</td>
-  </tr>
-</table>
-
-<a href="@{Utilisateurs.editermoncompte()}">Editer</a>
+<div id="details">
+	<span class="nom_label">E-mail</span>
+	<span class="nom">${user.email}</span>
+	<span class="nom_label">Mot de passe</span>
+	<span class="nom">${user.password}</span>
+	<span class="nom_label">Nom</span>
+	<span class="nom">${user.nom}</span>
+	<span class="nom_label">Pr&eacute;nom</span>
+	<span class="nom">${user.prenom}</span>
+	<span class="nom_label">T&eacute;l. mobile</span>
+	<span class="nom">${user.telephoneMobile}</span>
+	<span class="nom_label">T&eacute;l. personnel</span>
+	<span class="nom">${user.telephonePerso}</span>
+	<span class="nom_label">Date de naissance</span>
+	<span class="nom">${user.dateNaissance}</span>
+	<span class="nom_label">Rue</span>
+	<span class="nom">${user.rue}</span>
+	<span class="nom_label">Code postal</span>
+	<span class="nom">${user.cp}</span>
+	<span class="nom_label">Ville</span>
+	<span class="nom">${user.ville}</span>
+	<span class="nom_label">Pays</span>
+	<span class="nom">${user.pays}</span>
+	<a href="@{Utilisateurs.editermoncompte()}">Editer</a>
+</div>

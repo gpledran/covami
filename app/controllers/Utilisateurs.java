@@ -15,13 +15,19 @@ public class Utilisateurs extends Controller {
 				Play.configuration.getProperty("covami.baseline"));
 	}
 
-	public static void moncompte() {
+	@Before
+	static void setConnectedUser() {
 		if (Security.isConnected()) {
 			Utilisateur user = Utilisateur
 					.find("byEmail", Security.connected()).first();
 			renderArgs.put("user", user);
 			renderArgs.put("security", Security.connected());
+			flash.success("Connexion réussie");
 		}
+	}
+
+	public static void moncompte() {
+		flash.clear();
 		render();
 	}
 
@@ -29,7 +35,6 @@ public class Utilisateurs extends Controller {
 		if (Security.isConnected()) {
 			Utilisateur user = Utilisateur
 					.find("byEmail", Security.connected()).first();
-			renderArgs.put("security", Security.connected());
 			render(user);
 		}
 		render();
@@ -42,7 +47,6 @@ public class Utilisateurs extends Controller {
 			params.flash();
 			// keep the errors for the next request
 			validation.keep();
-			renderArgs.put("security", Security.connected());
 			editermoncompte(user);
 		} else {
 			user.save(); // explicit save here
@@ -53,7 +57,6 @@ public class Utilisateurs extends Controller {
 
 	public static void inscription(Utilisateur user) {
 		if (Security.isConnected()) {
-			// renderArgs.put("security", Security.connected());
 			Application.index();
 		}
 		render(user);
@@ -83,8 +86,6 @@ public class Utilisateurs extends Controller {
 				Application.index();
 			}
 		}
-		renderArgs.put("user", user);
-		renderArgs.put("security", Security.connected());
 		Application.index();
 	}
 

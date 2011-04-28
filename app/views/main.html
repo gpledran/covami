@@ -19,7 +19,7 @@
 	            <!--Si on est connecté, on dit bonjour et on propose de se déconnecter -->
 	            <li>
 					#{if security != null}
-						<a href="@{Admin.index()}">Administration</a>&nbsp;&nbsp;&nbsp;
+<!-- 						<a href="@{Admin.index()}">Administration</a>&nbsp;&nbsp;&nbsp; -->
 						<a href="@{Secure.logout()}">Déconnexion [${user.email}]</a>
 					#{/if}
 					<!-- Sinon on propose de se logger -->

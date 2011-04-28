@@ -7,3 +7,5 @@ secure.username=E-mail
 secure.password=Mot de passe
 secure.signin=Connexion
 secure.error=E-mail ou mot de passe inconnu.
+
+validator.required=Ce champ est requis

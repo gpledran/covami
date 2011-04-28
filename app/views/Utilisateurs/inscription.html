@@ -65,6 +65,24 @@
 	    <input type="text" name="user.pays" value="${user?.pays}" />
 	    <span class="error">#{error 'user.pays' /}</span>
 	</p>
+	
+	<div id="options"> 
+		<p class="show"> 
+			<a href="#options">Je possède un véhicule</a> 
+		</p> 
+		<p class="hide"> 
+			<a href="#start">Je ne possède pas un véhicule</a> 
+		</p> 
+		<p> 
+			<label for="voiture.type">Type</label> 
+			<select name="type">
+				<option value="petite">Petite</option>
+				<option value="moyenne">Moyenne</option>
+				<option value="grande">Grande</option>
+			</select> 
+		</p> 
+	</div>
+	
 	<p> 
 	    <input type="submit" value="S'inscrire" />
 	</p>
