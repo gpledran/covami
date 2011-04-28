@@ -3,6 +3,7 @@ package controllers;
 import models.Utilisateur;
 import play.*;
 import play.data.validation.Required;
+import play.data.validation.Valid;
 import play.mvc.*;
 
 public class Utilisateurs extends Controller {
@@ -28,14 +29,20 @@ public class Utilisateurs extends Controller {
 		if (Security.isConnected()) {
 			Utilisateur user = Utilisateur
 					.find("byEmail", Security.connected()).first();
+			renderArgs.put("security", Security.connected());
 			render(user);
 		}
 		render();
 	}
 
-	public static void sauvegardermoncompte(@Required Utilisateur user) {
+	public static void sauvegardermoncompte(@Required @Valid Utilisateur user) {
 		validation.valid(user);
 		if (validation.hasErrors()) {
+			// add http parameters to the flash scope
+			params.flash();
+			// keep the errors for the next request
+			validation.keep();
+			renderArgs.put("security", Security.connected());
 			editermoncompte(user);
 		} else {
 			user.save(); // explicit save here
@@ -46,21 +53,19 @@ public class Utilisateurs extends Controller {
 
 	public static void inscription(Utilisateur user) {
 		if (Security.isConnected()) {
-			renderArgs.put("security", Security.connected());
+			// renderArgs.put("security", Security.connected());
 			Application.index();
 		}
 		render(user);
 	}
 
-	public static void enregistrerinscription(Utilisateur user) {
+	public static void enregistrerinscription(@Valid Utilisateur user) {
 		validation.valid(user);
 		if (validation.hasErrors()) {
-			/*
-			 * for(play.data.validation.Error error : validation.errors()) {
-			 * flash.error(error.message()); }
-			 */
-			flash.error("Erreur de validation");
-			// flash.error(validation.toString());
+			// add http parameters to the flash scope
+			params.flash();
+			// keep the errors for the next request
+			validation.keep();
 			inscription(user);
 		} else {
 			if (Utilisateur.find("byEmail", user.email) != null) {
