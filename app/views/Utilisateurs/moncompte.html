@@ -1,0 +1,59 @@
+#{extends 'main.html' /}
+#{set title:'Covami - Mon compte' /}
+
+<h1>Mon compte</h1>
+
+#{if flash.success}
+    <p>
+        ${flash.success}
+    </p>
+#{/if}
+
+<table>
+  <tr>
+    <td>E-mail</td>
+    <td>${user.email}</td>
+  </tr>
+  <tr>
+    <td>Mot de passe</td>
+    <td>${user.password}</td>
+  </tr>
+  <tr>
+    <td>Nom</td>
+    <td>${user.nom}</td>
+  </tr>
+  <tr>
+    <td>Pr&eacute;nom</td>
+    <td>${user.prenom}</td>
+  </tr>
+  <tr>
+    <td>T&eacute;l. mobile</td>
+    <td>${user.telephoneMobile}</td>
+  </tr>
+  <tr>
+    <td>T&eacute;l. personnel</td>
+    <td>${user.telephonePerso}</td>
+  </tr>
+  <tr>
+    <td>Date de naissance</td>
+    <td>${user.dateNaissance}</td>
+  </tr>
+  <tr>
+    <td>Rue</td>
+    <td>${user.rue}</td>
+  </tr>
+  <tr>
+    <td>Code postal</td>
+    <td>${user.cp}</td>
+  </tr>
+  <tr>
+    <td>Ville</td>
+    <td>${user.ville}</td>
+  </tr>
+  <tr>
+    <td>Pays</td>
+    <td>${user.pays}</td>
+  </tr>
+</table>
+
+<a href="@{Utilisateurs.editermoncompte()}">Editer</a>
