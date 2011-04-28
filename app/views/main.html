@@ -25,7 +25,7 @@
 					<!-- Sinon on propose de se logger -->
 					#{else}
 						<a href="@{Secure.login()}">Connexion</a>&nbsp;&nbsp;&nbsp;
-						<a href="@{Application.inscription()}">S'inscrire</a>
+						<a href="@{Utilisateurs.inscription()}">S'inscrire</a>
 					#{/else}
                 </li>
                 
@@ -35,7 +35,7 @@
                  	<ul id="adminMenu">
                  	#{if security != null}
 		            	<li class="${request.controller == 'Utilisateurs' ? 'selected' : ''}">
-		                	<a href="@{Application.moncompte()}">Mon compte</a>
+		                	<a href="@{Utilisateurs.moncompte()}">Mon compte</a>
 		                </li>
 		         	#{/if}
 		    		</ul>

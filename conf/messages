@@ -3,7 +3,7 @@
 #
 
 # Formulaire de connexion
-secure.username=E-mail :
-secure.password=Mot de passe :
+secure.username=E-mail
+secure.password=Mot de passe
 secure.signin=Connexion
 secure.error=E-mail ou mot de passe inconnu.

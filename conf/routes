@@ -4,11 +4,11 @@
 
 # Home page
 GET     /                                       Application.index
-GET		/moncompte								Application.moncompte
-GET		/moncompte/editer						Application.editermoncompte
-POST	/sauvegardermoncompte					Application.sauvegardermoncompte
-GET		/inscription							Application.inscription
-POST	/enregistrerinscription					Application.enregistrerinscription	
+GET		/moncompte								Utilisateurs.moncompte
+GET		/moncompte/editer						Utilisateurs.editermoncompte
+POST	/sauvegardermoncompte					Utilisateurs.sauvegardermoncompte
+GET		/inscription							Utilisateurs.inscription
+POST	/enregistrerinscription					Utilisateurs.enregistrerinscription	
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
