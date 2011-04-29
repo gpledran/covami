@@ -56,17 +56,14 @@ public class Utilisateurs extends Controller {
 		}
 	}
 
-	public static void inscription(Utilisateur user/* , Voiture v */) {
+	public static void inscription(Utilisateur user, Voiture v) {
 		if (Security.isConnected()) {
 			Application.index();
 		}
-		render(user/* , v */);
+		render(user, v);
 	}
 
-	public static void enregistrerinscription(@Valid Utilisateur user/*
-																	 * , Voiture
-																	 * v
-																	 */) {
+	public static void enregistrerinscription(@Valid Utilisateur user, Voiture v) {
 		validation.valid(user);
 		// validation.valid(v);
 		if (validation.hasErrors()) {
@@ -74,16 +71,16 @@ public class Utilisateurs extends Controller {
 			params.flash();
 			// keep the errors for the next request
 			validation.keep();
-			inscription(user/* , v */);
+			inscription(user, v);
 		} else {
 			if (Utilisateur.find("byEmail", user.email).first() != null) {
 				flash.error("E-mail existant");
-				inscription(user/* , v */);
+				inscription(user, v);
 			} else {
 				// System.out.println("------------");
-				// user.maVoiture = v;
+				v.save();
+				user.maVoiture = v;
 				user.save(); // explicit save here
-				// v.save();
 				flash.success("Inscription réussie");
 				if (!Security.authentify(user.email, user.password)) {
 					flash.error("Erreur d'authentification");
