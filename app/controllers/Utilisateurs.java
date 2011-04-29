@@ -76,7 +76,7 @@ public class Utilisateurs extends Controller {
 			validation.keep();
 			inscription(user/* , v */);
 		} else {
-			if (Utilisateur.find("byEmail", user.email) != null) {
+			if (Utilisateur.find("byEmail", user.email).first() != null) {
 				flash.error("E-mail existant");
 				inscription(user/* , v */);
 			} else {
