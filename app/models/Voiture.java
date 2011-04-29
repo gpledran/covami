@@ -14,11 +14,10 @@ public class Voiture extends Model {
 	@Required
 	public String nbPlaces;
 
-	@Required
+	// @Required
 	public String gabarit;
 
 	public Voiture(String type, String nbPlaces, String gabarit) {
-		super();
 		this.type = type;
 		this.nbPlaces = nbPlaces;
 		this.gabarit = gabarit;

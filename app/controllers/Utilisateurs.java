@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Utilisateur;
+import models.Voiture;
 import play.*;
 import play.data.validation.Required;
 import play.data.validation.Valid;
@@ -55,28 +56,35 @@ public class Utilisateurs extends Controller {
 		}
 	}
 
-	public static void inscription(Utilisateur user) {
+	public static void inscription(Utilisateur user/* , Voiture v */) {
 		if (Security.isConnected()) {
 			Application.index();
 		}
-		render(user);
+		render(user/* , v */);
 	}
 
-	public static void enregistrerinscription(@Valid Utilisateur user) {
+	public static void enregistrerinscription(@Valid Utilisateur user/*
+																	 * , Voiture
+																	 * v
+																	 */) {
 		validation.valid(user);
+		// validation.valid(v);
 		if (validation.hasErrors()) {
 			// add http parameters to the flash scope
 			params.flash();
 			// keep the errors for the next request
 			validation.keep();
-			inscription(user);
+			inscription(user/* , v */);
 		} else {
 			if (Utilisateur.find("byEmail", user.email) != null) {
 				flash.error("E-mail existant");
-				inscription(user);
+				inscription(user/* , v */);
 			} else {
+				// System.out.println("------------");
+				// user.maVoiture = v;
 				user.save(); // explicit save here
-				flash.success("Inscription réussie - Merci de vous connecter");
+				// v.save();
+				flash.success("Inscription réussie");
 				if (!Security.authentify(user.email, user.password)) {
 					flash.error("Erreur d'authentification");
 					return;
