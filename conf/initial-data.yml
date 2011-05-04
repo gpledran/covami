@@ -27,7 +27,7 @@ Utilisateur(philippe):
     dateNaissance:          1987-06-02
     
 Utilisateur(melina):
-    email:                  melinafontaine@gmail.com
+    email:                  mfontaine@gmail.com
     password:               azerty    
     nom:                    Fontaine
     prenom:                 Melina
