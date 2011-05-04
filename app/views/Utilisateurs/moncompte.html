@@ -32,6 +32,12 @@
 	<span class="nom">${user.ville}</span>
 	<span class="nom_label">Pays</span>
 	<span class="nom">${user.pays}</span>
+	#{if user.maVoiture}
+		<span class="nom_label">Type de voiture</span>
+		<span class="nom">${user.maVoiture.type.capitalizeWords()}</span>
+		<span class="nom_label">Nombre de places</span>
+		<span class="nom">${user.maVoiture.nbPlaces}</span>
+	#{/if}
 	&nbsp;
 </div>
 	<a class="submit" href="@{Utilisateurs.editermoncompte()}">Editer</a>

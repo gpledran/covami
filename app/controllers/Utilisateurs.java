@@ -32,24 +32,27 @@ public class Utilisateurs extends Controller {
 		render();
 	}
 
-	public static void editermoncompte(Utilisateur usr) {
+	public static void editermoncompte(Utilisateur usr, Voiture v) {
 		if (Security.isConnected()) {
 			Utilisateur user = Utilisateur
 					.find("byEmail", Security.connected()).first();
-			render(user);
+			render(user, v);
 		}
 		render();
 	}
 
-	public static void sauvegardermoncompte(@Required @Valid Utilisateur user) {
+	public static void sauvegardermoncompte(@Required @Valid Utilisateur user,
+			Voiture v) {
 		validation.valid(user);
 		if (validation.hasErrors()) {
 			// add http parameters to the flash scope
 			params.flash();
 			// keep the errors for the next request
 			validation.keep();
-			editermoncompte(user);
+			editermoncompte(user, v);
 		} else {
+			v.save();
+			user.maVoiture = v;
 			user.save(); // explicit save here
 			flash.success("Sauvegarde réussie");
 			moncompte();
@@ -93,6 +96,5 @@ public class Utilisateurs extends Controller {
 		}
 		Application.index();
 	}
-	
 
 }
