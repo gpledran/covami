@@ -10,6 +10,9 @@ POST	/sauvegardermoncompte					Utilisateurs.sauvegardermoncompte
 GET		/inscription							Utilisateurs.inscription
 POST	/enregistrerinscription					Utilisateurs.enregistrerinscription	
 
+# Annonce page
+GET 	/mesannonces							Annonces.mesannonces
+
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 

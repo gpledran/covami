@@ -1,0 +1,26 @@
+#{extends 'main.html' /}
+#{set title:'Covami - Mes annonces' /}
+
+<h1>Mes Annonces</h1>
+
+<table>
+  <tr>
+  	<td>Ville depart</td>
+  	<td>Ville arriv&eacute;e</td>
+  	<td>Date depart</td>
+  	<td>Tarif/personne</td>
+  	<td><a href="">Detail</a></td>
+  </tr>
+  #{list 1..20, as:'i' } 
+	<tr>
+  		<td>${mesannonces.monTrajet.villeDepart}</td>
+  		<td>${mesannonces.monTrajet.villeArrivee}</td>
+  		<td>${mesannonces.monTrajet.dateDepart}</td>
+  		<td>${mesannonces.tarifParPersonne}</td>
+  		
+  	</tr> 
+  #{/list} 
+  
+  
+</table>
+
