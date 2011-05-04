@@ -6,17 +6,17 @@
 #   password: secret
 #   fullname: Bob
 
-Utilisateur(philippe)
-	login: pchauvelin
-	password: azerty
-	fullname: Philippe Chauvelin
-	
-Utilisateur(melina)
-	login: mfontaine
-	password: azerty
-	fullname: Mélina Fontaine
-	
-Utilisateur(gauderic)
-	login: gpledran
-	password: azerty
-	fullname: Gaudéric Pledran
+Utilisateur(philippe):
+    email:      pchauvelin@gamil.com
+    password:   azerty
+    fullname:   Philippe Chauvelin
+
+Utilisateur(melina):
+    email:      melinafontaine@gmail.com
+    password:   azerty
+    fullname:   Mélina Fontaine
+
+Utilisateur(gauderic):
+    email:      gpledran@gmail.com
+    password:   azerty
+    fullname:   Gaudéric Pledran

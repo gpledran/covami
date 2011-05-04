@@ -25,7 +25,7 @@ Utilisateur(philippe):
     ville:                  Nantes
     pays:                   France
     dateNaissance:          1987-06-02
-    
+
 Utilisateur(melina):
     email:                  mfontaine@gmail.com
     password:               azerty    
@@ -38,3 +38,29 @@ Utilisateur(melina):
     ville:                  Nantes
     pays:                   France
     dateNaissance:          1987-06-02
+
+Pays(France):
+   nom:                     France
+
+Ville(Nantes):
+    codePostal:             44000
+    latitude:               0
+    longitude:              0
+    nom:                    Nantes
+    monPays:                France
+    
+Ville(Tours):
+    codePostal:             37000
+    latitude:               0
+    longitude:              0
+    nom:                    Tours
+    monPays:                France
+    
+Trajet(toursnantes):
+    villeDepart:            Nantes
+    villeArrivee:           Tours
+
+Annonce(annonce):
+    tarifParPersonne:       5
+    monTrajet:              toursnantes
+    monUtilisateur:         philippe

@@ -3,6 +3,6 @@ package controllers;
 import play.*;
 import play.mvc.*;
 
-public class Voitures extends CRUD{
+public class Voitures extends Controller {
 
 }

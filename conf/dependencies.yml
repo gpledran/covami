@@ -2,4 +2,4 @@
 
 require:
     - play -> secure
-    - play -> crud
+    #- play -> crud

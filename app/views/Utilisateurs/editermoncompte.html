@@ -1,0 +1,72 @@
+#{extends 'main.html' /}
+#{set title:'Covami - Mon compte - Editer' /}
+
+<h1>Editer mon compte</h1>
+
+#{if flash.error}
+    <p style="color:#c00">
+        ${flash.error}
+    </p>
+#{/if}
+ 
+#{form @sauvegardermoncompte()}
+	<input type="hidden" name="user.id" value="${user.id}" />
+	<p>
+		<label for="user.mail">E-mail</label>
+	    <input type="text" name="user.email" value="${user?.email}" />
+	    <span class="error">#{error 'user.email' /}</span>
+   	</p>
+    <p>
+	    <label for="user.password">Mot de passe</label>
+	    <input type="password" name="user.password" value="${user?.password}" />
+	    <span class="error">#{error 'user.password' /}</span>
+ 	</p>
+ 	<p>
+	    <label for="user.nom">Nom</label>
+	    <input type="text" name="user.nom" value="${user?.nom}" />
+	    <span class="error">#{error 'user.nom' /}</span>
+	</p>
+	<p>
+	    <label for="user.prenom">Prenom</label>
+	    <input type="text" name="user.prenom" value="${user?.prenom}" />
+	    <span class="error">#{error 'user.prenom' /}</span>
+	</p>
+	<p>
+	    <label for="user.telephoneMobile">T&eacute;l. Mobile</label>
+	    <input type="text" name="user.telephoneMobile" value="${user?.telephoneMobile}" />
+	    <span class="error">#{error 'user.telephoneMobile' /}</span>
+	</p>
+	<p>
+	    <label for="user.telephonePerso">T&eacute;l. Perso</label>
+	    <input type="text" name="user.telephonePerso" value="${user?.telephonePerso}" />
+	    <span class="error">#{error 'user.telephonePerso' /}</span>
+	</p>
+	<p>
+	    <label for="user.dateNaissance">Date de naissance</label> 
+	    <input type="text" name="user.dateNaissance" value="${user?.dateNaissance}" />
+	    <span class="error">#{error 'user.dateNaissance' /}</span>
+	</p>
+	<p>
+	    <label for="user.rue">Rue</label>
+	    <input type="text" name="user.rue" value="${user?.rue}" />
+	    <span class="error">#{error 'user.rue' /}</span>
+	</p>
+	<p>
+	    <label for="user.cp">Code postal</label>
+	    <input type="text" name="user.cp" value="${user?.cp}" />
+	    <span class="error">#{error 'user.cp' /}</span>
+	</p>
+	<p>
+	    <label for="user.ville">Ville</label>
+	    <input type="text" name="user.ville" value="${user?.ville}" />
+	    <span class="error">#{error 'user.ville' /}</span>
+	</p>
+	<p>
+	    <label for="user.pays">Pays</label>
+	    <input type="text" name="user.pays" value="${user?.pays}" />
+	    <span class="error">#{error 'user.pays' /}</span>
+	</p>
+	<p>
+	    <input type="submit" value="Sauvegarder" />
+	</p>
+#{/form}

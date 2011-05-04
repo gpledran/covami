@@ -4,11 +4,14 @@
 
 # Home page
 GET     /                                       Application.index
-GET		/moncompte								Application.moncompte
-GET		/moncompte/editer						Application.editermoncompte
-POST	/sauvegardermoncompte					Application.sauvegardermoncompte
-GET		/inscription							Application.inscription
-POST	/enregistrerinscription					Application.enregistrerinscription	
+GET		/moncompte								Utilisateurs.moncompte
+GET		/moncompte/editer						Utilisateurs.editermoncompte
+POST	/sauvegardermoncompte					Utilisateurs.sauvegardermoncompte
+GET		/inscription							Utilisateurs.inscription
+POST	/enregistrerinscription					Utilisateurs.enregistrerinscription	
+
+# Annonce page
+GET 	/mesannonces							Annonces.mesannonces
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
@@ -20,5 +23,5 @@ GET     /public/                                staticDir:public
 *       /                                       module:secure
 
 # Import CRUD routes
-GET     /admin/?                                Admin.index
-*      	/admin              					module:crud
+#GET     /admin/?                                Admin.index
+#*      	/admin              					module:crud
