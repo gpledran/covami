@@ -13,16 +13,16 @@ public class Annonce extends Model {
 	public int tarifParPersonne;
 
 	@OneToOne
-	public Utilisateur monUtilisiteur;
+	public Utilisateur monUtilisateur;
 
 	@OneToOne
 	public Trajet monTrajet;
 
-	public Annonce(int tarifParPersonne, Utilisateur monUtilisiteur,
+	public Annonce(int tarifParPersonne, Utilisateur monUtilisateur,
 			Trajet monTrajet) {
 		super();
 		this.tarifParPersonne = tarifParPersonne;
-		this.monUtilisiteur = monUtilisiteur;
+		this.monUtilisateur = monUtilisateur;
 		this.monTrajet = monTrajet;
 	}
 
