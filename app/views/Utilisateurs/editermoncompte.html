@@ -43,7 +43,7 @@
 	</p>
 	<p>
 	    <label for="user.dateNaissance">Date de naissance</label> 
-	    <input type="text" name="user.dateNaissance" value="${user?.dateNaissance}" />
+	    <input type="text" name="user.dateNaissance" value="${user?.dateNaissance.format('dd/MM/yyyy')}" />
 	    <span class="error">#{error 'user.dateNaissance' /}</span>
 	</p>
 	<p>
