@@ -55,12 +55,33 @@ Ville(Tours):
     longitude:              0
     nom:                    Tours
     monPays:                France
+
+Ville(Angers):
+    codePostal:             49000
+    latitude:               0
+    longitude:              0
+    nom:                    Angers
+    monPays:                France
     
 Trajet(toursnantes):
     villeDepart:            Nantes
     villeArrivee:           Tours
+    
+Trajet(angersnantes):
+    villeDepart:            Angers
+    villeArrivee:           Nantes
 
-Annonce(annonce):
+Annonce(annoncephilippe):
     tarifParPersonne:       5
     monTrajet:              toursnantes
     monUtilisateur:         philippe
+    
+Annonce(annoncegaud):
+   tarifParPersonne:        7
+   monTrajet:               toursnantes
+   monUtilisateur:          gauderic
+
+Annonce(annoncemelina):
+   tarifParPersonne:        3
+   monTrajet:               angersnantes
+   monUtilisateur:          melina

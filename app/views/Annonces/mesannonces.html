@@ -1,26 +1,27 @@
 #{extends 'main.html' /}
 #{set title:'Covami - Mes annonces' /}
 
+
 <h1>Mes Annonces</h1>
 
-<table>
+<table id="tableMesAnnonces">
   <tr>
   	<td>Ville depart</td>
   	<td>Ville arriv&eacute;e</td>
   	<td>Date depart</td>
   	<td>Tarif/personne</td>
-  	<td><a href="">Detail</a></td>
+  	
   </tr>
-  #{list 1..20, as:'i' } 
-	<tr>
-  		<td>${mesannonces.monTrajet.villeDepart}</td>
-  		<td>${mesannonces.monTrajet.villeArrivee}</td>
-  		<td>${mesannonces.monTrajet.dateDepart}</td>
-  		<td>${mesannonces.tarifParPersonne}</td>
-  		
+  #{list 0..mesannonces.size-1, as:'i' } 
+	<tr class="tableBody">
+  		<td>${mesannonces.get(i).monTrajet.villeDepart.nom}</td>
+  		<td>${mesannonces.get(i).monTrajet.villeArrivee.nom}</td>
+  		<td>${mesannonces.get(i).monTrajet.dateDepart}</td>
+  		<td>${mesannonces.get(i).tarifParPersonne}&euro;</td>
+  		<td><a href="@{Annonces.details(mesannonces.get(i).id)}">D&eacute;tails</a></td>
   	</tr> 
   #{/list} 
   
   
-</table>
-
+</table><br/>
+<a href="">Proposer une annonce</a>

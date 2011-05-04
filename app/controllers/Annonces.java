@@ -32,10 +32,17 @@ public class Annonces extends Controller {
 	}
 	public static void mesannonces(){
 		if(Security.isConnected()){
-			// A refactorer ?
 			Utilisateur moi = Utilisateur.find("byEmail",Security.connected()).first();
 			List <Annonce> mesannonces = Annonce.find("byMonUtilisateur_id", moi.id).fetch();
 			renderArgs.put("mesannonces",mesannonces);
+		}
+		render();
+	}
+	public static void details(long id_annonce){
+		if(Security.isConnected()){
+			Annonce annonce = Annonce.find("byId",id_annonce).first();
+			renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
+			renderArgs.put("annonce", annonce);
 		}
 		render();
 	}

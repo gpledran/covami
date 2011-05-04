@@ -336,7 +336,7 @@ form p {
 }
 
 form p:last-child {
-	/* SŽlecteur avancŽ pour sŽlectionner le dernier paragraphe du formulaire */
+	/* Sï¿½lecteur avancï¿½ pour sï¿½lectionner le dernier paragraphe du formulaire */
 	margin-bottom: 0;
 }
 
@@ -381,7 +381,7 @@ input[type=text]:focus,input[type=password]:focus {
 	-moz-box-shadow: 0 0 3px #B8C569;
 	-webkit-box-shadow: 0 0 3px #B8C569;
 	outline: none;
-	/* Pour enlever le contour jaune lorsque l'on sŽlectionne un input dans Chrome */
+	/* Pour enlever le contour jaune lorsque l'on sï¿½lectionne un input dans Chrome */
 }
 
 select {
@@ -762,3 +762,16 @@ tr.odd {
 .hasError {
 	background: pink;
 }
+#tableMesAnnonces{
+	width : 700px;
+	border: 1px solid black;
+	margin: 0 auto;
+}
+	#tableMesAnnonces tr {
+		
+	}
+		#tableMesAnnonces tr td{
+			
+			
+		}
+	
