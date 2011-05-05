@@ -10,6 +10,7 @@
 #{/if}
  
 <form action="@{Utilisateurs.enregistrerinscription()}" method="POST">
+	<h1>Mes informations</h1>
 	<p>
 		<label for="user.mail">E-mail</label>
 	    <input type="text" name="user.email" value="${user?.email}" />
@@ -66,35 +67,37 @@
 	    <span class="error">#{error 'user.pays' /}</span>
 	</p>
 	
-	<div id="options"> 
-		<p class="show"> 
-			<a href="#options">Je possede un vehicule</a> 
-		</p> 
-		<p class="hide"> 
-			<a href="#start">Je ne possede pas un vehicule</a> 
-		</p> 
-		<p> 
-			<label for="v.type">Type</label> 
-			<select name="v.type">
-				<option value="petite">Petite</option>
-				<option value="moyenne">Moyenne</option>
-				<option value="grande">Grande</option>
-			</select> 
-		</p> 
-		<p>
-			<label for="v.nbPlaces">Nb Places</label> 
-			<select name="v.nbPlaces">
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-			</select> 
-		</p>
-	</div>
+	<br />
+	<h1>Ma voiture</h1>
+	<p>
+		<label for="v.type">Type</label> 
+		<select name="v.type">
+			<option value="-1">-- Sans voiture --</option>
+			<option value="petite">Petite</option>
+			<option value="moyenne">Moyenne</option>
+			<option value="grande">Grande</option>
+		</select> 
+	</p>
+	<p>
+		<label for="v.nbPlaces">Nb Places</label> 
+		<select name="v.nbPlaces">
+			<option value="-1">-- Sans voiture --</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+		</select>
+	</p>
+	
+	<br />
+	<h1>Mes criteres</h1>
+	<input type="checkbox" name="" value="animaux">Animaux&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" name="" value="musique">Musique&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" name="" value="fumeur">Fumeur
 	
 	<p> 
 	    <input type="submit" value="S'inscrire" />
