@@ -11,8 +11,10 @@ GET		/inscription							Utilisateurs.inscription
 POST	/enregistrerinscription					Utilisateurs.enregistrerinscription	
 
 # Annonce page
-GET 	/mesannonces							Annonces.mesannonces
-GET		/mesannonces/detail						Annonces.details
+GET 	/annonces								Annonces.annonces
+GET		/annonces/detail						Annonces.details
+GET 	/annonces/recherche						Annonces.recherche
+GET 	/annonces/creation						Annonces.creation
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public

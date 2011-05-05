@@ -1,0 +1,30 @@
+#{extends 'main.html' /}
+#{set title:'Covami - Mon compte - Editer' /}
+
+<h1>Cr&eacute;er une annonce</h1>
+#{if flash.error}
+    <p style="color:#c00">
+        ${flash.error}
+    </p>
+#{/if}
+#{form @creation()}
+	<input type="hidden" name="user.id" value="${user.id}" />
+	<p>
+		<label for="user.mail">E-mail</label>
+	    <input type="text" name="user.email" value="${user?.email}" />
+	    <span class="error">#{error 'user.email' /}</span>
+   	</p>
+    <p>
+	    <label for="user.password">Mot de passe</label>
+	    <input type="password" name="user.password" value="${user?.password}" />
+	    <span class="error">#{error 'user.password' /}</span>
+ 	</p>
+ 	<p>
+	    <label for="user.nom">Nom</label>
+	    <input type="text" name="user.nom" value="${user?.nom}" />
+	    <span class="error">#{error 'user.nom' /}</span>
+	</p
+	<p>	
+	    <input type="submit" value="Créer annonce" />
+	</p>
+#{/form}
