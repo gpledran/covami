@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import models.Utilisateur;
 import models.Voiture;
@@ -145,6 +146,24 @@ public class Utilisateurs extends Controller {
 			}
 		}
 		Application.index();
+	}
+
+	public static void mesamis() {
+		flash.clear();
+		if (Security.isConnected()) {
+			Utilisateur user = Utilisateur
+					.find("byEmail", Security.connected()).first();
+			List<Utilisateur> mesAmis = user.mesAmis;
+			render(mesAmis);
+		}
+		render();
+	}
+
+	public static void recherche(String field) {
+		if (Security.isConnected()) {
+
+		}
+		render();
 	}
 
 }

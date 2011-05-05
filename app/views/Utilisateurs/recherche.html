@@ -1,0 +1,18 @@
+#{extends 'main.html' /}
+#{set title:'Covami - Mes amis' /}
+
+<h1>Recherche d'ami</h1>
+
+#{if flash.error}
+    <p style="color:#c00">
+        ${flash.error}
+    </p>
+#{/if}
+
+#{form @recherche(field)}
+	<div style="text-align:center;">
+		<input type="text" name="field" value="Rechercher un membre" style="text-align:center;" onClick="javascript:this.value=''"/>
+		<input type="submit" value="Rechercher" style="margin: auto 0;"/>
+	</div>
+#{/form}
+ 

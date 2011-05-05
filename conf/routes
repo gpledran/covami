@@ -8,7 +8,9 @@ GET		/moncompte								Utilisateurs.moncompte
 GET		/moncompte/editer						Utilisateurs.editermoncompte
 POST	/sauvegardermoncompte					Utilisateurs.sauvegardermoncompte
 GET		/inscription							Utilisateurs.inscription
-POST	/enregistrerinscription					Utilisateurs.enregistrerinscription	
+POST	/enregistrerinscription					Utilisateurs.enregistrerinscription
+GET		/mesamis								Utilisateurs.mesamis
+GET		/mesamis/recherche						Utilisateurs.recherche	
 
 # Annonce page
 GET 	/annonces								Annonces.annonces
