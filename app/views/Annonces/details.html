@@ -1,33 +1,35 @@
 #{extends 'main.html' /}
-#{set title:'Covami - Mes annonces' /}
+#{set title:'Covami - Détails annonce' /}
 
 
 <h1>D&eacute;tails de l'annonce</h1>
-<table id="detailAnnonce">
-	<tr>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>Date de depart</td>
-		<td>${annonce.monTrajet.dateDepart}</td>
-	</tr>
-	<tr>
-		<td>Tarif par personne</td>
-		<td>${annonce.tarifParPersonne}&euro;</td>
-	</tr>
-	<tr>
-		<td>Ville de depart</td>
-		<td>${annonce.monTrajet.villeDepart.nom}</td>
-	</tr>
-	<tr>
-		<td>Ville d'arriv&eacute;e</td>
-		<td>${annonce.monTrajet.villeArrivee.nom}</td>
-	</tr>
-	<tr>
-		<td>Escales</td>
-		<td></td>
-	</tr>
-</table><br/>
 
-<a href="@{Annonces.mesannonces()}">Revenir &agrave; la liste</a>
+<div id="details">
+	<span class="nom_label">Date de depart</span>
+	<span class="nom">${annonce.monTrajet.dateDepart}</span>
+	
+	<span class="nom_label">Tarif par personne</span>
+	<span class="nom">${annonce.tarifParPersonne}&euro;</span>
+	
+	<span class="nom_label">Ville de depart</span>
+	<span class="nom">${annonce.monTrajet.villeDepart.nom}</span>
+	
+	<span class="nom_label">Ville d'arriv&eacute;e</span>
+	<span class="nom">${annonce.monTrajet.villeArrivee.nom}</span>
+	
+	<span class="nom_label" style="height:30px;">Escales</span>
+	<span class="nom" style="height:30px;">
+		<select style="width : 350px;">
+			
+		%{
+     		for(ville in etapes) { 
+		}%
+		     <option>${ville.nom}</option>
+		%{
+		     }
+		}%
+			
+		</select>
+	</span>	
+</div>
+<a href="@{Annonces.annonces()}">Revenir &agrave; la liste</a>

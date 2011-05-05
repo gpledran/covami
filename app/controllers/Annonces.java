@@ -3,11 +3,16 @@ package controllers;
 
 import java.util.List;
 
+import javax.persistence.TypedQuery;
+
+import models.Trajet;
 import models.Utilisateur;
 import models.Annonce;
+import models.Ville;
 import play.*;
 import play.data.validation.Required;
 import play.data.validation.Valid;
+import play.db.jpa.Model;
 import play.mvc.*;
 import play.mvc.Scope.RenderArgs;
 
@@ -30,20 +35,33 @@ public class Annonces extends Controller {
 			flash.success("Connexion réussie");
 		}
 	}
-	public static void mesannonces(){
+	public static void annonces(){
 		if(Security.isConnected()){
-			Utilisateur moi = Utilisateur.find("byEmail",Security.connected()).first();
-			List <Annonce> mesannonces = Annonce.find("byMonUtilisateur_id", moi.id).fetch();
-			renderArgs.put("mesannonces",mesannonces);
+			List <Annonce> annonces = Annonce.findAll();
+		
+			renderArgs.put("annonces",annonces);
+			
 		}
 		render();
 	}
 	public static void details(long id_annonce){
 		if(Security.isConnected()){
 			Annonce annonce = Annonce.find("byId",id_annonce).first();
-			renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
+			
 			renderArgs.put("annonce", annonce);
+			renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
+			
 		}
 		render();
+	}
+	public static void recherche(String field){
+		if(Security.isConnected()){
+			
+		}
+		render();
+	}
+	public static void creation(@Required @Valid Annonce annonce){
+	
+
 	}
 }

@@ -1,0 +1,45 @@
+#{extends 'main.html' /}
+#{set title:'Covami - Annonces' /}
+%{def couleur = 0}%
+
+<h1>Annonces</h1>
+#{form @recherche(field)}
+	<div style="text-align:center;">
+		<input type="text" name="field" value="Rechercher une annonce" style="text-align:center;" onClick="javascript:this.value=''"/>
+		<input type="submit" value="Rechercher" style="margin: auto 0;"/>
+	</div>
+#{/form}
+<table id="tableMesAnnonces">
+  <tr class="tableEntete">
+  	<td>Annonceur</td>
+  	<td>Ville depart</td>
+  	<td>Ville arriv&eacute;e</td>
+  	<td style="width : 100px;">Date depart</td>
+  	<td style="width : 100px;">Heure depart</td>
+  	<td style="width : 147px;">Tarif total / personne</td>
+  	
+  	
+  </tr>
+  #{list 0..annonces.size-1, as:'i' } 
+  	#{if couleur == 0}
+  		<tr class="tableBody" style="background-color : #C4C4C4">
+  		%{couleur = 1}%
+  	#{/if}
+  	#{else}
+  		<tr class="tableBody" style="background-color : white">
+  		%{couleur = 0}%
+  	#{/else}
+		<td style="text-align:left;">${annonces.get(i).monUtilisateur.prenom}&nbsp;${annonces.get(i).monUtilisateur.nom}</td>
+  		<td>${annonces.get(i).monTrajet.villeDepart.nom}</td>
+  		<td>${annonces.get(i).monTrajet.villeArrivee.nom}</td>
+  		<td style="width : 100px;">${annonces.get(i).monTrajet.dateDepart.format('dd/MM/yyyy')}</td>
+  		<td style="width : 100px;">${annonces.get(i).monTrajet.dateDepart.getHours()}:${annonces.get(i).monTrajet.dateDepart.getMinutes()}</td>
+  		<td style="width : 147px;">${annonces.get(i).tarifParPersonne}&euro;</td>
+  		<td style="width: 80px;"><a href="@{Annonces.details(annonces.get(i).id)}">D&eacute;tails</a></td>
+  		
+  	</tr> 
+  #{/list} 
+  
+  
+</table><br/>
+<a href="@{Annonces.creation()}">Proposer une annonce</a>
