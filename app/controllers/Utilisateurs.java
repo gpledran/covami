@@ -51,8 +51,12 @@ public class Utilisateurs extends Controller {
 			validation.keep();
 			editermoncompte(user, v);
 		} else {
-			v.save();
-			user.maVoiture = v;
+			if (v.type.equals("-1") || v.nbPlaces.equals("-1")) {
+				user.maVoiture = null;
+			} else {
+				v.save();
+				user.maVoiture = v;
+			}
 			user.save(); // explicit save here
 			flash.success("Sauvegarde réussie");
 			moncompte();
@@ -80,9 +84,12 @@ public class Utilisateurs extends Controller {
 				flash.error("E-mail existant");
 				inscription(user, v);
 			} else {
-				// System.out.println("------------");
-				v.save();
-				user.maVoiture = v;
+				if (v.type.equals("-1") || v.nbPlaces.equals("-1")) {
+					user.maVoiture = null;
+				} else {
+					v.save();
+					user.maVoiture = v;
+				}
 				user.save(); // explicit save here
 				flash.success("Inscription réussie");
 				if (!Security.authentify(user.email, user.password)) {
