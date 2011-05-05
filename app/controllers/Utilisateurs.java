@@ -40,7 +40,7 @@ public class Utilisateurs extends Controller {
 			Utilisateur user = Utilisateur
 					.find("byEmail", Security.connected()).first();
 			v = user.maVoiture;
-			if (!user.mesCriteres.isEmpty()) {
+			if (user.mesCriteres != null) {
 				for (String c : user.mesCriteres) {
 					if (c.equals("animaux")) {
 						c1 = c;

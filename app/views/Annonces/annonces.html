@@ -32,8 +32,8 @@
 		<td style="text-align:left;">${annonces.get(i).monUtilisateur.prenom}&nbsp;${annonces.get(i).monUtilisateur.nom}</td>
   		<td>${annonces.get(i).monTrajet.villeDepart.nom}</td>
   		<td>${annonces.get(i).monTrajet.villeArrivee.nom}</td>
-  		<td style="width : 100px;">${annonces.get(i).monTrajet.dateDepart.format('dd/MM/yyyy')}</td>
-  		<td style="width : 100px;">${annonces.get(i).monTrajet.dateDepart.getHours()}:${annonces.get(i).monTrajet.dateDepart.getMinutes()}</td>
+  		<td style="width : 100px;">${annonces.get(i).monTrajet.dateDepart?.format('dd/MM/yyyy')}</td>
+  		<td style="width : 100px;">${annonces.get(i).monTrajet.dateDepart?.getHours()}:${annonces.get(i).monTrajet.dateDepart?.getMinutes()}</td>
   		<td style="width : 147px;">${annonces.get(i).tarifParPersonne}&euro;</td>
   		<td style="width: 80px;"><a href="@{Annonces.details(annonces.get(i).id)}">D&eacute;tails</a></td>
   		
