@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.ArrayList;
+
 import models.Utilisateur;
 import models.Voiture;
 import play.*;
@@ -32,24 +34,37 @@ public class Utilisateurs extends Controller {
 		render();
 	}
 
-	public static void editermoncompte(Utilisateur usr, Voiture v) {
+	public static void editermoncompte(Utilisateur usr, Voiture v, String c1,
+			String c2, String c3) {
 		if (Security.isConnected()) {
 			Utilisateur user = Utilisateur
 					.find("byEmail", Security.connected()).first();
-			render(user, v);
+			v = user.maVoiture;
+			if (!user.mesCriteres.isEmpty()) {
+				for (String c : user.mesCriteres) {
+					if (c.equals("animaux")) {
+						c1 = c;
+					} else if (c.equals("musique")) {
+						c2 = c;
+					} else if (c.equals("fumeur")) {
+						c3 = c;
+					}
+				}
+			}
+			render(user, v, c1, c2, c3);
 		}
 		render();
 	}
 
 	public static void sauvegardermoncompte(@Required @Valid Utilisateur user,
-			Voiture v) {
+			Voiture v, String c1, String c2, String c3) {
 		validation.valid(user);
 		if (validation.hasErrors()) {
 			// add http parameters to the flash scope
 			params.flash();
 			// keep the errors for the next request
 			validation.keep();
-			editermoncompte(user, v);
+			editermoncompte(user, v, c1, c2, c3);
 		} else {
 			if (v.type.equals("-1") || v.nbPlaces.equals("-1")) {
 				user.maVoiture = null;
@@ -57,20 +72,35 @@ public class Utilisateurs extends Controller {
 				v.save();
 				user.maVoiture = v;
 			}
+			ArrayList<String> mesCriteres = new ArrayList<String>();
+			if (c1 != null && c1.equals("animaux")) {
+				mesCriteres.add("animaux");
+			}
+			if (c2 != null && c2.equals("musique")) {
+				mesCriteres.add("musique");
+			}
+			if (c3 != null && c3.equals("fumeur")) {
+				mesCriteres.add("fumeur");
+			}
+			if (!mesCriteres.isEmpty()) {
+				user.mesCriteres = mesCriteres;
+			}
 			user.save(); // explicit save here
 			flash.success("Sauvegarde réussie");
 			moncompte();
 		}
 	}
 
-	public static void inscription(Utilisateur user, Voiture v) {
+	public static void inscription(Utilisateur user, Voiture v, String c1,
+			String c2, String c3) {
 		if (Security.isConnected()) {
 			Application.index();
 		}
-		render(user, v);
+		render(user, v, c1, c2, c3);
 	}
 
-	public static void enregistrerinscription(@Valid Utilisateur user, Voiture v) {
+	public static void enregistrerinscription(@Valid Utilisateur user,
+			Voiture v, String c1, String c2, String c3) {
 		validation.valid(user);
 		// validation.valid(v);
 		if (validation.hasErrors()) {
@@ -78,17 +108,30 @@ public class Utilisateurs extends Controller {
 			params.flash();
 			// keep the errors for the next request
 			validation.keep();
-			inscription(user, v);
+			inscription(user, v, c1, c2, c3);
 		} else {
 			if (Utilisateur.find("byEmail", user.email).first() != null) {
 				flash.error("E-mail existant");
-				inscription(user, v);
+				inscription(user, v, c1, c2, c3);
 			} else {
 				if (v.type.equals("-1") || v.nbPlaces.equals("-1")) {
 					user.maVoiture = null;
 				} else {
 					v.save();
 					user.maVoiture = v;
+				}
+				ArrayList<String> mesCriteres = new ArrayList<String>();
+				if (c1 != null && c1.equals("animaux")) {
+					mesCriteres.add("animaux");
+				}
+				if (c2 != null && c2.equals("musique")) {
+					mesCriteres.add("musique");
+				}
+				if (c3 != null && c3.equals("fumeur")) {
+					mesCriteres.add("fumeur");
+				}
+				if (!mesCriteres.isEmpty()) {
+					user.mesCriteres = mesCriteres;
 				}
 				user.save(); // explicit save here
 				flash.success("Inscription réussie");

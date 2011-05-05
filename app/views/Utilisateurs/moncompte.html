@@ -38,6 +38,14 @@
 		<span class="nom_label">Nombre de places</span>
 		<span class="nom">${user.maVoiture.nbPlaces}</span>
 	#{/if}
+	#{if user.mesCriteres}
+		<span class="nom_label">Crit&egrave;res accept&eacute;s</span>
+		<span class="nom">-&nbsp;
+			#{list items:user.mesCriteres, as:'critere' } 
+				${critere.capitalizeWords()}&nbsp;-&nbsp;
+	 	 	#{/list}
+ 	 	</span>
+	#{/if}
 	&nbsp;
 </div>
 	<a class="submit" href="@{Utilisateurs.editermoncompte()}">Editer</a>

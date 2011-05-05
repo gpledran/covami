@@ -50,14 +50,13 @@ public class Utilisateur extends Model {
 	@OneToMany
 	public List<Utilisateur> mesAmis;
 
-	public ArrayList<String> mesCritères;
+	public ArrayList<String> mesCriteres;
 
 	public Utilisateur(String email, String password, String nom,
 			String prenom, String telephoneMobile, String telephonePerso,
 			Date dateNaissance, String rue, String cp, String ville,
 			String pays, Voiture maVoiture, Ville maVille,
-			List<Utilisateur> mesAmis) {
-		super();
+			List<Utilisateur> mesAmis, ArrayList<String> mesCriteres) {
 		this.email = email;
 		this.password = password;
 		this.nom = nom;
@@ -72,6 +71,7 @@ public class Utilisateur extends Model {
 		this.maVoiture = maVoiture;
 		this.maVille = maVille;
 		this.mesAmis = mesAmis;
+		this.mesCriteres = mesCriteres;
 	}
 
 	public static Utilisateur connect(String email, String password) {
