@@ -60,8 +60,34 @@ public class Annonces extends Controller {
 		}
 		render();
 	}
-	public static void creation(@Required @Valid Annonce annonce){
-	
+	public static void creation(Annonce annonce, Trajet trajet){
+		if(Security.isConnected()){
+			annonce.monUtilisateur = Utilisateur.find("byEmail", Security.connected()).first();
+			List <Ville> lesVilles = Ville.findAll();
+			render(annonce, trajet, lesVilles);
+		}
+		render();
+	}
+	public static void enregistrerannonce(Annonce annonce, String villeDepart_id){
+		//validation.valid(annonce);
+		//validation.valid(trajet);
+		System.out.println("test creation 1");
+		/*if (validation.hasErrors()) {
+			
+			params.flash();
+			
+			validation.keep();
+			creation(annonce, trajet);
+		}else{*/
+			//System.out.println("test creation 2");
+			//trajet.save();
+			//annonce.monTrajet = trajet;
+			System.out.println("depart : "+villeDepart_id);
 
+			//annonce.save(); 
+			flash.success("Annonce enregistrée");
+
+			//Application.index();
+		//}
 	}
 }

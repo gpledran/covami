@@ -48,6 +48,7 @@ Ville(Nantes):
     longitude:              0
     nom:                    Nantes
     monPays:                France
+    codeInsee:              44109
     
 Ville(Tours):
     codePostal:             37000
@@ -55,6 +56,7 @@ Ville(Tours):
     longitude:              0
     nom:                    Tours
     monPays:                France
+    codeInsee:              37261
 
 Ville(Angers):
     codePostal:             49000
@@ -62,6 +64,7 @@ Ville(Angers):
     longitude:              0
     nom:                    Angers
     monPays:                France
+    codeInsee:              49007    
     
 Trajet(toursnantes):
     villeDepart:            Nantes
