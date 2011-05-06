@@ -15,6 +15,9 @@ public class Ville extends Model {
 	public String codePostal;
 
 	@Required
+	public String codeInsee;
+
+	@Required
 	public float latitude;
 
 	@Required
@@ -23,11 +26,11 @@ public class Ville extends Model {
 	@OneToOne
 	public Pays monPays;
 
-	public Ville(String nom, String codePostal, float latitude,
-			float longitude, Pays monPays) {
-		super();
+	public Ville(String nom, String codePostal, String codeInsee,
+			float latitude, float longitude, Pays monPays) {
 		this.nom = nom;
 		this.codePostal = codePostal;
+		this.codeInsee = codeInsee;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.monPays = monPays;
