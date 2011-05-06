@@ -10,7 +10,8 @@ POST	/sauvegardermoncompte					Utilisateurs.sauvegardermoncompte
 GET		/inscription							Utilisateurs.inscription
 POST	/enregistrerinscription					Utilisateurs.enregistrerinscription
 GET		/mesamis								Utilisateurs.mesamis
-GET		/mesamis/recherche						Utilisateurs.recherche	
+GET		/mesamis/recherche						Utilisateurs.recherche
+GET		/mesamis/demandes						Utilisateurs.mesdemandes	
 
 # Annonce page
 GET 	/annonces								Annonces.annonces

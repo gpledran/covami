@@ -13,14 +13,14 @@
         
         <div id="header">
             <div id="logo">
-				${covamiTitle}
+				Covami
             </div>
             <ul id="tools">
 	            <!--Si on est connecté, on dit bonjour et on propose de se déconnecter -->
 	            <li>
 					#{if security != null}
-<!-- 						<a href="@{Admin.index()}">Administration</a>&nbsp;&nbsp;&nbsp; -->
-						<a href="@{Secure.logout()}">Déconnexion [${user.email}]</a>
+						<a class="submit" href="@{Utilisateurs.mesdemandes()}">${nbDemandes}</a>
+						<a class="submit" href="@{Secure.logout()}">Déconnexion [${user.email}]</a>
 					#{/if}
 					<!-- Sinon on propose de se logger -->
 					#{else}
@@ -42,11 +42,16 @@
 		                </li>
 		         	#{/if}
 		    		</ul>
-		    	<h2>${covamiBaseline}</h2>
+		    	<h2>Le seul moyen de voyager avec vos amis !</h2>
             </div>
         </div>
         
         <div id="main">
+        #{if flash.success}
+		    <p style="color:green">
+		        ${flash.success}
+		    </p>
+		#{/if}
             #{doLayout /} 
         </div>
         

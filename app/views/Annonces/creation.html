@@ -10,15 +10,35 @@
 <form action="@{Annonces.enregistrerannonce()}" method="POST">
 	<input type="hidden" name="annonce.id" value="${annonce.id}" />
 	<p> 
-		<label for="villeDepart_id">Ville de depart</label> 
-		<select name="villeDepart_id">
+		<label for="villeDepart_insee">Ville de depart</label> 
+		<select name="villeDepart_insee">
+			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 
-				
 				<option value="${ville.codeInsee}">${ville.nom}</option>
 			#{/list}
 		</select> 
 	</p> 
-	
+	<p> 
+		<label for="villeArrivee_insee">Ville de depart</label> 
+		<select name="villeArrivee_insee">
+			<option value="-">------</option>
+			#{list items:lesVilles, as:'ville' } 
+				<option value="${ville.codeInsee}">${ville.nom}</option>
+			#{/list}
+		</select> 
+	</p> 
+	<p> 
+		<label for="dateDepart">Date de depart</label>
+		<input type="text" name="dateDepart" value="jj/MM/aaaa" onClick="javascript:this.value=''"/>
+	</p>
+	<p> 
+		<label for="heureDepart">heure de depart</label>
+		<input type="text" name="heureDepart" value="mm:hh" onClick="javascript:this.value=''"/>
+	</p>
+	<p> 
+		<label for="tarifTotal">Tarif total</label>
+		<input type="text" name="tarifTotal" value="" />
+	</p>
 	<p>
 	    <input type="submit" value="Créer annonce" />
 	</p>
