@@ -148,6 +148,16 @@ public class Utilisateurs extends Controller {
 		Application.index();
 	}
 
+	public static void supprimermoncompte() throws Throwable {
+		if (Security.isConnected()) {
+			Utilisateur user = Utilisateur
+					.find("byEmail", Security.connected()).first();
+			user.delete();
+			Secure.logout();
+		}
+		Application.index();
+	}
+
 	public static void mesamis() {
 		flash.clear();
 		if (Security.isConnected()) {
