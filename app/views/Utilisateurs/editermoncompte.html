@@ -74,11 +74,11 @@
 		<label for="v.type">Type</label> 
 		<select name="v.type">
 			<option value="-1">-- Sans voiture --</option>
-			#{if v.type == "petite"} <option value="petite" selected="selected">Petite</option> #{/if}
+			#{if v?.type == "petite"} <option value="petite" selected="selected">Petite</option> #{/if}
 			#{else}	<option value="petite">Petite</option> #{/else}
-			#{if v.type == "moyenne"} <option value="moyenne" selected="selected">Moyenne</option> #{/if}
+			#{if v?.type == "moyenne"} <option value="moyenne" selected="selected">Moyenne</option> #{/if}
 			#{else}	<option value="moyenne">Moyenne</option> #{/else}
-			#{if v.type == "grande"} <option value="grande" selected="selected">Grande</option> #{/if}
+			#{if v?.type == "grande"} <option value="grande" selected="selected">Grande</option> #{/if}
 			#{else}	<option value="grande">Grande</option> #{/else}
 		</select> 
 	</p> 
@@ -86,21 +86,21 @@
 		<label for="v.nbPlaces">Nb Places</label> 
 		<select name="v.nbPlaces">
 			<option value="-1">-- Sans voiture --</option>
-			#{if v.nbPlaces == "2"} <option value="2" selected="selected">2</option> #{/if}
+			#{if v?.nbPlaces == "2"} <option value="2" selected="selected">2</option> #{/if}
 			#{else}	<option value="2">2</option> #{/else}
-			#{if v.nbPlaces == "3"} <option value="3" selected="selected">3</option> #{/if}
+			#{if v?.nbPlaces == "3"} <option value="3" selected="selected">3</option> #{/if}
 			#{else}	<option value="3">3</option> #{/else}
-			#{if v.nbPlaces == "4"} <option value="4" selected="selected">4</option> #{/if}
+			#{if v?.nbPlaces == "4"} <option value="4" selected="selected">4</option> #{/if}
 			#{else}	<option value="4">4</option> #{/else}
-			#{if v.nbPlaces == "5"} <option value="5" selected="selected">5</option> #{/if}
+			#{if v?.nbPlaces == "5"} <option value="5" selected="selected">5</option> #{/if}
 			#{else}	<option value="5">5</option> #{/else}
-			#{if v.nbPlaces == "6"} <option value="6" selected="selected">6</option> #{/if}
+			#{if v?.nbPlaces == "6"} <option value="6" selected="selected">6</option> #{/if}
 			#{else}	<option value="6">6</option> #{/else}
-			#{if v.nbPlaces == "7"} <option value="7" selected="selected">7</option> #{/if}
+			#{if v?.nbPlaces == "7"} <option value="7" selected="selected">7</option> #{/if}
 			#{else}	<option value="7">7</option> #{/else}
-			#{if v.nbPlaces == "8"} <option value="8" selected="selected">8</option> #{/if}
+			#{if v?.nbPlaces == "8"} <option value="8" selected="selected">8</option> #{/if}
 			#{else}	<option value="8">8</option> #{/else}
-			#{if v.nbPlaces == "9"} <option value="9" selected="selected">9</option> #{/if}
+			#{if v?.nbPlaces == "9"} <option value="9" selected="selected">9</option> #{/if}
 			#{else}	<option value="9">9</option> #{/else}
 		</select> 
 	</p>

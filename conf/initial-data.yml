@@ -66,10 +66,12 @@ Ville(Angers):
 Trajet(toursnantes):
     villeDepart:            Nantes
     villeArrivee:           Tours
+    dateDepart:             2010-06-12
     
 Trajet(angersnantes):
     villeDepart:            Angers
     villeArrivee:           Nantes
+    dateDepart:             2010-05-30
 
 Annonce(annoncephilippe):
     tarifParPersonne:       5

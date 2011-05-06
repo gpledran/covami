@@ -1,6 +1,11 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.StringTokenizer;
 
 import models.Utilisateur;
 import models.Voiture;
@@ -147,4 +152,40 @@ public class Utilisateurs extends Controller {
 		Application.index();
 	}
 
+	public static void supprimermoncompte() throws Throwable {
+		if (Security.isConnected()) {
+			Utilisateur user = Utilisateur
+					.find("byEmail", Security.connected()).first();
+			user.delete();
+			Secure.logout();
+		}
+		Application.index();
+	}
+
+	public static void mesamis() {
+		flash.clear();
+		if (Security.isConnected()) {
+			Utilisateur user = Utilisateur
+					.find("byEmail", Security.connected()).first();
+			List<Utilisateur> mesAmis = user.mesAmis;
+			render(mesAmis);
+		}
+		render();
+	}
+
+	public static void recherche(String field) {
+		if (Security.isConnected()) {
+			List<String> s = new ArrayList<String>();
+			StringTokenizer st = new StringTokenizer(field, ", ");
+			while (st.hasMoreTokens()) {
+				s.add(st.nextToken());
+			}
+			List<Utilisateur> mesAmis = Utilisateur.find(
+					"email like ? or nom like ? or prenom like ?",
+					"%" + field + "%", "%" + field + "%", "%" + field + "%")
+					.fetch();
+			render(mesAmis);
+		}
+		render();
+	}
 }
