@@ -50,6 +50,10 @@ public class Utilisateur extends Model {
 	@OneToMany
 	public List<Utilisateur> mesAmis;
 
+	@ManyToMany
+	@JoinTable(name = "DemandeEnAttente")
+	public List<Utilisateur> mesDemandes;
+
 	public ArrayList<String> mesCriteres;
 
 	public Utilisateur(String email, String password, String nom,

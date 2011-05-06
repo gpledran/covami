@@ -1,7 +1,11 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.StringTokenizer;
 
 import models.Utilisateur;
 import models.Voiture;
@@ -171,9 +175,17 @@ public class Utilisateurs extends Controller {
 
 	public static void recherche(String field) {
 		if (Security.isConnected()) {
-
+			List<String> s = new ArrayList<String>();
+			StringTokenizer st = new StringTokenizer(field, ", ");
+			while (st.hasMoreTokens()) {
+				s.add(st.nextToken());
+			}
+			List<Utilisateur> mesAmis = Utilisateur.find(
+					"email like ? or nom like ? or prenom like ?",
+					"%" + field + "%", "%" + field + "%", "%" + field + "%")
+					.fetch();
+			render(mesAmis);
 		}
 		render();
 	}
-
 }
