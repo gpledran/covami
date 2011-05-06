@@ -44,13 +44,10 @@ public class Utilisateur extends Model {
 	@OneToOne
 	public Voiture maVoiture;
 
-	@OneToOne
-	public Ville maVille;
-
 	@OneToMany
 	public List<Utilisateur> mesAmis;
 
-	@ManyToMany
+	@OneToMany
 	@JoinTable(name = "DemandeEnAttente")
 	public List<Utilisateur> mesDemandes;
 
@@ -59,8 +56,8 @@ public class Utilisateur extends Model {
 	public Utilisateur(String email, String password, String nom,
 			String prenom, String telephoneMobile, String telephonePerso,
 			Date dateNaissance, String rue, String cp, String ville,
-			String pays, Voiture maVoiture, Ville maVille,
-			List<Utilisateur> mesAmis, ArrayList<String> mesCriteres) {
+			String pays, Voiture maVoiture, List<Utilisateur> mesAmis,
+			List<Utilisateur> mesDemandes, ArrayList<String> mesCriteres) {
 		this.email = email;
 		this.password = password;
 		this.nom = nom;
@@ -73,8 +70,8 @@ public class Utilisateur extends Model {
 		this.ville = ville;
 		this.pays = pays;
 		this.maVoiture = maVoiture;
-		this.maVille = maVille;
 		this.mesAmis = mesAmis;
+		this.mesDemandes = mesDemandes;
 		this.mesCriteres = mesCriteres;
 	}
 

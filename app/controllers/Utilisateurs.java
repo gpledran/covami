@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
 
+import models.DemandeEnAttente;
 import models.Utilisateur;
 import models.Voiture;
 import play.*;
@@ -15,13 +16,6 @@ import play.data.validation.Valid;
 import play.mvc.*;
 
 public class Utilisateurs extends Controller {
-	@Before
-	static void addDefaults() {
-		renderArgs.put("covamiTitle",
-				Play.configuration.getProperty("covami.title"));
-		renderArgs.put("covamiBaseline",
-				Play.configuration.getProperty("covami.baseline"));
-	}
 
 	@Before
 	static void setConnectedUser() {
@@ -31,6 +25,16 @@ public class Utilisateurs extends Controller {
 			renderArgs.put("user", user);
 			renderArgs.put("security", Security.connected());
 			flash.success("Connexion réussie");
+		}
+	}
+
+	@Before
+	static void nbDemandes() {
+		if (Security.isConnected()) {
+			Utilisateur user = Utilisateur
+					.find("byEmail", Security.connected()).first();
+			int nbDemandes = user.mesDemandes.size();
+			renderArgs.put("nbDemandes", nbDemandes);
 		}
 	}
 
@@ -174,17 +178,97 @@ public class Utilisateurs extends Controller {
 	}
 
 	public static void recherche(String field) {
+		System.out.println("=========test========");
 		if (Security.isConnected()) {
 			List<String> s = new ArrayList<String>();
 			StringTokenizer st = new StringTokenizer(field, ", ");
 			while (st.hasMoreTokens()) {
 				s.add(st.nextToken());
 			}
-			List<Utilisateur> mesAmis = Utilisateur.find(
-					"email like ? or nom like ? or prenom like ?",
-					"%" + field + "%", "%" + field + "%", "%" + field + "%")
-					.fetch();
+			List<Utilisateur> mesAmis = new ArrayList<Utilisateur>();
+			if (s.size() == 3) {
+				mesAmis = Utilisateur.find(
+						"email like ? or nom like ? or prenom like ?",
+						"%" + s.get(2) + "%", "%" + s.get(0) + "%",
+						"%" + s.get(1) + "%").fetch();
+			} else if (s.size() == 2) {
+				mesAmis = Utilisateur.find("nom like ? or prenom like ?",
+						"%" + s.get(0) + "%", "%" + s.get(1) + "%").fetch();
+			} else if (s.size() == 1) {
+				mesAmis = Utilisateur.find("nom like ?", "%" + s.get(0) + "%")
+						.fetch();
+			} else if (s.size() == 0) {
+				mesAmis = Utilisateur.findAll();
+			}
+			System.out.println("======================");
+			System.out.println(mesAmis.get(0).email);
 			render(mesAmis);
+		}
+		render();
+	}
+
+	public static void envoyerdemande(Long id) {
+		if (Security.isConnected()) {
+			Utilisateur user = Utilisateur
+					.find("byEmail", Security.connected()).first();
+			Utilisateur ami = Utilisateur.findById(id);
+			ami.mesDemandes.add(user);
+			ami.save();
+			// (new DemandeEnAttente(user.id, Long.parseLong(id))).save();
+			flash.success("Demande envoyée avec succès.");
+			Application.index();
+		}
+	}
+
+	public static void mesdemandes() {
+		if (Security.isConnected()) {
+			Utilisateur user = Utilisateur
+					.find("byEmail", Security.connected()).first();
+			List<Utilisateur> mesDemandes = user.mesDemandes;
+			render(mesDemandes);
+		}
+		render();
+	}
+
+	public static void accepterdemande(Long id) {
+		if (Security.isConnected()) {
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			Utilisateur ami = Utilisateur.findById(id);
+			moi.mesAmis.add(ami);
+			ami.mesAmis.add(moi);
+			moi.mesDemandes.remove(ami);
+			moi.save();
+			ami.save();
+			flash.success("Ami ajouté avec succès.");
+			mesamis();
+		}
+		render();
+	}
+
+	public static void refuserdemande(Long id) {
+		if (Security.isConnected()) {
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			Utilisateur ami = Utilisateur.findById(id);
+			moi.mesDemandes.remove(ami);
+			moi.save();
+			flash.success("Ami refusé avec succès.");
+			mesamis();
+		}
+		render();
+	}
+
+	public static void supprimerami(Long id) {
+		if (Security.isConnected()) {
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			Utilisateur ami = Utilisateur.findById(id);
+			moi.mesAmis.remove(ami);
+			ami.mesAmis.remove(moi);
+			moi.save();
+			ami.save();
+			mesamis();
 		}
 		render();
 	}

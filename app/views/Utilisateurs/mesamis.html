@@ -11,14 +11,18 @@
 
 #{form @recherche(field)}
 	<div style="text-align:center;">
-		<input type="text" name="field" value="Nom, PrŽnom, Email" style="text-align:center;" onClick="javascript:this.value=''"/>
+		<input type="text" name="field" value="Nom, Pr&eacute;nom, Email" style="text-align:center;" onClick="javascript:this.value=''"/>
 		<input type="submit" value="Rechercher" style="margin: auto 0;"/>
 	</div>
 #{/form}
 
 #{if mesAmis}
 	#{list items:mesAmis, as:'ami' } 
-		${ami.nom.capitalizeWords()}&nbsp;-&nbsp;
+		<p>
+			${ami.prenom.capitalizeWords()}&nbsp;
+			${ami.nom.capitalizeWords()}&nbsp;
+			<a class="submit" href="@{Utilisateurs.supprimerami(ami.id)}" onclick="return(confirm('Etes-vous sur de vouloir supprimer votre lien d'amiti&eacute; ?'));">Supprimer</a>
+		</p>
  	#{/list}
 #{/if}
 #{else}

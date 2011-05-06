@@ -1,6 +1,5 @@
 package controllers;
 
-
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -17,13 +16,6 @@ import play.mvc.*;
 import play.mvc.Scope.RenderArgs;
 
 public class Annonces extends Controller {
-	@Before
-	static void addDefaults() {
-		renderArgs.put("covamiTitle",
-				Play.configuration.getProperty("covami.title"));
-		renderArgs.put("covamiBaseline",
-				Play.configuration.getProperty("covami.baseline"));
-	}
 
 	@Before
 	static void setConnectedUser() {
@@ -35,33 +27,46 @@ public class Annonces extends Controller {
 			flash.success("Connexion réussie");
 		}
 	}
-	public static void annonces(){
-		if(Security.isConnected()){
-			List <Annonce> annonces = Annonce.findAll();
-		
-			renderArgs.put("annonces",annonces);
-			
+
+	@Before
+	static void mesDemandes() {
+		if (Security.isConnected()) {
+			Utilisateur user = Utilisateur
+					.find("byEmail", Security.connected()).first();
+			int nbDemandes = user.mesDemandes.size();
+			renderArgs.put("nbDemandes", nbDemandes);
+		}
+	}
+
+	public static void annonces() {
+		if (Security.isConnected()) {
+			List<Annonce> annonces = Annonce.findAll();
+
+			renderArgs.put("annonces", annonces);
+
 		}
 		render();
 	}
-	public static void details(long id_annonce){
-		if(Security.isConnected()){
-			Annonce annonce = Annonce.find("byId",id_annonce).first();
-			
+
+	public static void details(long id_annonce) {
+		if (Security.isConnected()) {
+			Annonce annonce = Annonce.find("byId", id_annonce).first();
+
 			renderArgs.put("annonce", annonce);
 			renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
-			
+
 		}
 		render();
 	}
-	public static void recherche(String field){
-		if(Security.isConnected()){
-			
+
+	public static void recherche(String field) {
+		if (Security.isConnected()) {
+
 		}
 		render();
 	}
-	public static void creation(@Required @Valid Annonce annonce){
-	
+
+	public static void creation(@Required @Valid Annonce annonce) {
 
 	}
 }

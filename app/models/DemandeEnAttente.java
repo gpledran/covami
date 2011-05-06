@@ -19,5 +19,4 @@ public class DemandeEnAttente extends Model {
 		this.demandeur_id = demandeur_id;
 		this.receveur_id = receveur_id;
 	}
-
 }
