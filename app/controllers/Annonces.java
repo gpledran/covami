@@ -2,6 +2,7 @@ package controllers;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -112,9 +113,11 @@ public class Annonces extends Controller {
 			annonce.tarifParPersonne = Integer.parseInt(tarifTotal);
 			
 			Trajet monTrajet = new Trajet(new Date() , villeDepart, villeArrivee, etapes);
-			
+			//System.out.println("date : "+ monTrajet.dateDepart);
 			//annonce.save(); 
 			flash.success("Annonce enregistrée");
 			annonces();
 	}
+	
+
 }
