@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'Covami - Mes amis' /}
+#{set title:'Covami - Rechercher des amis' /}
 
 <h1>Recherche d'ami</h1>
 
@@ -17,13 +17,15 @@
 #{/form}
 
 #{if mesAmis}
+	<div id="ami">
+	<hr>
 	#{list items:mesAmis, as:'ami' } 
-		<p>
-			${ami.prenom.capitalizeWords()}&nbsp;
-			${ami.nom.capitalizeWords()}&nbsp;
-			<a class="submit" href="@{Utilisateurs.envoyerdemande(ami.id)}" >Envoyer une demande</a>
-		</p>
+		<div class="content">
+			<div class="nom">${ami.prenom.capitalizeWords()}&nbsp;${ami.nom.capitalizeWords()}&nbsp;</div>
+			<div class="bouton"><a class="submit" href="@{Utilisateurs.envoyerdemande(ami.id)}" >Envoyer une demande</a></div>
+		</div>
  	#{/list}
+ 	</div>&nbsp;
 #{/if}
 #{else}
 	<p>Aucun r&eacute;sultat !</p>

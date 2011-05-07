@@ -60,6 +60,7 @@ public class Utilisateurs extends Controller {
 					}
 				}
 			}
+			flash.clear();
 			render(user, v, c1, c2, c3);
 		}
 		render();
@@ -178,7 +179,6 @@ public class Utilisateurs extends Controller {
 	}
 
 	public static void recherche(String field) {
-		System.out.println("=========test========");
 		if (Security.isConnected()) {
 			List<String> s = new ArrayList<String>();
 			StringTokenizer st = new StringTokenizer(field, ", ");
@@ -200,8 +200,19 @@ public class Utilisateurs extends Controller {
 			} else if (s.size() == 0) {
 				mesAmis = Utilisateur.findAll();
 			}
-			System.out.println("======================");
-			System.out.println(mesAmis.get(0).email);
+			flash.clear();
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			mesAmis.remove(moi);
+			for (Utilisateur ami : moi.mesAmis) {
+				mesAmis.remove(ami);
+			}
+			List<Utilisateur> listeDemandes = Utilisateur.findAll();
+			for (Utilisateur demande : listeDemandes) {
+				if (demande.mesDemandes.contains(moi)) {
+					mesAmis.remove(demande);
+				}
+			}
 			render(mesAmis);
 		}
 		render();
@@ -214,7 +225,6 @@ public class Utilisateurs extends Controller {
 			Utilisateur ami = Utilisateur.findById(id);
 			ami.mesDemandes.add(user);
 			ami.save();
-			// (new DemandeEnAttente(user.id, Long.parseLong(id))).save();
 			flash.success("Demande envoyée avec succès.");
 			Application.index();
 		}
@@ -225,6 +235,7 @@ public class Utilisateurs extends Controller {
 			Utilisateur user = Utilisateur
 					.find("byEmail", Security.connected()).first();
 			List<Utilisateur> mesDemandes = user.mesDemandes;
+			flash.clear();
 			render(mesDemandes);
 		}
 		render();

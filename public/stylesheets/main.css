@@ -531,6 +531,43 @@ a{
 	margin-top: 20px;
 }
 
+/** Listes mesamis, rechercheami, mesdemandes **/
+#ami {
+	background-color: #fff;
+	width: 860px;
+	-webkit-border-radius: 16px;
+	-moz-border-radius: 16px;
+	position: relative;
+}
+
+#ami hr {
+	border:0;
+	border-bottom: 1px solid #CCC;
+	margin-bottom: 15px;
+}
+
+#ami .content {
+	padding: 10px;
+	height: 30px;
+	witdh: 860px;
+/* 	border-bottom: 2px dashed #828282; */
+	border-bottom: 1px solid #CCC;
+	margin-bottom: 15px;
+}
+
+#ami .nom {
+	float: left;
+	width: 400px;
+	position: relative;
+}
+
+#ami .bouton {
+	float: right;
+	width: 420px;
+/* 	width: 440px; */
+	position: relative;	
+}
+
 /** Pagination **/
 #pagination {
 	list-style: none;
