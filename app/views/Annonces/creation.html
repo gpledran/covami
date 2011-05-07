@@ -29,7 +29,7 @@
 	</p> 
 	<p> 
 		<label for="dateDepart">Date de depart</label>
-		<input type="text" name="dateDepart" value="jj/MM/aaaa" onClick="javascript:this.value=''"/>
+		<input id="datepicker" type="text" name="dateDepart" value=""/>
 	</p>
 	<p> 
 		<label for="heureDepart">heure de depart</label>
@@ -43,3 +43,22 @@
 	    <input type="submit" value="Créer annonce" />
 	</p>
 </form>
+
+  		
+<script type="text/javascript" charset="utf-8">
+// 	$(function() {
+// 		$( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+// 	});
+	$(function() {
+		$(document).ready(function() {
+			$("#datepicker").datepicker({
+				dateFormat:'dd/mm/yy', 
+				showAnim:'fadeIn',
+				dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+				monthNames: ['Janvier','F&eacute;vrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','D&eacute;cembre'],
+				autoSize: true,
+				minDate: '0'
+			});
+		});
+	});
+</script>
