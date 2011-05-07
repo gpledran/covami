@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
 
+import models.Annonce;
 import models.DemandeEnAttente;
 import models.Utilisateur;
 import models.Voiture;
@@ -159,9 +160,30 @@ public class Utilisateurs extends Controller {
 
 	public static void supprimermoncompte() throws Throwable {
 		if (Security.isConnected()) {
-			Utilisateur user = Utilisateur
-					.find("byEmail", Security.connected()).first();
-			user.delete();
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			List<Utilisateur> liste = Utilisateur.findAll();
+			for (Utilisateur u : liste) {
+				if (u.mesAmis.contains(moi)) {
+					u.mesAmis.remove(moi);
+					moi.mesAmis.remove(u);
+					u.save();
+					moi.save();
+				}
+				if (u.mesDemandes.contains(moi)) {
+					u.mesDemandes.remove(moi);
+					moi.mesDemandes.remove(u);
+					u.save();
+					moi.save();
+				}
+			}
+			List<Annonce> annonces = Annonce.findAll();
+			for (Annonce a : annonces) {
+				if (a.monUtilisateur.equals(moi)) {
+					a.delete();
+				}
+			}
+			moi.delete();
 			Secure.logout();
 		}
 		Application.index();
@@ -220,10 +242,10 @@ public class Utilisateurs extends Controller {
 
 	public static void envoyerdemande(Long id) {
 		if (Security.isConnected()) {
-			Utilisateur user = Utilisateur
-					.find("byEmail", Security.connected()).first();
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
 			Utilisateur ami = Utilisateur.findById(id);
-			ami.mesDemandes.add(user);
+			ami.mesDemandes.add(moi);
 			ami.save();
 			flash.success("Demande envoyée avec succès.");
 			Application.index();
@@ -232,9 +254,9 @@ public class Utilisateurs extends Controller {
 
 	public static void mesdemandes() {
 		if (Security.isConnected()) {
-			Utilisateur user = Utilisateur
-					.find("byEmail", Security.connected()).first();
-			List<Utilisateur> mesDemandes = user.mesDemandes;
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			List<Utilisateur> mesDemandes = moi.mesDemandes;
 			flash.clear();
 			render(mesDemandes);
 		}

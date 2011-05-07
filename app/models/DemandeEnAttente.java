@@ -3,6 +3,9 @@ package models;
 import java.util.*;
 import javax.persistence.*;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import play.db.jpa.*;
 import play.data.validation.*;
 
