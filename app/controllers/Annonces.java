@@ -75,46 +75,52 @@ public class Annonces extends Controller {
 			}
 			List<Annonce> annonces = new ArrayList<Annonce>();
 			// todo
-			
+
 			render(annonces);
 		}
 		render();
 	}
 
-	public static void creation(Annonce annonce, Trajet trajet){
-		if(Security.isConnected()){
-			annonce.monUtilisateur = Utilisateur.find("byEmail", Security.connected()).first();
-			List <Ville> lesVilles = Ville.findAll();
+	public static void creation(Annonce annonce, Trajet trajet) {
+		if (Security.isConnected()) {
+			annonce.monUtilisateur = Utilisateur.find("byEmail",
+					Security.connected()).first();
+			List<Ville> lesVilles = Ville.find("ORDER BY nom").fetch();
 			render(annonce, trajet, lesVilles);
 		}
 		render();
 	}
-	public static void enregistrerannonce(Annonce annonce, String villeDepart_insee, String villeArrivee_insee,
-										  String dateDepart, String heureDepart, String tarifTotal, List <Ville> etapes){
-		//validation.valid(annonce);
-		//validation.valid(trajet);
+
+	public static void enregistrerannonce(Annonce annonce,
+			String villeDepart_insee, String villeArrivee_insee,
+			String dateDepart, String heureDepart, String tarifTotal,
+			List<Ville> etapes) {
+		// validation.valid(annonce);
+		// validation.valid(trajet);
 		System.out.println("test creation 1");
-		/*if (validation.hasErrors()) {
-			
-			params.flash();
-			
-			validation.keep();
-			creation(annonce, trajet);
-		}else{*/
-			//System.out.println("test creation 2");
-			//trajet.save();
-			//annonce.monTrajet = trajet;
-			Ville villeDepart = Ville.find("byCodeInsee", villeDepart_insee).first();
-			Ville villeArrivee = Ville.find("byCodeInsee", villeArrivee_insee).first();
-			//etapes.add(villeDepart);
-			
-			
-			annonce.tarifParPersonne = Integer.parseInt(tarifTotal);
-			
-			Trajet monTrajet = new Trajet(new Date() , villeDepart, villeArrivee, etapes);
-			
-			//annonce.save(); 
-			flash.success("Annonce enregistrée");
-			annonces();
+		/*
+		 * if (validation.hasErrors()) {
+		 * 
+		 * params.flash();
+		 * 
+		 * validation.keep(); creation(annonce, trajet); }else{
+		 */
+		// System.out.println("test creation 2");
+		// trajet.save();
+		// annonce.monTrajet = trajet;
+		Ville villeDepart = Ville.find("byCodeInsee", villeDepart_insee)
+				.first();
+		Ville villeArrivee = Ville.find("byCodeInsee", villeArrivee_insee)
+				.first();
+		// etapes.add(villeDepart);
+
+		annonce.tarifParPersonne = Integer.parseInt(tarifTotal);
+
+		Trajet monTrajet = new Trajet(new Date(), villeDepart, villeArrivee,
+				etapes);
+
+		// annonce.save();
+		flash.success("Annonce enregistrée");
+		annonces();
 	}
 }
