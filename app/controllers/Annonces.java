@@ -55,6 +55,29 @@ public class Annonces extends Controller {
 		render();
 	}
 
+	public static void mesannonces(List<Annonces> mesAnnonces) {
+		if (Security.isConnected()) {
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			mesAnnonces = Annonce.find("byMonUtilisateur", moi).fetch();
+			flash.clear();
+			render(mesAnnonces);
+
+		}
+		render();
+	}
+
+	public static void editermonannonce(long id_annonce) {
+		if (Security.isConnected()) {
+			Annonce annonce = Annonce.findById(id_annonce);
+
+			renderArgs.put("annonce", annonce);
+			renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
+
+		}
+		render();
+	}
+
 	public static void details(long id_annonce) {
 		if (Security.isConnected()) {
 			Annonce annonce = Annonce.find("byId", id_annonce).first();

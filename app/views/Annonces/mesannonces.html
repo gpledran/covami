@@ -1,0 +1,40 @@
+#{extends 'main.html' /}
+#{set title:'Covami - Mes annonces' /}
+%{def couleur = 0}%
+
+<h1>Mes Annonces</h1>
+
+<table id="tableMesAnnonces">
+  <tr class="tableEntete">
+  	<td>Annonceur</td>
+  	<td>Ville depart</td>
+  	<td>Ville arriv&eacute;e</td>
+  	<td style="width : 100px;">Date depart</td>
+  	<td style="width : 100px;">Heure depart</td>
+  	<td style="width : 147px;">Tarif total / personne</td>
+  	
+  	
+  </tr>
+  #{list 0..mesAnnonces.size-1, as:'i' } 
+  	#{if couleur == 0}
+  		<tr class="tableBody" style="background-color : #C4C4C4">
+  		%{couleur = 1}%
+  	#{/if}
+  	#{else}
+  		<tr class="tableBody" style="background-color : white">
+  		%{couleur = 0}%
+  	#{/else}
+		<td style="text-align:left;">${mesAnnonces.get(i).monUtilisateur.prenom}&nbsp;${mesAnnonces.get(i).monUtilisateur.nom}</td>
+  		<td>${mesAnnonces.get(i).monTrajet.villeDepart.nom}</td>
+  		<td>${mesAnnonces.get(i).monTrajet.villeArrivee.nom}</td>
+  		<td style="width : 100px;">${mesAnnonces.get(i).monTrajet.dateDepart?.format('dd/MM/yyyy')}</td>
+  		<td style="width : 100px;">${mesAnnonces.get(i).monTrajet.dateDepart?.getHours()}:${mesAnnonces.get(i).monTrajet.dateDepart?.getMinutes()}</td>
+  		<td style="width : 147px;">${mesAnnonces.get(i).tarifParPersonne}&euro;</td>
+  		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(mesAnnonces.get(i).id)}">D&eacute;tails</a></td>
+  		
+  	</tr> 
+  #{/list} 
+  
+  
+</table><br/>
+<a class="submit" style="margin-left:20px;" href="@{Annonces.creation()}">Proposer une nouvelle annonce</a>

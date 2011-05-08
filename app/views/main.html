@@ -37,17 +37,18 @@
             </ul>
             <div id="title">
                 <span class="about">About this blog</span>
+		    	<h2>Le seul moyen de voyager avec vos amis !</h2>
                  	<ul id="adminMenu">
                  	#{if security != null}
 		            	<li class="${request.controller == 'Utilisateurs' ? 'selected' : ''}">
 		                	<a href="@{Application.index()}">Accueil</a>
+		                	<a href="@{Annonces.annonces()}">Trouver un covoiturage</a>
 		                	<a href="@{Utilisateurs.moncompte()}">Mon compte</a>
 		                	<a href="@{Utilisateurs.mesamis()}">Mes amis</a>
-		                	<a href="@{Annonces.annonces()}">Annonces</a>
+		                	<a href="@{Annonces.mesannonces()}">Mes annonces</a>
 		                </li>
 		         	#{/if}
 		    		</ul>
-		    	<h2>Le seul moyen de voyager avec vos amis !</h2>
             </div>
         </div>
         
