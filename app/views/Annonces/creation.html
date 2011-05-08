@@ -10,7 +10,7 @@
 <form action="@{Annonces.enregistrerannonce()}" method="POST">
 	<input type="hidden" name="annonce.id" value="${annonce.id}" />
 	<p> 
-		<label for="villeDepart_insee">Ville de depart</label> 
+		<label for="villeDepart_insee">Ville de d&eacute;part</label> 
 		<select name="villeDepart_insee">
 			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 
@@ -19,7 +19,7 @@
 		</select> 
 	</p> 
 	<p> 
-		<label for="villeArrivee_insee">Ville de depart</label> 
+		<label for="villeArrivee_insee">Ville d'arriv&eacute;e</label> 
 		<select name="villeArrivee_insee">
 			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 

@@ -16,6 +16,7 @@ import models.Trajet;
 import models.Utilisateur;
 import models.Annonce;
 import models.Ville;
+import models.Voiture;
 import play.*;
 import play.data.validation.Required;
 import play.data.validation.Valid;
@@ -55,7 +56,7 @@ public class Annonces extends Controller {
 		render();
 	}
 
-	public static void mesannonces(List<Annonces> mesAnnonces) {
+	public static void mesannonces(List<Annonce> mesAnnonces) {
 		if (Security.isConnected()) {
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 					.first();
@@ -70,18 +71,52 @@ public class Annonces extends Controller {
 	public static void editermonannonce(long id_annonce) {
 		if (Security.isConnected()) {
 			Annonce annonce = Annonce.findById(id_annonce);
-
+			List<Ville> lesVilles = Ville.find("ORDER BY nom").fetch();
 			renderArgs.put("annonce", annonce);
 			renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
+			renderArgs.put("lesVilles", lesVilles);
 
 		}
 		render();
 	}
 
+	public static void sauvegardermonannonce(Annonce annonce, Long depart,
+			Long arrivee, String date, String heure) {
+		Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+				.first();
+		annonce.monTrajet.villeDepart = Ville.findById(arrivee);
+		annonce.monTrajet.villeArrivee = Ville.findById(depart);
+
+		StringTokenizer st = new StringTokenizer(date, "/");
+		String[] tabDate = new String[6];
+		int i = 0;
+		while (st.hasMoreTokens()) {
+			tabDate[i] = st.nextToken();
+			i++;
+		}
+
+		StringTokenizer stH = new StringTokenizer(heure, ":");
+		while (stH.hasMoreTokens()) {
+			tabDate[i] = stH.nextToken();
+			i++;
+		}
+		annonce.monTrajet.dateDepart = new Date(Integer.parseInt(tabDate[2]),
+				Integer.parseInt(tabDate[1]), Integer.parseInt(tabDate[0]),
+				Integer.parseInt(tabDate[3]), Integer.parseInt(tabDate[4]));
+		annonce.monTrajet.save();
+		annonce.save();
+		flash.success("Sauvegarde réussie");
+		List<Annonce> mesAnnonces = Annonce.find("byMonUtilisateur", moi)
+				.fetch();
+		mesannonces(mesAnnonces);
+	}
+
 	public static void details(long id_annonce) {
 		if (Security.isConnected()) {
 			Annonce annonce = Annonce.find("byId", id_annonce).first();
-
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			renderArgs.put("moi", moi);
 			renderArgs.put("annonce", annonce);
 			renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
 

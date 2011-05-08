@@ -36,4 +36,6 @@
 	</span>&nbsp;	
 </div>
 <a class="submit" href="javascript:history.back()">Revenir &agrave; la liste</a>
-<a class="submit" href="@{Annonces.editermonannonce(annonce.id)}">Editer</a>
+#{if moi == annonce.monUtilisateur}
+	<a class="submit" href="@{Annonces.editermonannonce(annonce.id)}">Editer</a>
+#{/if}

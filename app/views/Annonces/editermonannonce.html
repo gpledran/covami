@@ -3,3 +3,74 @@
 
 
 <h1>Editer mon annonce</h1>
+
+<form action="@{Annonces.sauvegardermonannonce()}" method="POST">
+	<input type="hidden" name="annonce.id" value="${annonce.id}" />
+	<p> 
+		<label for="depart">Ville de d&eacute;part</label> 
+		<select name="depart">
+			<option value="-">------</option>
+			#{list items:lesVilles, as:'ville' } 
+				<option value="${ville.id}" #{if annonce.monTrajet.villeDepart.id == ville.id} selected="selected" #{/if}>${ville.nom}</option>
+			#{/list}
+		</select> 
+	</p> 
+	<p> 
+		<label for="arrivee">Ville d'arriv&eacute;e</label> 
+		<select name="arrivee">
+			<option value="-">------</option>
+			#{list items:lesVilles, as:'ville' } 
+				<option value="${ville.id}" #{if annonce.monTrajet.villeArrivee.id == ville.id} selected="selected" #{/if}>${ville.nom}</option>
+			#{/list}
+		</select> 
+	</p> 
+	<p> 
+		<label for="tarifTotal" id="lbltarif"></label>
+		<input type="hidden" id="tarifTotal" name="annonce.tarifParPersonne" value="${annonce.tarifParPersonne}" />
+	</p>
+		<div id="tarif-slider" style="margin-left: 150px; margin-top: 27px; width: 280px;"></div>
+	<p>
+	<p> 
+		<label for="dateDepart">Date de depart</label>
+		<input id="datepicker" type="text" name="date" value="${annonce.monTrajet.dateDepart.format('dd/MM/yyyy')}"/>
+	</p>
+	<p> 
+		<label for="heureDepart">Heure de depart</label>
+		<input id="heureDepart" type="text" name="heure" value="${annonce.monTrajet.dateDepart.format('mm:hh')}" />
+	</p>
+	    <input type="submit" value="Sauvegarder" />
+	</p>
+</form>
+
+  		
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$(document).ready(function() {
+			$("#datepicker").datepicker({
+				dateFormat:'dd/mm/yy', 
+				showAnim:'fadeIn',
+				dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+				monthNames: ['Janvier','F&eacute;vrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','D&eacute;cembre'],
+				autoSize: true,
+				minDate: '0'
+			});
+		});
+		
+		$("#tarif-slider").slider({
+			min: 0,
+			max: 100,
+			step: 1,
+			value: ${annonce.tarifParPersonne},
+			slide: function(event, ui) {
+				$("#lbltarif").text('Tarif total - ' + ui.value + ' euro');
+			},
+			change: function(event, ui) {
+				// Pour le champs input hidden
+				$("#tarifTotal").attr("value", $("#tarif-slider").slider("values", 0));
+			}
+		});
+		$("#lbltarif").text('Tarif total - ' + $("#tarif-slider").slider("values", 0) + ' euro');
+		
+		$('#heureDepart').timepicker({});
+	});
+</script>
