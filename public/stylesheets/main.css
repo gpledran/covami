@@ -420,7 +420,6 @@ input[type=submit],a.submit {
 	text-shadow: 0 1px 1px #333;
 	text-transform: uppercase;
 }
-
 a.submit {
 	margin: 0;
 	margin-top: 30px;	
@@ -802,25 +801,56 @@ tr.odd {
 table#tableMesAnnonces{
 		margin : 0 auto;
 }
-	table#tableMesAnnonces tr td{
-		width : 125px;
-		text-align : center;
-		float :left;
-	}
-		table#tableMesAnnonces tr.tableEntete{
-			color: white;
-			font-size: 0.95em;
-			font-weight : normal;
-			background-color: #828282;
-			line-height: 1.5em;
-		}
-		table#tableMesAnnonces tr.tableBody{
-			font-size: 0.80em;
-			line-height: 1.25em;
-			
-		}
+table#tableMesAnnonces tr td{
+	width : 125px;
+	text-align : center;
+	float :left;
+}
+table#tableMesAnnonces tr.tableEntete{
+	color: white;
+	font-size: 0.95em;
+	font-weight : normal;
+	background-color: #828282;
+	line-height: 1.5em;
+}
+table#tableMesAnnonces tr.tableBody{
+	font-size: 0.80em;
+	line-height: 1.25em;
+	
+}
 a{
 	color : #0066FF;	
+}
+
+a.lien {
+	background: #ddd;
+	background: -moz-linear-gradient(90deg, #0459b7, #08adff);
+	/* Firefox */
+	background: -webkit-gradient(linear, left top, left bottom, from(#08adff),
+		to(#0459b7) ); /* Webkit */
+	border: 1px solid #093c75;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-box-shadow: 0 1px 0 #fff;
+	-webkit-box-shadow: 0 1px 0 #fff;
+	color: #fff;
+	cursor: pointer;
+	font-family: Helvetica, Arial, Sans !important;
+	font-size: 9px;
+	font-weight: bold;
+	padding: 2px 5px;
+	text-decoration: none;
+	text-shadow: 0 1px 1px #333;
+	text-transform: uppercase;
+}
+
+a.lien:hover {
+	background: #eee;
+	background: -moz-linear-gradient(90deg, #067cd3, #0bcdff);
+	background: -webkit-gradient(linear, left top, left bottom, from(#0bcdff),
+		to(#067cd3) );
+	border-color: #093c75;
+	text-decoration: none;
 }
 
 /** Datepicker **/

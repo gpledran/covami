@@ -48,7 +48,7 @@ public class Annonces extends Controller {
 	public static void annonces() {
 		if (Security.isConnected()) {
 			List<Annonce> annonces = Annonce.findAll();
-
+			flash.clear();
 			renderArgs.put("annonces", annonces);
 
 		}

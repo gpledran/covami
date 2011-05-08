@@ -35,7 +35,7 @@
   		<td style="width : 100px;">${annonces.get(i).monTrajet.dateDepart?.format('dd/MM/yyyy')}</td>
   		<td style="width : 100px;">${annonces.get(i).monTrajet.dateDepart?.getHours()}:${annonces.get(i).monTrajet.dateDepart?.getMinutes()}</td>
   		<td style="width : 147px;">${annonces.get(i).tarifParPersonne}&euro;</td>
-  		<td style="width: 80px;"><a href="@{Annonces.details(annonces.get(i).id)}">D&eacute;tails</a></td>
+  		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(annonces.get(i).id)}">D&eacute;tails</a></td>
   		
   	</tr> 
   #{/list} 
