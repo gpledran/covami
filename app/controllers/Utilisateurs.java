@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
 
+import models.Annonce;
 import models.DemandeEnAttente;
 import models.Utilisateur;
 import models.Voiture;
@@ -60,6 +61,7 @@ public class Utilisateurs extends Controller {
 					}
 				}
 			}
+			flash.clear();
 			render(user, v, c1, c2, c3);
 		}
 		render();
@@ -158,9 +160,30 @@ public class Utilisateurs extends Controller {
 
 	public static void supprimermoncompte() throws Throwable {
 		if (Security.isConnected()) {
-			Utilisateur user = Utilisateur
-					.find("byEmail", Security.connected()).first();
-			user.delete();
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			List<Utilisateur> liste = Utilisateur.findAll();
+			for (Utilisateur u : liste) {
+				if (u.mesAmis.contains(moi)) {
+					u.mesAmis.remove(moi);
+					moi.mesAmis.remove(u);
+					u.save();
+					moi.save();
+				}
+				if (u.mesDemandes.contains(moi)) {
+					u.mesDemandes.remove(moi);
+					moi.mesDemandes.remove(u);
+					u.save();
+					moi.save();
+				}
+			}
+			List<Annonce> annonces = Annonce.findAll();
+			for (Annonce a : annonces) {
+				if (a.monUtilisateur.equals(moi)) {
+					a.delete();
+				}
+			}
+			moi.delete();
 			Secure.logout();
 		}
 		Application.index();
@@ -178,7 +201,6 @@ public class Utilisateurs extends Controller {
 	}
 
 	public static void recherche(String field) {
-		System.out.println("=========test========");
 		if (Security.isConnected()) {
 			List<String> s = new ArrayList<String>();
 			StringTokenizer st = new StringTokenizer(field, ", ");
@@ -200,8 +222,19 @@ public class Utilisateurs extends Controller {
 			} else if (s.size() == 0) {
 				mesAmis = Utilisateur.findAll();
 			}
-			System.out.println("======================");
-			System.out.println(mesAmis.get(0).email);
+			flash.clear();
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			mesAmis.remove(moi);
+			for (Utilisateur ami : moi.mesAmis) {
+				mesAmis.remove(ami);
+			}
+			List<Utilisateur> listeDemandes = Utilisateur.findAll();
+			for (Utilisateur demande : listeDemandes) {
+				if (demande.mesDemandes.contains(moi)) {
+					mesAmis.remove(demande);
+				}
+			}
 			render(mesAmis);
 		}
 		render();
@@ -209,12 +242,11 @@ public class Utilisateurs extends Controller {
 
 	public static void envoyerdemande(Long id) {
 		if (Security.isConnected()) {
-			Utilisateur user = Utilisateur
-					.find("byEmail", Security.connected()).first();
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
 			Utilisateur ami = Utilisateur.findById(id);
-			ami.mesDemandes.add(user);
+			ami.mesDemandes.add(moi);
 			ami.save();
-			// (new DemandeEnAttente(user.id, Long.parseLong(id))).save();
 			flash.success("Demande envoyée avec succès.");
 			Application.index();
 		}
@@ -222,9 +254,10 @@ public class Utilisateurs extends Controller {
 
 	public static void mesdemandes() {
 		if (Security.isConnected()) {
-			Utilisateur user = Utilisateur
-					.find("byEmail", Security.connected()).first();
-			List<Utilisateur> mesDemandes = user.mesDemandes;
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			List<Utilisateur> mesDemandes = moi.mesDemandes;
+			flash.clear();
 			render(mesDemandes);
 		}
 		render();

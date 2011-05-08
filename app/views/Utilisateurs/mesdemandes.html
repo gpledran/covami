@@ -1,7 +1,7 @@
 #{extends 'main.html' /}
-#{set title:'Covami - Mes amis' /}
+#{set title:'Covami - Mes demandes' /}
 
-<h1>Recherche d'ami</h1>
+<h1>Mes demandes</h1>
 
 #{if flash.error}
     <p style="color:#c00">
@@ -10,14 +10,18 @@
 #{/if}
 
 #{if mesDemandes}
-	#{list items:mesDemandes, as:'ami' } 
-		<p>
-			${ami.prenom.capitalizeWords()}&nbsp;
-			${ami.nom.capitalizeWords()}&nbsp;
-			<a class="submit" href="@{Utilisateurs.accepterdemande(ami.id)}" >Accepter</a>
-			<a class="submit" href="@{Utilisateurs.refuserdemande(ami.id)}" >Refuser</a>
-		</p>
+	<div id="ami">
+	<hr>
+	#{list items:mesDemandes, as:'ami' }
+		<div class="content"> 
+			<div class="nom">${ami.prenom.capitalizeWords()}&nbsp;${ami.nom.capitalizeWords()}&nbsp;</div>
+			<div class="bouton">
+				<a class="submit" href="@{Utilisateurs.accepterdemande(ami.id)}" >Accepter</a>
+				<a class="submit" href="@{Utilisateurs.refuserdemande(ami.id)}" >Refuser</a>
+			</div>
+		</div>
  	#{/list}
+ 	</div>&nbsp;
 #{/if}
 #{else}
 	<p>Aucune demande !</p>
