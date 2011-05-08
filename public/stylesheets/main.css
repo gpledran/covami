@@ -822,3 +822,8 @@ table#tableMesAnnonces{
 a{
 	color : #0066FF;	
 }
+
+/** Datepicker **/
+div.ui-datepicker{
+ font-size:10px;
+}

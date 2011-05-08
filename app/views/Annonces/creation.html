@@ -39,7 +39,7 @@
 	</p>
 	<p> 
 		<label for="heureDepart">Heure de depart</label>
-		<input type="text" name="heureDepart" value="mm:hh" onClick="javascript:this.value=''"/>
+		<input id="heureDepart" type="text" name="heureDepart" value="" />
 	</p>
 	    <input type="submit" value="Créer annonce" />
 	</p>
@@ -58,6 +58,7 @@
 				minDate: '0'
 			});
 		});
+		
 		$("#tarif-slider").slider({
 			min: 0,
 			max: 100,
@@ -72,5 +73,7 @@
 			}
 		});
 		$("#lbltarif").text('Tarif total - ' + $("#tarif-slider").slider("values", 0) + ' euro');
+		
+		$('#heureDepart').timepicker({});
 	});
 </script>
