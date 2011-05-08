@@ -1,63 +1,44 @@
 #{extends 'main.html' /}
-#{set title:'Covami - Mon compte - Editer' /}
+#{set title:'Covami - Edition de mon annonce' /}
 
-<h1>Cr&eacute;er une annonce</h1>
-#{if flash.error}
-    <p style="color:#c00">
-        ${flash.error}
-    </p>
-#{/if}
-<form action="@{Annonces.enregistrerannonce()}" method="POST">
+
+<h1>Editer mon annonce</h1>
+
+<form action="@{Annonces.sauvegardermonannonce()}" method="POST">
 	<input type="hidden" name="annonce.id" value="${annonce.id}" />
 	<p> 
-
-		<label for="villeDepart_insee">Ville de d&eacute;part</label> 
-		<select name="villeDepart_insee" style="width:280px;">
-
-
+		<label for="depart">Ville de d&eacute;part</label> 
+		<select name="depart">
 			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 
-				<option value="${ville.codeInsee}">${ville.nom}</option>
+				<option value="${ville.id}" #{if annonce.monTrajet.villeDepart.id == ville.id} selected="selected" #{/if}>${ville.nom}</option>
 			#{/list}
 		</select> 
 	</p> 
 	<p> 
-		<label for="villeArrivee_insee">Ville d'arriv&eacute;e</label> 
-		<select name="villeArrivee_insee" style="width:280px;">
-		
-
+		<label for="arrivee">Ville d'arriv&eacute;e</label> 
+		<select name="arrivee">
 			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 
-				<option value="${ville.codeInsee}">${ville.nom}</option>
+				<option value="${ville.id}" #{if annonce.monTrajet.villeArrivee.id == ville.id} selected="selected" #{/if}>${ville.nom}</option>
 			#{/list}
 		</select> 
 	</p> 
 	<p> 
-		<label for="dateDepart">Date de depart</label>
-
-		<input id="datepicker" type="text" name="dateDepart" value=""/>
 		<label for="tarifTotal" id="lbltarif"></label>
-		<input type="hidden" id="tarifTotal" name="tarifTotal" value="50" />
-
+		<input type="hidden" id="tarifTotal" name="annonce.tarifParPersonne" value="${annonce.tarifParPersonne}" />
 	</p>
 		<div id="tarif-slider" style="margin-left: 150px; margin-top: 27px; width: 280px;"></div>
 	<p>
 	<p> 
-		<label for="heureDepart">Heure de depart</label>
-		<input id="heureDepart" type="text" name="heureDepart" value="" />
+		<label for="dateDepart">Date de depart</label>
+		<input id="datepicker" type="text" name="date" value="${annonce.monTrajet.dateDepart.format('dd/MM/yyyy')}"/>
 	</p>
-
 	<p> 
-		<label for="etapes">Escales</label>
-		<select name="etapes" style="width:280px;">
-			<option value="-">------</option>
-			#{list items:lesVilles, as:'ville' } 
-				<option value="${ville.codeInsee}">${ville.nom}</option>
-			#{/list}
-		</select> 
+		<label for="heureDepart">Heure de depart</label>
+		<input id="heureDepart" type="text" name="heure" value="${annonce.monTrajet.dateDepart.format('mm:hh')}" />
 	</p>
-	<p>
-	    <input type="submit" value="Créer annonce" />
+	    <input type="submit" value="Sauvegarder" />
 	</p>
 </form>
 
@@ -79,7 +60,7 @@
 			min: 0,
 			max: 100,
 			step: 1,
-			value: 50,
+			value: ${annonce.tarifParPersonne},
 			slide: function(event, ui) {
 				$("#lbltarif").text('Tarif total - ' + ui.value + ' euro');
 			},

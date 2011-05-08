@@ -5,6 +5,9 @@
 <h1>D&eacute;tails de l'annonce</h1>
 
 <div id="details">
+	<span class="nom_label">Annonceur</span>
+	<span class="nom">${annonce.monUtilisateur.prenom.capitalizeWords()}&nbsp;${annonce.monUtilisateur.nom.capitalizeWords()}</span>
+
 	<span class="nom_label">Date de depart</span>
 	<span class="nom">${annonce.monTrajet.dateDepart.format('dd MMMM yyyy hh:mm', 'fr')}</span>
 	
@@ -30,6 +33,9 @@
 		}%
 			
 		</select>
-	</span>	
+	</span>&nbsp;	
 </div>
-<a href="@{Annonces.annonces()}">Revenir &agrave; la liste</a>
+<a class="submit" href="javascript:history.back()">Revenir &agrave; la liste</a>
+#{if moi == annonce.monUtilisateur}
+	<a class="submit" href="@{Annonces.editermonannonce(annonce.id)}">Editer</a>
+#{/if}

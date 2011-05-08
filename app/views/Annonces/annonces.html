@@ -2,7 +2,7 @@
 #{set title:'Covami - Annonces' /}
 %{def couleur = 0}%
 
-<h1>Annonces</h1>
+<h1>Toutes les annonces</h1>
 #{form @recherche(field)}
 	<div style="text-align:center;">
 		<input type="text" name="field" value="Annonceur, Ville, Date de depart" style="text-align:center;" onClick="javascript:this.value=''"/>
@@ -35,11 +35,11 @@
   		<td style="width : 100px;">${annonces.get(i).monTrajet.dateDepart?.format('dd/MM/yyyy')}</td>
   		<td style="width : 100px;">${annonces.get(i).monTrajet.dateDepart?.getHours()}:${annonces.get(i).monTrajet.dateDepart?.getMinutes()}</td>
   		<td style="width : 147px;">${annonces.get(i).tarifParPersonne}&euro;</td>
-  		<td style="width: 80px;"><a href="@{Annonces.details(annonces.get(i).id)}">D&eacute;tails</a></td>
+  		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(annonces.get(i).id)}">D&eacute;tails</a></td>
   		
   	</tr> 
   #{/list} 
   
   
 </table><br/>
-<a href="@{Annonces.creation()}">Proposer une annonce</a>
+<a class="submit" style="margin-left:20px;" href="@{Annonces.creation()}">Proposer une annonce</a>
