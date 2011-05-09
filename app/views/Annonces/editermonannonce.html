@@ -31,12 +31,12 @@
 		<div id="tarif-slider" style="margin-left: 150px; margin-top: 27px; width: 280px;"></div>
 	<p>
 	<p> 
-		<label for="dateDepart">Date de depart</label>
+		<label for="dateDepart">Date de d&eacute;part</label>
 		<input id="datepicker" type="text" name="date" value="${annonce.monTrajet.dateDepart.format('dd/MM/yyyy')}"/>
 	</p>
 	<p> 
-		<label for="heureDepart">Heure de depart</label>
-		<input id="heureDepart" type="text" name="heure" value="${annonce.monTrajet.dateDepart.format('mm:hh')}" />
+		<label for="heureDepart">Heure de d&eacute;part</label>
+		<input id="heureDepart" type="text" name="heure" value="${annonce.monTrajet.dateDepart.format('hh:mm')}" />
 	</p>
 	    <input type="submit" value="Sauvegarder" />
 	</p>
@@ -69,7 +69,7 @@
 				$("#tarifTotal").attr("value", $("#tarif-slider").slider("values", 0));
 			}
 		});
-		$("#lbltarif").text('Tarif total - ' + $("#tarif-slider").slider("values", 0) + ' euro');
+		$("#lbltarif").html('Tarif total - ' + $("#tarif-slider").slider("values", 0) + ' &euro;');
 		
 		$('#heureDepart').timepicker({});
 	});
