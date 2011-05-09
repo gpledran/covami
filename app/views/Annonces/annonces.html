@@ -20,7 +20,7 @@
   	
   	
   </tr>
-  #{list 0..annonces.size-1, as:'i' } 
+  #{list items:annonces, as:'annonces' }  
   	#{if couleur == 0}
   		<tr class="tableBody" style="background-color : #C4C4C4">
   		%{couleur = 1}%
@@ -29,17 +29,16 @@
   		<tr class="tableBody" style="background-color : white">
   		%{couleur = 0}%
   	#{/else}
-		<td style="text-align:left;">${annonces.get(i).monUtilisateur.prenom}&nbsp;${annonces.get(i).monUtilisateur.nom}</td>
-  		<td>${annonces.get(i).monTrajet.villeDepart.nom}</td>
-  		<td>${annonces.get(i).monTrajet.villeArrivee.nom}</td>
-  		<td style="width : 100px;">${annonces.get(i).monTrajet.dateDepart?.format('dd/MM/yyyy')}</td>
-  		<td style="width : 100px;">${annonces.get(i).monTrajet.dateDepart?.format('HH:mm')}</td>
-  		<td style="width : 147px;">${annonces.get(i).tarifParPersonne}&euro;</td>
-  		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(annonces.get(i).id)}">D&eacute;tails</a></td>
+		<td style="text-align:left;">${annonces.monUtilisateur.prenom}&nbsp;${annonces.monUtilisateur.nom}</td>
+  		<td>${annonces.monTrajet.villeDepart.nom}</td>
+  		<td>${annonces.monTrajet.villeArrivee.nom}</td>
+  		<td style="width : 100px;">${annonces.monTrajet.dateDepart?.format('dd/MM/yyyy')}</td>
+  		<td style="width : 100px;">${annonces.monTrajet.dateDepart?.format('HH:mm')}</td>
+  		<td style="width : 147px;">${annonces.tarifParPersonne}&euro;</td>
+  		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(annonces.id)}">D&eacute;tails</a></td>
   		
   	</tr> 
   #{/list} 
   
   
-</table><br/>
-<a class="submit" style="margin-left:20px;" href="@{Annonces.creation()}">Proposer une annonce</a>
+</table>
