@@ -137,15 +137,8 @@ public class Annonces extends Controller {
 
 	public static void recherche(String field) {
 		if (Security.isConnected()) {
-			List<String> s = new ArrayList<String>();
-			StringTokenizer st = new StringTokenizer(field, ", ");
-			while (st.hasMoreTokens()) {
-				s.add(st.nextToken());
-			}
-			List<Annonce> annonces = new ArrayList<Annonce>();
-			// todo
-
-			render(annonces);
+			
+			
 		}
 		render();
 	}
@@ -159,8 +152,8 @@ public class Annonces extends Controller {
 	}
 
 	public static void enregistrerannonce(Annonce annonce,
-			String villeDepart_insee, String villeArrivee_insee,
-			String dateDepart, String heureDepart, String tarifTotal,
+			@Required String villeDepart_insee, @Required String villeArrivee_insee,
+			@Required String dateDepart, @Required String heureDepart, @Required String tarifTotal,
 			List<Ville> etapes) throws ParseException {
 		// validation.valid(annonce);
 		// validation.valid(trajet);
