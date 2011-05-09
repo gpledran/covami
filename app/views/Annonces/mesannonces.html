@@ -28,7 +28,7 @@
   		<td>${mesAnnonces.get(i).monTrajet.villeDepart.nom}</td>
   		<td>${mesAnnonces.get(i).monTrajet.villeArrivee.nom}</td>
   		<td style="width : 100px;">${mesAnnonces.get(i).monTrajet.dateDepart?.format('dd/MM/yyyy')}</td>
-  		<td style="width : 100px;">${mesAnnonces.get(i).monTrajet.dateDepart?.getHours()}:${mesAnnonces.get(i).monTrajet.dateDepart?.getMinutes()}</td>
+  		<td style="width : 100px;">${mesAnnonces.get(i).monTrajet.dateDepart?.format('HH:mm')}</td>
   		<td style="width : 147px;">${mesAnnonces.get(i).tarifParPersonne}&euro;</td>
   		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(mesAnnonces.get(i).id)}">D&eacute;tails</a></td>
   		

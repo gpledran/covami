@@ -62,7 +62,7 @@
 			step: 1,
 			value: ${annonce.tarifParPersonne},
 			slide: function(event, ui) {
-				$("#lbltarif").text('Tarif total - ' + ui.value + ' euro');
+				$("#lbltarif").html('Tarif total - ' + ui.value + ' &euro;');
 			},
 			change: function(event, ui) {
 				// Pour le champs input hidden

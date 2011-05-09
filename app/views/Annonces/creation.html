@@ -33,17 +33,18 @@
 		</select> 
 	</p> 
 	<p> 
-		<label for="dateDepart">Date de depart</label>
-
-		<input id="datepicker" type="text" name="dateDepart" value=""/>
 		<label for="tarifTotal" id="lbltarif"></label>
-		<input type="hidden" id="tarifTotal" name="tarifTotal" value="50" />
-
+		<input type="hidden" id="tarifTotal" name="annonce.tarifParPersonne" value="${annonce.tarifParPersonne}" />
+	</p>
+		<div id="tarif-slider" style="margin-left: 150px; margin-top: 27px; width: 280px;"></div>
+	<p> 
+		<label for="dateDepart">Date de d&eacute;part</label>
+		<input id="datepicker" type="text" name="dateDepart" value=""/>
 	</p>
 		<div id="tarif-slider" style="margin-left: 150px; margin-top: 27px; width: 280px;"></div>
 	<p>
 	<p> 
-		<label for="heureDepart">Heure de depart</label>
+		<label for="heureDepart">Heure de d&eacute;part</label>
 		<input id="heureDepart" type="text" name="heureDepart" value="" />
 	</p>
 
@@ -81,14 +82,14 @@
 			step: 1,
 			value: 50,
 			slide: function(event, ui) {
-				$("#lbltarif").text('Tarif total - ' + ui.value + ' euro');
+				$("#lbltarif").html('Tarif total - ' + ui.value + ' &euro;');
 			},
 			change: function(event, ui) {
 				// Pour le champs input hidden
 				$("#tarifTotal").attr("value", $("#tarif-slider").slider("values", 0));
 			}
 		});
-		$("#lbltarif").text('Tarif total - ' + $("#tarif-slider").slider("values", 0) + ' euro');
+		$("#lbltarif").html('Tarif total - ' + $("#tarif-slider").slider("values", 0) + ' &euro;');
 		
 		$('#heureDepart').timepicker({});
 	});
