@@ -151,7 +151,7 @@ public class Annonces extends Controller {
 		render();
 	}
 
-	public static void creation(Annonce annonce, Trajet trajet) {
+	public static void creation(Annonce annonce) {
 		if (Security.isConnected()) {
 			List<Ville> lesVilles = Ville.find("ORDER BY nom").fetch();
 			render(annonce, lesVilles);
@@ -163,39 +163,39 @@ public class Annonces extends Controller {
 			@Required String villeDepart_insee, @Required String villeArrivee_insee,
 			@Required String dateDepart, @Required String heureDepart, @Required String tarifTotal,
 			List<Ville> etapes) throws ParseException {
-		// validation.valid(annonce);
-		// validation.valid(trajet);
+		 
+		validation.valid(dateDepart);
+		validation.valid(heureDepart);
 
-		/*
-		 * if (validation.hasErrors()) {
-		 * 
-		 * params.flash();
-		 * 
-		 * validation.keep(); creation(annonce, trajet); }else{
-		 */
-		// System.out.println("test creation 2");
+		
+		if (validation.hasErrors()) {
+	  
+		  params.flash();
+		  validation.keep(); 
+		  creation(annonce);
+		}else{
 
-		Ville villeDepart = Ville.find("byCodeInsee", villeDepart_insee)
-				.first();
-		Ville villeArrivee = Ville.find("byCodeInsee", villeArrivee_insee)
-				.first();
+			Ville villeDepart = Ville.find("byCodeInsee", villeDepart_insee)
+					.first();
+			Ville villeArrivee = Ville.find("byCodeInsee", villeArrivee_insee)
+					.first();
+	
+			Date madate = retournerDate(dateDepart, heureDepart);
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+			dateFormat.format(madate);
+	
+			Trajet monTrajet = new Trajet(madate, villeDepart, villeArrivee, etapes);
+			annonce.monTrajet = monTrajet;
+			annonce.tarifParPersonne = Integer.parseInt(tarifTotal);
+			annonce.monUtilisateur = Utilisateur.find("byEmail",
+					Security.connected()).first();
+	
+			monTrajet.save();
+			annonce.save();
+	
+			flash.success("Annonce enregistrée");
+			mesannonces();
 
-		Date madate = retournerDate(dateDepart, heureDepart);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-		dateFormat.format(madate);
-
-		Trajet monTrajet = new Trajet(madate, villeDepart, villeArrivee, etapes);
-		annonce.monTrajet = monTrajet;
-		annonce.tarifParPersonne = Integer.parseInt(tarifTotal);
-		annonce.monUtilisateur = Utilisateur.find("byEmail",
-				Security.connected()).first();
-
-		monTrajet.save();
-		annonce.save();
-
-		flash.success("Annonce enregistrée");
-		mesannonces();
-
+		}
 	}
-
 }
