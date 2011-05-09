@@ -10,11 +10,8 @@
 <form action="@{Annonces.enregistrerannonce()}" method="POST">
 	<input type="hidden" name="annonce.id" value="${annonce.id}" />
 	<p> 
-
 		<label for="villeDepart_insee">Ville de d&eacute;part</label> 
 		<select name="villeDepart_insee" style="width:280px;">
-
-
 			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 
 				<option value="${ville.codeInsee}">${ville.nom}</option>
@@ -24,8 +21,6 @@
 	<p> 
 		<label for="villeArrivee_insee">Ville d'arriv&eacute;e</label> 
 		<select name="villeArrivee_insee" style="width:280px;">
-		
-
 			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 
 				<option value="${ville.codeInsee}">${ville.nom}</option>
@@ -35,20 +30,17 @@
 	<p> 
 		<label for="tarifTotal" id="lbltarif"></label>
 		<input type="hidden" id="tarifTotal" name="annonce.tarifParPersonne" value="${annonce.tarifParPersonne}" />
-		<span class="error">#{error 'annonce.tarifParPersonne' /}</span>
+		
 	</p>
 		<div id="tarif-slider" style="margin-left: 150px; margin-top: 27px; width: 280px;"></div>
 	<p> 
 		<label for="dateDepart">Date de d&eacute;part</label>
 		<input id="datepicker" type="text" name="dateDepart" value=""/>
-		<span class="error">#{error 'date' /}</span>
-	</p>
-		<div id="tarif-slider" style="margin-left: 150px; margin-top: 27px; width: 280px;"></div>
-	<p>
+		<span class="error">#{error 'dateDepart' /}</span>
 	<p> 
 		<label for="heureDepart">Heure de d&eacute;part</label>
 		<input id="heureDepart" type="text" name="heureDepart" value="" />
-		<span class="error">#{error 'heure' /}</span>
+		<span class="error">#{error 'heureDepart' /}</span>
 	</p>
 
 	<p> 

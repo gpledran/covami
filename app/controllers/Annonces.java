@@ -6,6 +6,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -50,11 +51,15 @@ public class Annonces extends Controller {
 	}
 
 	public static void annonces() {
+
 		if (Security.isConnected()) {
+		
+			
 			List<Annonce> annonces = Annonce.findAll();
+			
 			flash.clear();
 			renderArgs.put("annonces", annonces);
-
+			
 		}
 		render();
 	}
@@ -145,9 +150,21 @@ public class Annonces extends Controller {
 
 	public static void recherche(String field) {
 		if (Security.isConnected()) {
+			List<Annonce> pAnnonces = new ArrayList<Annonce>();
+			field = "%"+field+"%";
+			List<Utilisateur> utilisateurs = Utilisateur.find("nom like ? or prenom like ?", field, field).fetch();
+
+			for(Utilisateur u : utilisateurs){
+				List<Annonce> l = Annonce.find("byMonUtilisateur_id",u.id).fetch();
+				for (Annonce a : l) {
+					pAnnonces.add(a);
+				}
+			}
 			
-			
+			renderArgs.put("annonces", pAnnonces);
+			renderTemplate("Annonces/annonces.html");
 		}
+		
 		render();
 	}
 
@@ -161,20 +178,20 @@ public class Annonces extends Controller {
 
 	public static void enregistrerannonce(Annonce annonce,
 			@Required String villeDepart_insee, @Required String villeArrivee_insee,
-			@Required String dateDepart, @Required String heureDepart, @Required String tarifTotal,
+			@Required String dateDepart, @Required String heureDepart, String tarifTotal,
 			List<Ville> etapes) throws ParseException {
 		 
 		validation.valid(dateDepart);
 		validation.valid(heureDepart);
-
-		
+		//validation.valid(villeDepart_insee);
+		//validation.valid(villeArrivee_insee);
+	
 		if (validation.hasErrors()) {
-	  
 		  params.flash();
 		  validation.keep(); 
 		  creation(annonce);
 		}else{
-
+			System.out.println("le programme est passé ici");
 			Ville villeDepart = Ville.find("byCodeInsee", villeDepart_insee)
 					.first();
 			Ville villeArrivee = Ville.find("byCodeInsee", villeArrivee_insee)
