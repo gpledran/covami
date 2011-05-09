@@ -52,6 +52,7 @@ public class Bootstrap extends Job {
 		// Sert à savoir si le champs parser est le nom (le premier champs d'une
 		// ligne)
 		String autoroute = "";
+		String ville_precedente = "";
 		try {
 			BufferedReader fichier = new BufferedReader(new FileReader(
 					"/home/philippe/covami_workspace/covami/public/csv/autoroutes.csv"));
@@ -59,15 +60,32 @@ public class Bootstrap extends Job {
 			while ((chaine = fichier.readLine()) != null) {
 				StringTokenizer st = new StringTokenizer(chaine, ";");
 				while (st.hasMoreTokens()) {
+					
 					if (autoroute == "") {
 						// Si c'est le premier champs, c'est le nom de
 						// l'autoroute
 						autoroute = st.nextToken();
+						//premier tronçon
+						Ville actuelle = Ville.find("byCodeInsee", st.nextToken())
+						.first();
+						
+						Ville suivante = Ville.find("byCodeInsee", st.nextToken())
+								.first();
+						(new Troncon(autoroute, suivante, actuelle, distanceVolOiseau(actuelle, suivante))).save();
+						ville_precedente = suivante.codeInsee;
+						
 					} else {
 						// Sinon c'est la ville à ajouter à un nouveau tronçon
-						Ville v = Ville.find("byCodeInsee", st.nextToken())
+						Ville actuelle = Ville.find("byCodeInsee", ville_precedente)
+						.first();
+						
+						Ville suivante = Ville.find("byCodeInsee", st.nextToken())
 								.first();
-						(new Troncon(autoroute, v, 0, 0)).save();
+						
+						ville_precedente = suivante.codeInsee;
+						(new Troncon(autoroute, suivante, actuelle, distanceVolOiseau(actuelle, suivante))).save();
+						
+						
 					}
 				}
 				// Reaffectation la var à null pour la prochaine ligne
@@ -77,5 +95,11 @@ public class Bootstrap extends Job {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public double distanceVolOiseau(Ville a , Ville b){
+		return 6367445*Math.acos(Math.sin(Math.PI*a.latitude/180)//6367445 = rayon de la terre
+				*Math.sin(Math.PI*b.latitude/180)+Math.cos(Math.PI*a.latitude/180)
+				*Math.cos(Math.PI*b.latitude/180)
+				*Math.cos((Math.PI*a.longitude/180)-(Math.PI*b.longitude/180)))/1000;
 	}
 }

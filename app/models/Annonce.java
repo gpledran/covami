@@ -25,4 +25,8 @@ public class Annonce extends Model {
 		this.monUtilisateur = monUtilisateur;
 		this.monTrajet = monTrajet;
 	}
+	
+	public int calculerTarifTotal(){
+		return 0;
+	}
 }

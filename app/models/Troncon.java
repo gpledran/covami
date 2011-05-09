@@ -18,16 +18,18 @@ public class Troncon extends Model {
 	public Ville villeSuivante;
 
 	@Required
-	public int tarif;
+	@OneToOne
+	public Ville villeActuelle;
 
 	@Required
-	public int nbKms;
+	public double nbKms;
 
-	public Troncon(String nomAutoroute, Ville villeSuivante, int tarif,
-			int nbKms) {
+	public Troncon(String nomAutoroute, Ville villeSuivante, Ville villeActuelle,
+			double nbKms) {
 		this.nomAutoroute = nomAutoroute;
+		this.villeActuelle = villeActuelle;
 		this.villeSuivante = villeSuivante;
-		this.tarif = tarif;
+		
 		this.nbKms = nbKms;
 	}
 
