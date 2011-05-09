@@ -139,10 +139,11 @@ public class Annonces extends Controller {
 			Annonce annonce = Annonce.find("byId", id_annonce).first();
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 					.first();
+			//System.out.println("tariftotal "+annonce.calculerTarifTotal());
 			renderArgs.put("moi", moi);
 			renderArgs.put("annonce", annonce);
 			renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
-
+			
 		}
 		render();
 	}
@@ -211,6 +212,7 @@ public class Annonces extends Controller {
 
 			monTrajet.save();
 			annonce.save();
+			
 
 			flash.success("Annonce enregistrée");
 			mesannonces();
