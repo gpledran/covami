@@ -10,8 +10,11 @@
 <form action="@{Annonces.enregistrerannonce()}" method="POST">
 	<input type="hidden" name="annonce.id" value="${annonce.id}" />
 	<p> 
+
 		<label for="villeDepart_insee">Ville de d&eacute;part</label> 
-		<select name="villeDepart_insee">
+		<select name="villeDepart_insee" style="width:280px;">
+
+
 			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 
 				<option value="${ville.codeInsee}">${ville.nom}</option>
@@ -20,7 +23,9 @@
 	</p> 
 	<p> 
 		<label for="villeArrivee_insee">Ville d'arriv&eacute;e</label> 
-		<select name="villeArrivee_insee">
+		<select name="villeArrivee_insee" style="width:280px;">
+		
+
 			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 
 				<option value="${ville.codeInsee}">${ville.nom}</option>
@@ -28,19 +33,30 @@
 		</select> 
 	</p> 
 	<p> 
+		<label for="dateDepart">Date de depart</label>
+
+		<input id="datepicker" type="text" name="dateDepart" value=""/>
 		<label for="tarifTotal" id="lbltarif"></label>
 		<input type="hidden" id="tarifTotal" name="tarifTotal" value="50" />
+
 	</p>
 		<div id="tarif-slider" style="margin-left: 150px; margin-top: 27px; width: 280px;"></div>
 	<p>
 	<p> 
-		<label for="dateDepart">Date de depart</label>
-		<input id="datepicker" type="text" name="dateDepart" value=""/>
-	</p>
-	<p> 
 		<label for="heureDepart">Heure de depart</label>
 		<input id="heureDepart" type="text" name="heureDepart" value="" />
 	</p>
+
+	<p> 
+		<label for="etapes">Escales</label>
+		<select name="etapes" style="width:280px;">
+			<option value="-">------</option>
+			#{list items:lesVilles, as:'ville' } 
+				<option value="${ville.codeInsee}">${ville.nom}</option>
+			#{/list}
+		</select> 
+	</p>
+	<p>
 	    <input type="submit" value="Créer annonce" />
 	</p>
 </form>
