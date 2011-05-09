@@ -161,6 +161,7 @@ public class Annonces extends Controller {
 					pAnnonces.add(a);
 				}
 			}
+			
 
 			renderArgs.put("annonces", pAnnonces);
 			renderTemplate("Annonces/annonces.html");
@@ -215,5 +216,14 @@ public class Annonces extends Controller {
 			mesannonces();
 
 		}
+	}
+	
+	
+	public static List<Ville> chercherchemin(Annonce annonce){
+		List <Ville> trajet = new ArrayList<Ville>();
+		if(!annonce.monTrajet.villeDepart.equals(annonce.monTrajet.villeArrivee)){
+			//todo
+		}
+		return trajet;
 	}
 }
