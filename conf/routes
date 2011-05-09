@@ -24,6 +24,9 @@ GET		/mesannonces							Annonces.mesannonces
 GET		/monannonce/editer/{id_annonce}			Annonces.editermonannonce
 POST	/monannonce/sauvegarder					Annonces.sauvegardermonannonce
 
+# Carte page
+GET		/carte									Carte.affichercarte
+
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
