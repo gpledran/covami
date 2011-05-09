@@ -27,16 +27,19 @@
 	<p> 
 		<label for="tarifTotal" id="lbltarif"></label>
 		<input type="hidden" id="tarifTotal" name="annonce.tarifParPersonne" value="${annonce.tarifParPersonne}" />
+		<span class="error">#{error 'annonce.tarifParPersonne' /}</span>
 	</p>
 		<div id="tarif-slider" style="margin-left: 150px; margin-top: 27px; width: 280px;"></div>
 	<p>
 	<p> 
 		<label for="dateDepart">Date de d&eacute;part</label>
 		<input id="datepicker" type="text" name="date" value="${annonce.monTrajet.dateDepart.format('dd/MM/yyyy')}"/>
+		<span class="error">#{error 'date' /}</span>
 	</p>
 	<p> 
 		<label for="heureDepart">Heure de d&eacute;part</label>
 		<input id="heureDepart" type="text" name="heure" value="${annonce.monTrajet.dateDepart.format('hh:mm')}" />
+		<span class="error">#{error 'heure' /}</span>
 	</p>
 	    <input type="submit" value="Sauvegarder" />
 	</p>

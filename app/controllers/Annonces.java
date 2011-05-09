@@ -79,7 +79,6 @@ public class Annonces extends Controller {
 			renderArgs.put("annonce", annonce);
 			renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
 			renderArgs.put("lesVilles", lesVilles);
-
 		}
 		render();
 	}
@@ -107,19 +106,28 @@ public class Annonces extends Controller {
 	}
 
 	public static void sauvegardermonannonce(Annonce annonce, Long depart,
-			Long arrivee, String date, String heure) throws ParseException {
+			Long arrivee, @Required String date, @Required String heure)
+			throws ParseException {
 		// Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 		// .first();
-		annonce.monTrajet.villeDepart = Ville.findById(arrivee);
-		annonce.monTrajet.villeArrivee = Ville.findById(depart);
-		annonce.monTrajet.dateDepart = retournerDate(date, heure);
+		validation.valid(date);
+		validation.valid(heure);
+		if (validation.hasErrors()) {
+			params.flash();
+			validation.keep();
+			editermonannonce(annonce.id);
+		} else {
+			annonce.monTrajet.villeDepart = Ville.findById(arrivee);
+			annonce.monTrajet.villeArrivee = Ville.findById(depart);
+			annonce.monTrajet.dateDepart = retournerDate(date, heure);
 
-		annonce.monTrajet.save();
-		annonce.save();
-		flash.success("Sauvegarde réussie");
-		// List<Annonce> mesAnnonces = Annonce.find("byMonUtilisateur", moi)
-		// .fetch();
-		mesannonces();
+			annonce.monTrajet.save();
+			annonce.save();
+			flash.success("Sauvegarde réussie");
+			// List<Annonce> mesAnnonces = Annonce.find("byMonUtilisateur", moi)
+			// .fetch();
+			mesannonces();
+		}
 	}
 
 	public static void details(long id_annonce) {
