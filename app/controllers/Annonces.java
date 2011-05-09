@@ -100,9 +100,14 @@ public class Annonces extends Controller {
 			tabDate[i] = stH.nextToken();
 			i++;
 		}
-		annonce.monTrajet.dateDepart = new Date(Integer.parseInt(tabDate[2]),
-				Integer.parseInt(tabDate[1]), Integer.parseInt(tabDate[0]),
+		annonce.monTrajet.dateDepart = new Date(
+				Integer.parseInt(tabDate[2]) - 1900,
+				Integer.parseInt(tabDate[1]) - 1, Integer.parseInt(tabDate[0]),
 				Integer.parseInt(tabDate[3]), Integer.parseInt(tabDate[4]));
+		// annonce.monTrajet.dateDepart = new SimpleDateFormat(DateFormat)
+		// (tabDate[2] + "-"
+		// + tabDate[1] + "-" + tabDate[0] + " " + tabDate[3] + ":" +
+		// tabDate[4]);
 		annonce.monTrajet.save();
 		annonce.save();
 		flash.success("Sauvegarde réussie");
