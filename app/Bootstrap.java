@@ -15,6 +15,7 @@ public class Bootstrap extends Job {
 
 	@SuppressWarnings("deprecation")
 	public void doJob() {
+		(new Pays("France")).save();
 		if (Ville.count() == 0) {
 			initialiserVilles();
 		}
