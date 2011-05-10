@@ -45,10 +45,12 @@
 		<label for="escales">Mes escales</label>
 	</p>
 		<div id="escales">
-			testest
+			&nbsp;
 		</div>
 	<p>
-	    <input type="submit" value="Sauvegarder" />
+		<input id="mesAnciennesEtapes" name="annonce.monTrajet.mesEtapes" value="${annonce?.monTrajet?.mesEtapes.id}" type="hidden"/>
+		<input id="mesEscales" name="mesEscales" type="hidden" />
+	    <input id="submit" type="submit" value="Sauvegarder" />
 	</p>
 </form>
 
@@ -64,6 +66,15 @@
 				autoSize: true,
 				minDate: '0'
 			});
+			
+			var dep = $("#villeDepart option:selected").val();
+			var arr = $("#villeArrivee option:selected").val();
+			if (dep != "-" && arr != "-") {
+				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee') /}
+				$('#escales').load(
+					listeEscales({depart: dep, arrivee: arr})
+				)			
+			}
 		});
 		
 		$("#tarif-slider").slider({
@@ -84,10 +95,23 @@
 		$('#heureDepart').timepicker({});
 		
 		$(".etape").change(function() {
-			var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee') /}
-			$('#escales').load(
-				listeEscales({depart: $('#villeDepart').val(), arrivee: $('#villeArrivee').val()})
-			)
+			var dep = $("#villeDepart option:selected").val();
+			var arr = $("#villeArrivee option:selected").val();
+			var anciennes = ${annonce?.monTrajet?.mesEtapes.id};
+			if (dep != "-" && arr != "-") {
+				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee', ':mesAnciennesEtapes') /}
+				$('#escales').load(
+					listeEscales({depart: dep, arrivee: arr, mesAnciennesEtapes: anciennes})
+				)			
+			}
+		});
+		
+		$("#submit").click(function() {
+			var mesetapes = "";
+			$(".lesetapes:checkbox:checked").each(function(i) {
+				mesetapes += $(this).val() + " ";
+			});
+			$("#mesEscales").val(mesetapes);
 		});
 		
 	});

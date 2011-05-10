@@ -112,8 +112,8 @@ public class Annonces extends Controller {
 	}
 
 	public static void sauvegardermonannonce(Annonce annonce, Long depart,
-			Long arrivee, @Required String date, @Required String heure)
-			throws ParseException {
+			Long arrivee, @Required String date, @Required String heure,
+			String mesEscales) throws ParseException {
 		// Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 		// .first();
 		validation.valid(date);
@@ -123,10 +123,19 @@ public class Annonces extends Controller {
 			validation.keep();
 			editermonannonce(annonce.id);
 		} else {
-			annonce.monTrajet.villeDepart = Ville.findById(arrivee);
-			annonce.monTrajet.villeArrivee = Ville.findById(depart);
+			annonce.monTrajet.villeDepart = Ville.findById(depart);
+			annonce.monTrajet.villeArrivee = Ville.findById(arrivee);
 			annonce.monTrajet.dateDepart = retournerDate(date, heure);
 
+			List<Ville> etapes = new ArrayList<Ville>();
+			StringTokenizer st = new StringTokenizer(mesEscales, " ");
+			while (st.hasMoreTokens()) {
+				Ville v = Ville.findById(Long.parseLong(st.nextToken()));
+				etapes.add(v);
+			}
+
+			annonce.monTrajet.mesEtapes.clear();
+			annonce.monTrajet.mesEtapes = etapes;
 			annonce.monTrajet.save();
 			annonce.save();
 			flash.success("Sauvegarde réussie");
@@ -181,29 +190,30 @@ public class Annonces extends Controller {
 	}
 
 	public static void enregistrerannonce(Annonce annonce,
-			@Required String villeDepart_insee,
-			@Required String villeArrivee_insee, @Required String dateDepart,
-			@Required String heureDepart, List<Ville> etapes)
-			throws ParseException {
+			@Required Long depart, @Required Long arrivee,
+			@Required String dateDepart, @Required String heureDepart,
+			String mesEscales) throws ParseException {
 
 		validation.valid(dateDepart);
 		validation.valid(heureDepart);
-		// validation.valid(villeDepart_insee);
-		// validation.valid(villeArrivee_insee);
-
 		if (validation.hasErrors()) {
 			params.flash();
 			validation.keep();
 			creation(annonce);
 		} else {
-			Ville villeDepart = Ville.find("byCodeInsee", villeDepart_insee)
-					.first();
-			Ville villeArrivee = Ville.find("byCodeInsee", villeArrivee_insee)
-					.first();
+			Ville villeDepart = Ville.findById(depart);
+			Ville villeArrivee = Ville.findById(arrivee);
 
 			Date madate = retournerDate(dateDepart, heureDepart);
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 			dateFormat.format(madate);
+
+			List<Ville> etapes = new ArrayList<Ville>();
+			StringTokenizer st = new StringTokenizer(mesEscales, " ");
+			while (st.hasMoreTokens()) {
+				Ville v = Ville.findById(Long.parseLong(st.nextToken()));
+				etapes.add(v);
+			}
 
 			Trajet monTrajet = new Trajet(madate, villeDepart, villeArrivee,
 					etapes);
@@ -220,15 +230,9 @@ public class Annonces extends Controller {
 		}
 	}
 
-	public static void chercheretapes(Long depart, Long arrivee) {
-		// Ville villeDepart = Ville.findById(depart);
-		// mesEtapes.add(villeDepart);
-		//
-		// Ville villeArrivee = Ville.findById(arrivee);
-		// mesEtapes.add(villeArrivee);
-
-		// System.out.println(depart + "test" + arrivee);
-
+	public static void chercheretapes(Long depart, Long arrivee,
+			List<Long> mesAnciennesEtapes) {
+		System.out.println(mesAnciennesEtapes);
 		// Création d'une liste de noeud AStar temporaire
 		ArrayList<Noeud> fileAStar = new ArrayList<Noeud>();
 		// Création de la liste des étapes
@@ -238,13 +242,8 @@ public class Annonces extends Controller {
 		Ville villeArrivee = Ville.findById(arrivee);
 		// Recupération des troncons
 		List<Troncon> lesTroncons = Troncon.find("").fetch();
-		for (Troncon t : lesTroncons) {
-			System.out.println("Ville actuelle : " + t.villeActuelle.nom
-					+ " Ville suivante : " + t.villeSuivante.nom);
-		}
 
 		if (depart != arrivee) {
-			System.out.println("====================================> Depart");
 			Noeud n = new Noeud(villeDepart,
 					villeDepart.calculerDistanceVers(villeArrivee), 0, null);
 			Noeud.insererNoeudHeuristique(n, fileAStar);
@@ -255,12 +254,8 @@ public class Annonces extends Controller {
 				lesTroncons.clear();
 				lesTroncons = Troncon.find("byVilleActuelle", nP.getVille())
 						.fetch();
-				System.out.println("========= Ville actuelle");
-				System.out.println(nP.getVille().nom);
-				System.out.println("========= Tronçons");
 				for (Troncon t : lesTroncons) {
 					if (t.villeSuivante != nP.getVille()) {
-						System.out.println(t.villeSuivante.nom);
 						Noeud.insererNoeudHeuristique(
 								new Noeud(t.villeSuivante, t.villeSuivante
 										.calculerDistanceVers(villeArrivee)
@@ -284,7 +279,7 @@ public class Annonces extends Controller {
 			mesEtapes.add(villeDepart);
 			mesEtapes.add(villeArrivee);
 		}
-		render(mesEtapes);
+		render(mesEtapes, depart, arrivee, mesAnciennesEtapes);
 	}
 
 	public static List<Ville> chercherchemin(Annonce annonce) {

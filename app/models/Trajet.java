@@ -18,7 +18,7 @@ public class Trajet extends Model {
 	@OneToOne
 	public Ville villeArrivee;
 
-	@OneToMany
+	@ManyToMany
 	public List<Ville> mesEtapes;
 
 	public Trajet(Date dateDepart, Ville villeDepart, Ville villeArrivee,

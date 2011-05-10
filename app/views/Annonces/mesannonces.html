@@ -3,7 +3,7 @@
 %{def couleur = 0}%
 
 <h1>Mes Annonces</h1>
-
+#{if mesAnnonces}
 <table id="tableMesAnnonces">
   <tr class="tableEntete">
   	<td>Annonceur</td>
@@ -12,7 +12,10 @@
   	<td style="width : 100px;">Date depart</td>
   	<td style="width : 100px;">Heure depart</td>
   	<td style="width : 147px;">Tarif total / personne</td>
-  	
+#{/if}
+#{else}
+	<p>Vous n'avez aucune annonce !</p>
+#{/else}	
   	
   </tr>
   #{list items:mesAnnonces, as:'annonce' } 
@@ -24,9 +27,9 @@
   		<tr class="tableBody" style="background-color : white">
   		%{couleur = 0}%
   	#{/else}
-		<td style="text-align:left;">${annonce?.monUtilisateur.prenom}&nbsp;${annonce?.monUtilisateur.nom}</td>
-  		<td>${annonce?.monTrajet.villeDepart.nom}</td>
-  		<td>${annonce?.monTrajet.villeArrivee.nom}</td>
+		<td style="text-align:left;">${annonce?.monUtilisateur?.prenom}&nbsp;${annonce?.monUtilisateur?.nom}</td>
+  		<td>${annonce?.monTrajet?.villeDepart?.nom}</td>
+  		<td>${annonce?.monTrajet?.villeArrivee?.nom}</td>
   		<td style="width : 100px;">${annonce?.monTrajet.dateDepart?.format('dd/MM/yyyy')}</td>
   		<td style="width : 100px;">${annonce?.monTrajet.dateDepart?.format('HH:mm')}</td>
   		<td style="width : 147px;">${annonce?.tarifParPersonne}&euro;</td>

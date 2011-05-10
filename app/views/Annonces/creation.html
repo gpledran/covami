@@ -10,20 +10,20 @@
 <form action="@{Annonces.enregistrerannonce()}" method="POST">
 	<input type="hidden" name="annonce.id" value="${annonce.id}" />
 	<p> 
-		<label for="villeDepart_insee">Ville de d&eacute;part</label> 
-		<select name="villeDepart_insee" style="width:280px;">
+		<label for="depart">Ville de d&eacute;part</label> 
+		<select id="villeDepart" class="etape" name="depart" style="width:280px;">
 			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 
-				<option value="${ville.codeInsee}">${ville.nom}</option>
+				<option value="${ville.id}">${ville.nom}</option>
 			#{/list}
 		</select> 
 	</p> 
 	<p> 
-		<label for="villeArrivee_insee">Ville d'arriv&eacute;e</label> 
-		<select name="villeArrivee_insee" style="width:280px;">
+		<label for="arrivee">Ville d'arriv&eacute;e</label> 
+		<select id="villeArrivee" class="etape" name="arrivee" style="width:280px;">
 			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 
-				<option value="${ville.codeInsee}">${ville.nom}</option>
+				<option value="${ville.id}">${ville.nom}</option>
 			#{/list}
 		</select> 
 	</p> 
@@ -44,18 +44,15 @@
 		<span class="error">#{error 'heureDepart' /}</span>
 	</p>
 
-	<p> 
-		<label for="etapes">Escales</label>
-		<select name="etapes" style="width:280px;">
-			<option value="-">------</option>
-			#{list items:lesVilles, as:'ville' } 
-				<option value="${ville.codeInsee}">${ville.nom}</option>
-			#{/list}
-		</select> 
-		
-	</p>
 	<p>
-	    <input type="submit" value="Créer annonce" />
+		<label for="escales">Mes escales</label>
+	</p>
+		<div id="escales">
+			&nbsp;
+		</div>
+	<p>
+		<input id="mesEscales" name="mesEscales" type="hidden" /> 
+	    <input id="submit" type="submit" value="Créer annonce" />
 	</p>
 </form>
   		
@@ -91,6 +88,23 @@
 		
 		$('#heureDepart').timepicker({});
 		
+		$(".etape").change(function() {
+			var dep = $("#villeDepart option:selected").val();
+			var arr = $("#villeArrivee option:selected").val();
+			if (dep != "-" && arr != "-") {
+				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee') /}
+				$('#escales').load(
+					listeEscales({depart: dep, arrivee: arr})
+				)			
+			}
+		});
 		
+		$("#submit").click(function() {
+			var mesetapes = "";
+			$(".lesetapes:checkbox:checked").each(function(i) {
+				mesetapes += $(this).val() + " ";
+			});
+			$("#mesEscales").val(mesetapes);
+		});
 	});
 </script>

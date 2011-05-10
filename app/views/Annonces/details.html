@@ -20,20 +20,14 @@
 	<span class="nom_label">Ville d'arriv&eacute;e</span>
 	<span class="nom">${annonce.monTrajet.villeArrivee.nom}</span>
 	
-	<span class="nom_label" style="height:30px;">Escales</span>
-	<span class="nom" style="height:30px;">
-		<select style="width : 350px;">
-			
-		%{
-     		for(ville in etapes) { 
-		}%
-		     <option>${ville.nom}</option>
-		%{
-		     }
-		}%
-			
-		</select>
-	</span>&nbsp;	
+	#{if annonce.monTrajet.mesEtapes}
+		<span class="nom_label">Escales</span>
+		<span class="nom">-&nbsp;
+			#{list items: annonce.monTrajet.mesEtapes, as:'etape' } 
+				${etape.nom.capitalizeWords()}&nbsp;-&nbsp;
+	 	 	#{/list}
+ 	 	</span>
+	#{/if}&nbsp;	
 </div>
 <a class="submit" href="javascript:history.back()">Revenir &agrave; la liste</a>
 #{if moi == annonce.monUtilisateur}
