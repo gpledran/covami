@@ -42,51 +42,51 @@ Utilisateur(melina):
 Pays(France):
    nom:                     France
 
-Ville(Nantes):
-    codePostal:             44000
-    latitude:               0
-    longitude:              0
-    nom:                    Nantes
-    monPays:                France
-    codeInsee:              44109
+#Ville(Nantes):
+#    codePostal:             44000
+#    latitude:               0
+#    longitude:              0
+#    nom:                    Nantes
+#    monPays:                France
+#    codeInsee:              44109
     
-Ville(Tours):
-    codePostal:             37000
-    latitude:               0
-    longitude:              0
-    nom:                    Tours
-    monPays:                France
-    codeInsee:              37261
+#Ville(Tours):
+#    codePostal:             37000
+#    latitude:               0
+#    longitude:              0
+#    nom:                    Tours
+#    monPays:                France
+#    codeInsee:              37261
 
-Ville(Angers):
-    codePostal:             49000
-    latitude:               0
-    longitude:              0
-    nom:                    Angers
-    monPays:                France
-    codeInsee:              49007    
+#Ville(Angers):
+#    codePostal:             49000
+#    latitude:               0
+#    longitude:              0
+#    nom:                    Angers
+#    monPays:                France
+#    codeInsee:              49007    
     
-Trajet(toursnantes):
-    villeDepart:            Nantes
-    villeArrivee:           Tours
-    dateDepart:             2010-06-12
+#Trajet(toursnantes):
+#    villeDepart:            Nantes
+#    villeArrivee:           Tours
+#    dateDepart:             2010-06-12
     
-Trajet(angersnantes):
-    villeDepart:            Angers
-    villeArrivee:           Nantes
-    dateDepart:             2010-05-30
+#Trajet(angersnantes):
+#    villeDepart:            Angers
+#    villeArrivee:           Nantes
+#    dateDepart:             2010-05-30
 
-Annonce(annoncephilippe):
-    tarifParPersonne:       5
-    monTrajet:              toursnantes
-    monUtilisateur:         philippe
+#Annonce(annoncephilippe):
+#    tarifParPersonne:       5
+#    monTrajet:              toursnantes
+#    monUtilisateur:         philippe
     
-Annonce(annoncegaud):
-   tarifParPersonne:        7
-   monTrajet:               toursnantes
-   monUtilisateur:          gauderic
+#Annonce(annoncegaud):
+#   tarifParPersonne:        7
+#   monTrajet:               toursnantes
+#   monUtilisateur:          gauderic
 
-Annonce(annoncemelina):
-   tarifParPersonne:        3
-   monTrajet:               angersnantes
-   monUtilisateur:          melina
+#Annonce(annoncemelina):
+#   tarifParPersonne:        3
+#   monTrajet:               angersnantes
+#   monUtilisateur:          melina

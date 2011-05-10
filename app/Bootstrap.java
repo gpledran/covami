@@ -65,13 +65,18 @@ public class Bootstrap extends Job {
 						// Si c'est le premier champs, c'est le nom de
 						// l'autoroute
 						autoroute = st.nextToken();
-						//premier tronçon
-						Ville actuelle = Ville.find("byCodeInsee", st.nextToken())
-						.first();
-						
-						Ville suivante = Ville.find("byCodeInsee", st.nextToken())
-								.first();
-						(new Troncon(autoroute, suivante, actuelle, distanceVolOiseau(actuelle, suivante))).save();
+
+						// premier tronçon
+						Ville actuelle = Ville.find("byCodeInsee",
+								st.nextToken()).first();
+
+						Ville suivante = Ville.find("byCodeInsee",
+								st.nextToken()).first();
+						(new Troncon(autoroute, suivante, actuelle,
+								distanceVolOiseau(actuelle, suivante))).save();
+						(new Troncon(autoroute, actuelle, suivante,
+								distanceVolOiseau(actuelle, suivante))).save();
+
 						ville_precedente = suivante.codeInsee;
 						
 					} else {
@@ -82,10 +87,12 @@ public class Bootstrap extends Job {
 						Ville suivante = Ville.find("byCodeInsee", st.nextToken())
 								.first();
 						
-						ville_precedente = suivante.codeInsee;
-						(new Troncon(autoroute, suivante, actuelle, distanceVolOiseau(actuelle, suivante))).save();
-						
-						
+
+						(new Troncon(autoroute, suivante, actuelle,
+								distanceVolOiseau(actuelle, suivante))).save();
+						(new Troncon(autoroute, actuelle, suivante,
+								distanceVolOiseau(actuelle, suivante))).save();
+
 					}
 				}
 				// Reaffectation la var à null pour la prochaine ligne
