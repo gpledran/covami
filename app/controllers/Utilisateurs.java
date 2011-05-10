@@ -35,6 +35,11 @@ public class Utilisateurs extends Controller {
 			Utilisateur user = Utilisateur
 					.find("byEmail", Security.connected()).first();
 			int nbDemandes = user.mesDemandes.size();
+			
+			List<Annonce> mesAnnonces = Annonce.find("byMonUtilisateur_id", user.id).fetch();
+			for(Annonce a : mesAnnonces){
+				nbDemandes += a.mesDemandePassagers.size();
+			}
 			renderArgs.put("nbDemandes", nbDemandes);
 		}
 	}
@@ -239,7 +244,24 @@ public class Utilisateurs extends Controller {
 		}
 		render();
 	}
+	
+	public static void mescovoiturages(){
+		if (Security.isConnected()) {
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			List<Annonce> annonces = Annonce.findAll();
+			List<Annonce> mescovoiturages = new ArrayList<Annonce>();
+			for(Annonce a : annonces){
+				if(a.mesPassagers.contains(moi)){
+					mescovoiturages.add(a);
+				}
+			}
+			flash.clear();
+			render(mescovoiturages);
 
+		}
+		render();
+	}
 	public static void envoyerdemande(Long id) {
 		if (Security.isConnected()) {
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
@@ -251,18 +273,20 @@ public class Utilisateurs extends Controller {
 			Application.index();
 		}
 	}
-
+	// mes demande ami + participation annonce
 	public static void mesdemandes() {
 		if (Security.isConnected()) {
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 					.first();
 			List<Utilisateur> mesDemandes = moi.mesDemandes;
+			List<Annonce> mesAnnonces = Annonce.find("byMonUtilisateur_id", moi.id).fetch();
+			
 			flash.clear();
-			render(mesDemandes);
+			render(mesDemandes, mesAnnonces);
 		}
 		render();
 	}
-
+	
 	public static void accepterdemande(Long id) {
 		if (Security.isConnected()) {
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
@@ -275,6 +299,40 @@ public class Utilisateurs extends Controller {
 			ami.save();
 			flash.success("Ami ajouté avec succès.");
 			mesamis();
+		}
+		render();
+	}
+	
+	public static void accepterDemandeAnnonce(Long id, long annonce_id) {
+		if (Security.isConnected()) {
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			Annonce monAnnonce = Annonce.findById(annonce_id);
+			
+			Utilisateur passager = Utilisateur.findById(id);
+			
+			monAnnonce.mesPassagers.add(passager);
+			
+			monAnnonce.mesDemandePassagers.remove(passager);
+			monAnnonce.save();
+			flash.success("Passager accepté");
+			mesdemandes();
+		}
+		render();
+	}
+	
+	public static void refuserDemandeAnnonce(Long id, long annonce_id) {
+		if (Security.isConnected()) {
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+			.first();
+			Annonce monAnnonce = Annonce.findById(annonce_id);
+			
+			Utilisateur passager = Utilisateur.findById(id);
+			
+			monAnnonce.mesDemandePassagers.remove(passager);
+			monAnnonce.save();
+			flash.success("Passager refusé");
+			mesdemandes();
 		}
 		render();
 	}

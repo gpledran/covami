@@ -140,9 +140,22 @@ public class Annonces extends Controller {
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 					.first();
 			//System.out.println("tariftotal "+annonce.calculerTarifTotal());
+			boolean dejaenvoye = false;
+			for(Utilisateur a : annonce.mesDemandePassagers){
+				System.out.println("test");
+				System.out.println(a.nom);
+			}
+			System.out.println(annonce.mesDemandePassagers.size());
+			if(annonce.mesDemandePassagers.contains(moi)){
+				
+				dejaenvoye = true;
+			}
+			
 			renderArgs.put("moi", moi);
+			renderArgs.put("dejaenvoye", dejaenvoye);
 			renderArgs.put("annonce", annonce);
 			renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
+			
 			
 		}
 		render();
@@ -220,6 +233,15 @@ public class Annonces extends Controller {
 		}
 	}
 	
+	public static void demandeparticipation(long id){
+		Annonce annonce = Annonce.find("byId",id).first();
+		Utilisateur passager = Utilisateur.find("byEmail", Security.connected()).first();
+		annonce.mesDemandePassagers.add(passager);
+		annonce.save();
+		flash.success("Demande envoyée");
+		details(id);
+		
+	}
 	
 	public static List<Ville> chercherchemin(Annonce annonce){
 		List <Ville> trajet = new ArrayList<Ville>();
