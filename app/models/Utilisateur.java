@@ -50,7 +50,7 @@ public class Utilisateur extends Model {
 	@OneToMany
 	public List<Utilisateur> mesAmis;
 
-	@OneToMany
+	@ManyToMany
 	@JoinTable(name = "DemandeEnAttente")
 	public List<Utilisateur> mesDemandes;
 

@@ -13,13 +13,13 @@ import play.data.validation.*;
 public class DemandeEnAttente extends Model {
 
 	@Required
-	public Long demandeur_id;
+	public Long Utilisateur_id;
 
 	@Required
-	public Long receveur_id;
+	public Long mesDemandes_id;
 
 	public DemandeEnAttente(Long demandeur_id, Long receveur_id) {
-		this.demandeur_id = demandeur_id;
-		this.receveur_id = receveur_id;
+		this.Utilisateur_id = demandeur_id;
+		this.mesDemandes_id = receveur_id;
 	}
 }
