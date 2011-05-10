@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.codehaus.groovy.runtime.ConvertedClosure;
 import com.sun.jmx.snmp.Timestamp;
 
 import models.Trajet;
+import models.Troncon;
 import models.Utilisateur;
 import models.Annonce;
 import models.Ville;
@@ -139,11 +141,11 @@ public class Annonces extends Controller {
 			Annonce annonce = Annonce.find("byId", id_annonce).first();
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 					.first();
-			//System.out.println("tariftotal "+annonce.calculerTarifTotal());
+			// System.out.println("tariftotal "+annonce.calculerTarifTotal());
 			renderArgs.put("moi", moi);
 			renderArgs.put("annonce", annonce);
 			renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
-			
+
 		}
 		render();
 	}
@@ -162,7 +164,6 @@ public class Annonces extends Controller {
 					pAnnonces.add(a);
 				}
 			}
-			
 
 			renderArgs.put("annonces", pAnnonces);
 			renderTemplate("Annonces/annonces.html");
@@ -212,19 +213,85 @@ public class Annonces extends Controller {
 
 			monTrajet.save();
 			annonce.save();
-			
 
 			flash.success("Annonce enregistrée");
 			mesannonces();
 
 		}
 	}
-	
-	
-	public static List<Ville> chercherchemin(Annonce annonce){
-		List <Ville> trajet = new ArrayList<Ville>();
-		if(!annonce.monTrajet.villeDepart.equals(annonce.monTrajet.villeArrivee)){
-			//todo
+
+	public static void chercheretapes(Long depart, Long arrivee) {
+		// Ville villeDepart = Ville.findById(depart);
+		// mesEtapes.add(villeDepart);
+		//
+		// Ville villeArrivee = Ville.findById(arrivee);
+		// mesEtapes.add(villeArrivee);
+
+		// System.out.println(depart + "test" + arrivee);
+
+		// Création d'une liste de noeud AStar temporaire
+		ArrayList<Noeud> fileAStar = new ArrayList<Noeud>();
+		// Création de la liste des étapes
+		List<Ville> mesEtapes = new ArrayList<Ville>();
+		// Recuperation des villes
+		Ville villeDepart = Ville.findById(depart);
+		Ville villeArrivee = Ville.findById(arrivee);
+		// Recupération des troncons
+		List<Troncon> lesTroncons = Troncon.find("").fetch();
+		for (Troncon t : lesTroncons) {
+			System.out.println("Ville actuelle : " + t.villeActuelle.nom
+					+ " Ville suivante : " + t.villeSuivante.nom);
+		}
+
+		if (depart != arrivee) {
+			System.out.println("====================================> Depart");
+			Noeud n = new Noeud(villeDepart,
+					villeDepart.calculerDistanceVers(villeArrivee), 0, null);
+			Noeud.insererNoeudHeuristique(n, fileAStar);
+			while (!fileAStar.isEmpty()
+					&& !fileAStar.get(0).getVille().equals(villeArrivee)) {
+				Noeud nP = fileAStar.get(0);
+				fileAStar.remove(0);
+				lesTroncons.clear();
+				lesTroncons = Troncon.find("byVilleActuelle", nP.getVille())
+						.fetch();
+				System.out.println("========= Ville actuelle");
+				System.out.println(nP.getVille().nom);
+				System.out.println("========= Tronçons");
+				for (Troncon t : lesTroncons) {
+					if (t.villeSuivante != nP.getVille()) {
+						System.out.println(t.villeSuivante.nom);
+						Noeud.insererNoeudHeuristique(
+								new Noeud(t.villeSuivante, t.villeSuivante
+										.calculerDistanceVers(villeArrivee)
+										+ nP.getDistReelle() + t.nbKms, t.nbKms
+										+ nP.getDistReelle(), nP), fileAStar);
+					}
+				}
+				// System.out.println(nP.getVille().nom);
+			}
+
+			// Recuperation du trajet optimal avec les noeuds parents
+			if (!fileAStar.isEmpty()) {
+				Noeud noeud = fileAStar.get(0);
+				while (noeud != null) {
+					mesEtapes.add(noeud.getVille());
+					noeud = noeud.getNoeudParent();
+				}
+				Collections.reverse(mesEtapes);
+			}
+		} else {
+			mesEtapes.add(villeDepart);
+			mesEtapes.add(villeArrivee);
+		}
+		render(mesEtapes);
+	}
+
+	public static List<Ville> chercherchemin(Annonce annonce) {
+		List<Ville> trajet = new ArrayList<Ville>();
+		if (!annonce.monTrajet.villeDepart
+				.equals(annonce.monTrajet.villeArrivee)) {
+			// todo
 		}
 		return trajet;
 	}

@@ -73,6 +73,8 @@ public class Bootstrap extends Job {
 								st.nextToken()).first();
 						(new Troncon(autoroute, suivante, actuelle,
 								distanceVolOiseau(actuelle, suivante))).save();
+						(new Troncon(autoroute, actuelle, suivante,
+								distanceVolOiseau(actuelle, suivante))).save();
 						ville_precedente = suivante.codeInsee;
 
 					} else {
@@ -85,6 +87,8 @@ public class Bootstrap extends Job {
 
 						ville_precedente = suivante.codeInsee;
 						(new Troncon(autoroute, suivante, actuelle,
+								distanceVolOiseau(actuelle, suivante))).save();
+						(new Troncon(autoroute, actuelle, suivante,
 								distanceVolOiseau(actuelle, suivante))).save();
 
 					}

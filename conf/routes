@@ -23,6 +23,7 @@ GET 	/annonces/creation						Annonces.creation
 GET		/mesannonces							Annonces.mesannonces
 GET		/monannonce/editer/{id_annonce}			Annonces.editermonannonce
 POST	/monannonce/sauvegarder					Annonces.sauvegardermonannonce
+GET		/cherchertarif							Annonces.cherchertarif
 
 # Carte page
 GET		/carte									Carte.affichercarte

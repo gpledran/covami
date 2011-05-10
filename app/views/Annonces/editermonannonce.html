@@ -8,7 +8,7 @@
 	<input type="hidden" name="annonce.id" value="${annonce.id}" />
 	<p> 
 		<label for="depart">Ville de d&eacute;part</label> 
-		<select name="depart">
+		<select id="villeDepart" class="etape" name="depart">
 			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 
 				<option value="${ville.id}" #{if annonce.monTrajet.villeDepart.id == ville.id} selected="selected" #{/if}>${ville.nom}</option>
@@ -17,7 +17,7 @@
 	</p> 
 	<p> 
 		<label for="arrivee">Ville d'arriv&eacute;e</label> 
-		<select name="arrivee">
+		<select id="villeArrivee" class="etape" name="arrivee">
 			<option value="-">------</option>
 			#{list items:lesVilles, as:'ville' } 
 				<option value="${ville.id}" #{if annonce.monTrajet.villeArrivee.id == ville.id} selected="selected" #{/if}>${ville.nom}</option>
@@ -41,6 +41,13 @@
 		<input id="heureDepart" type="text" name="heure" value="${annonce.monTrajet.dateDepart.format('hh:mm')}" />
 		<span class="error">#{error 'heure' /}</span>
 	</p>
+	<p>
+		<label for="escales">Mes escales</label>
+	</p>
+		<div id="escales">
+			testest
+		</div>
+	<p>
 	    <input type="submit" value="Sauvegarder" />
 	</p>
 </form>
@@ -75,5 +82,13 @@
 		$("#lbltarif").html('Tarif total - ' + $("#tarif-slider").slider("values", 0) + ' &euro;');
 		
 		$('#heureDepart').timepicker({});
+		
+		$(".etape").change(function() {
+			var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee') /}
+			$('#escales').load(
+				listeEscales({depart: $('#villeDepart').val(), arrivee: $('#villeArrivee').val()})
+			)
+		});
+		
 	});
 </script>
