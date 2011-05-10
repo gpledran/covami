@@ -556,13 +556,13 @@ a{
 
 #ami .nom {
 	float: left;
-	width: 400px;
+	width: 620px;
 	position: relative;
 }
 
 #ami .bouton {
 	float: right;
-	width: 420px;
+	width: 200px;
 /* 	width: 440px; */
 	position: relative;	
 }
@@ -857,4 +857,7 @@ a.lien:hover {
 /** Datepicker **/
 div.ui-datepicker{
  font-size:10px;
+}
+.rouge{
+	color:red;	
 }

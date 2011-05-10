@@ -33,3 +33,8 @@
 #{if moi == annonce.monUtilisateur}
 	<a class="submit" href="@{Annonces.editermonannonce(annonce.id)}">Editer</a>
 #{/if}
+#{if moi != annonce.monUtilisateur}
+	#{if dejaenvoye==false}	
+	<a class="submit" href="@{Annonces.demandeparticipation(annonce.id)}">Demande de participation</a>
+	#{/if}
+#{/if}

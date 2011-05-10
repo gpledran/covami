@@ -16,7 +16,8 @@
   	<td>Ville arriv&eacute;e</td>
   	<td style="width : 100px;">Date depart</td>
   	<td style="width : 100px;">Heure depart</td>
-  	<td style="width : 147px;">Tarif total / personne</td>
+  	<td style="width : 90px;">Tarif/pers.</td>
+  	<td style="width : 90px;">Places</td>
   	
   	
   </tr>
@@ -34,9 +35,9 @@
   		<td>${annonces.monTrajet.villeArrivee.nom}</td>
   		<td style="width : 100px;">${annonces.monTrajet.dateDepart?.format('dd/MM/yyyy')}</td>
   		<td style="width : 100px;">${annonces.monTrajet.dateDepart?.format('HH:mm')}</td>
-  		<td style="width : 147px;">${annonces.tarifParPersonne}&euro;</td>
+  		<td style="width : 90px;">${annonces.tarifParPersonne}&euro;</td>
+  		<td style="width : 90px;">${annonces.monUtilisateur.maVoiture.nbPlaces}</td>
   		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(annonces.id)}">D&eacute;tails</a></td>
-  		
   	</tr> 
   #{/list} 
   

@@ -17,6 +17,14 @@ public class Annonce extends Model {
 
 	@OneToOne
 	public Trajet monTrajet;
+	
+	@OneToMany
+	public List<Utilisateur> mesPassagers;
+	
+	@ManyToMany
+	@JoinTable(name = "DemandeAnnonceEnAttente")
+	public List<Utilisateur> mesDemandePassagers;
+	
 
 	public Annonce(int tarifParPersonne, Utilisateur monUtilisateur,
 			Trajet monTrajet) {

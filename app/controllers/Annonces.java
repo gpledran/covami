@@ -150,8 +150,24 @@ public class Annonces extends Controller {
 			Annonce annonce = Annonce.find("byId", id_annonce).first();
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 					.first();
+
+			//System.out.println("tariftotal "+annonce.calculerTarifTotal());
+			boolean dejaenvoye = false;
+			for(Utilisateur a : annonce.mesDemandePassagers){
+				System.out.println("test");
+				System.out.println(a.nom);
+			}
+			System.out.println(annonce.mesDemandePassagers.size());
+			if(annonce.mesDemandePassagers.contains(moi)){
+				
+				dejaenvoye = true;
+			}
+			
+
 			// System.out.println("tariftotal "+annonce.calculerTarifTotal());
+
 			renderArgs.put("moi", moi);
+			renderArgs.put("dejaenvoye", dejaenvoye);
 			renderArgs.put("annonce", annonce);
 			renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
 
@@ -230,9 +246,33 @@ public class Annonces extends Controller {
 		}
 	}
 
+<<<<<<< HEAD
 	public static void chercheretapes(Long depart, Long arrivee,
 			List<Long> mesAnciennesEtapes) {
 		System.out.println(mesAnciennesEtapes);
+=======
+	
+	public static void demandeparticipation(long id){
+		Annonce annonce = Annonce.find("byId",id).first();
+		Utilisateur passager = Utilisateur.find("byEmail", Security.connected()).first();
+		annonce.mesDemandePassagers.add(passager);
+		annonce.save();
+		flash.success("Demande envoyée");
+		details(id);
+		
+	}
+	
+
+	public static void chercheretapes(Long depart, Long arrivee) {
+		// Ville villeDepart = Ville.findById(depart);
+		// mesEtapes.add(villeDepart);
+		//
+		// Ville villeArrivee = Ville.findById(arrivee);
+		// mesEtapes.add(villeArrivee);
+
+		// System.out.println(depart + "test" + arrivee);
+
+>>>>>>> d24c729293114436d5a2c7b94bc3166e1c6fba54
 		// Création d'une liste de noeud AStar temporaire
 		ArrayList<Noeud> fileAStar = new ArrayList<Noeud>();
 		// Création de la liste des étapes
@@ -287,6 +327,7 @@ public class Annonces extends Controller {
 		if (!annonce.monTrajet.villeDepart
 				.equals(annonce.monTrajet.villeArrivee)) {
 			// todo
+
 		}
 		return trajet;
 	}

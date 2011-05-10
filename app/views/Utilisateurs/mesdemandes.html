@@ -14,12 +14,26 @@
 	<hr>
 	#{list items:mesDemandes, as:'ami' }
 		<div class="content"> 
-			<div class="nom">${ami.prenom.capitalizeWords()}&nbsp;${ami.nom.capitalizeWords()}&nbsp;</div>
+			<div class="nom">${ami.prenom.capitalizeWords()}&nbsp;${ami.nom.capitalizeWords()}&nbsp;(demande d'amititi&eacute;)</div>
 			<div class="bouton">
 				<a class="submit" href="@{Utilisateurs.accepterdemande(ami.id)}" >Accepter</a>
 				<a class="submit" href="@{Utilisateurs.refuserdemande(ami.id)}" >Refuser</a>
 			</div>
 		</div>
+ 	#{/list}
+ 	#{list items:mesAnnonces, as:'a' }
+ 		#{list items:a.mesDemandePassagers, as:'p' }
+		<div class="content"> 
+			<div class="nom">${p.prenom.capitalizeWords()}&nbsp;${p.nom.capitalizeWords()}&nbsp;
+			veut participer au trajet ${a.monTrajet.villeDepart.nom} - ${a.monTrajet.villeArrivee.nom} 
+			du ${a.monTrajet.dateDepart.format('dd/MM/yyyy : HH:mm')}
+			</div>
+			<div class="bouton">
+				<a class="submit" href="@{Utilisateurs.accepterDemandeAnnonce(p.id, a.id)}" >Accepter</a>
+				<a class="submit" href="@{Utilisateurs.refuserDemandeAnnonce(p.id, a.id)}" >Refuser</a>
+			</div>
+		</div>
+		#{/list}
  	#{/list}
  	</div>&nbsp;
 #{/if}
