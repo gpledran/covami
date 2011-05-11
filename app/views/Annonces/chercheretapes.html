@@ -2,6 +2,7 @@
 	#{list items:mesEtapes, as:'etape' }
 		<input class="lesetapes" type="checkbox" value="${etape.id}" 
 		#{list items:mesAnciennesEtapes, as:'ancienne'}
+		ancienne
 			#{if ancienne == ${etape.id}}
 				checked
 			#{/if}
@@ -9,3 +10,14 @@
 		/>${etape.nom}<br />
 	#{/list}
 </div>
+
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$(document).ready(function() {
+			$('.lesetapes:first').attr('checked', true);
+			$('.lesetapes:first').attr('disabled', true);
+			$('.lesetapes:last').attr('checked', true);
+			$('.lesetapes:last').attr('disabled', true);
+		});
+	});
+</script>

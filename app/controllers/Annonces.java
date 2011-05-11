@@ -253,21 +253,12 @@ public class Annonces extends Controller {
 
 	}
 
-	public static void chercheretapes(Long depart, Long arrivee,
-			List<Long> mesAnciennesEtapes) {
-		System.out.println(mesAnciennesEtapes);
-
-		// Création d'une liste de noeud AStar temporaire
-		ArrayList<Noeud> fileAStar = new ArrayList<Noeud>();
-		// Création de la liste des étapes
+	public static List<Ville> toutesLesEtapes(Ville villeDepart,
+			Ville villeArrivee) {
 		List<Ville> mesEtapes = new ArrayList<Ville>();
-		// Recuperation des villes
-		Ville villeDepart = Ville.findById(depart);
-		Ville villeArrivee = Ville.findById(arrivee);
-		// Recupération des troncons
 		List<Troncon> lesTroncons = Troncon.find("").fetch();
-
-		if (depart != arrivee) {
+		ArrayList<Noeud> fileAStar = new ArrayList<Noeud>();
+		if (villeDepart != villeArrivee) {
 			Noeud n = new Noeud(villeDepart,
 					villeDepart.calculerDistanceVers(villeArrivee), 0, null);
 			Noeud.insererNoeudHeuristique(n, fileAStar);
@@ -303,16 +294,19 @@ public class Annonces extends Controller {
 			mesEtapes.add(villeDepart);
 			mesEtapes.add(villeArrivee);
 		}
-		render(mesEtapes, depart, arrivee, mesAnciennesEtapes);
+		return mesEtapes;
 	}
 
-	public static List<Ville> chercherchemin(Annonce annonce) {
-		List<Ville> trajet = new ArrayList<Ville>();
-		if (!annonce.monTrajet.villeDepart
-				.equals(annonce.monTrajet.villeArrivee)) {
-			// todo
+	public static void chercheretapes(Long depart, Long arrivee,
+			List<Long> mesAnciennesEtapes) {
+		// System.out.println(mesAnciennesEtapes.get(0));
+		// Création de la liste des étapes
+		List<Ville> mesEtapes = new ArrayList<Ville>();
+		// Recuperation des villes
+		Ville villeDepart = Ville.findById(depart);
+		Ville villeArrivee = Ville.findById(arrivee);
+		mesEtapes = toutesLesEtapes(villeDepart, villeArrivee);
 
-		}
-		return trajet;
+		render(mesEtapes, depart, arrivee, mesAnciennesEtapes);
 	}
 }

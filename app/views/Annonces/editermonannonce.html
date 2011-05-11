@@ -48,7 +48,7 @@
 			&nbsp;
 		</div>
 	<p>
-		<input id="mesAnciennesEtapes" name="annonce.monTrajet.mesEtapes" value="${annonce?.monTrajet?.mesEtapes.id}" />
+		<input id="mesAnciennesEtapes" name="annonce.monTrajet.mesEtapes.id" value="${annonce?.monTrajet?.mesEtapes.id}" />
 		<input id="mesEscales" name="mesEscales" type="hidden" />
 	    <input id="submit" type="submit" value="Sauvegarder" />
 	</p>
@@ -73,7 +73,8 @@
 				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee') /}
 				$('#escales').load(
 					listeEscales({depart: dep, arrivee: arr})
-				)			
+				)
+				$('input[class=lesetapes]').attr('checked', true);
 			}
 		});
 		
