@@ -48,7 +48,7 @@
 			&nbsp;
 		</div>
 	<p>
-		<input id="mesAnciennesEtapes" name="annonce.monTrajet.mesEtapes.id" value="${annonce?.monTrajet?.mesEtapes.id}" />
+		<input id="mesAnciennesEtapes" name="mesAnciennesEtapes" value="${annonce?.monTrajet?.mesEtapes?.id}" type="hidden"/>
 		<input id="mesEscales" name="mesEscales" type="hidden" />
 	    <input id="submit" type="submit" value="Sauvegarder" />
 	</p>
@@ -69,12 +69,13 @@
 			
 			var dep = $("#villeDepart option:selected").val();
 			var arr = $("#villeArrivee option:selected").val();
+			var anciennes = $("#mesAnciennesEtapes").val();
+			anciennes = anciennes.substr(1, anciennes.length-2).split(', ').join('-');
 			if (dep != "-" && arr != "-") {
-				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee') /}
+				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee', ':mesAnciennesEtapes') /}
 				$('#escales').load(
-					listeEscales({depart: dep, arrivee: arr})
-				)
-				$('input[class=lesetapes]').attr('checked', true);
+					listeEscales({depart: dep, arrivee: arr, mesAnciennesEtapes: anciennes})
+				)			
 			}
 		});
 		
@@ -98,7 +99,8 @@
 		$(".etape").change(function() {
 			var dep = $("#villeDepart option:selected").val();
 			var arr = $("#villeArrivee option:selected").val();
-			var anciennes = ${annonce?.monTrajet?.mesEtapes.id};
+			var anciennes = $("#mesAnciennesEtapes").val();
+			anciennes = anciennes.substr(1, anciennes.length-2).split(', ').join('-');
 			if (dep != "-" && arr != "-") {
 				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee', ':mesAnciennesEtapes') /}
 				$('#escales').load(

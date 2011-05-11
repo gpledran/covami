@@ -149,23 +149,6 @@ public class Annonces extends Controller {
 			Annonce annonce = Annonce.find("byId", id_annonce).first();
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 					.first();
-
-			// System.out.println("tariftotal "+annonce.calculerTarifTotal());
-			// boolean dejaenvoye = false;
-			// for (Utilisateur a : annonce.mesDemandePassagers) {
-			// System.out.println("test");
-			// System.out.println(a.nom);
-			// }
-			// System.out.println(annonce.mesDemandePassagers.size());
-			// if (annonce.mesDemandePassagers.contains(moi)) {
-			//
-			// dejaenvoye = true;
-			// }
-			// System.out.println("tariftotal " + annonce.calculerTarifTotal());
-			// renderArgs.put("moi", moi);
-			// renderArgs.put("dejaenvoye", dejaenvoye);
-			// renderArgs.put("annonce", annonce);
-			// renderArgs.put("etapes", annonce.monTrajet.mesEtapes);
 			render(moi, annonce);
 		}
 		render();
@@ -298,15 +281,21 @@ public class Annonces extends Controller {
 	}
 
 	public static void chercheretapes(Long depart, Long arrivee,
-			List<Long> mesAnciennesEtapes) {
-		// System.out.println(mesAnciennesEtapes.get(0));
+			String mesAnciennesEtapes) {
+		StringTokenizer st = new StringTokenizer(mesAnciennesEtapes, "-");
+		List<Long> mesAnciennes = new ArrayList<Long>();
+		while (st.hasMoreTokens()) {
+			mesAnciennes.add(Long.parseLong(st.nextToken()));
+		}
 		// Création de la liste des étapes
 		List<Ville> mesEtapes = new ArrayList<Ville>();
 		// Recuperation des villes
 		Ville villeDepart = Ville.findById(depart);
 		Ville villeArrivee = Ville.findById(arrivee);
+
+		// Appelle de la fonction toutesLesEtapes qui correspond à A*
 		mesEtapes = toutesLesEtapes(villeDepart, villeArrivee);
 
-		render(mesEtapes, depart, arrivee, mesAnciennesEtapes);
+		render(mesEtapes, depart, arrivee, mesAnciennes);
 	}
 }
