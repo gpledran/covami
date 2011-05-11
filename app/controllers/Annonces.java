@@ -149,13 +149,15 @@ public class Annonces extends Controller {
 			Annonce annonce = Annonce.find("byId", id_annonce).first();
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 					.first();
-
+				
+			
+			System.out.println(calculerTarifTotal(annonce));
 			// System.out.println("tariftotal "+annonce.calculerTarifTotal());
 			// boolean dejaenvoye = false;
 			// for (Utilisateur a : annonce.mesDemandePassagers) {
 			// System.out.println("test");
 			// System.out.println(a.nom);
-			// }
+			// }monAnnonce.monTrajet.mesEtapes
 			// System.out.println(annonce.mesDemandePassagers.size());
 			// if (annonce.mesDemandePassagers.contains(moi)) {
 			//
@@ -308,5 +310,25 @@ public class Annonces extends Controller {
 		mesEtapes = toutesLesEtapes(villeDepart, villeArrivee);
 
 		render(mesEtapes, depart, arrivee, mesAnciennesEtapes);
+	}
+	
+	public static int calculerTarifTotal(Annonce monAnnonce){
+		// tester si l'utilisateur à une voiture ?
+		int tarifTotal = 0, kmsTotal = 0;
+		List<Ville> villes = toutesLesEtapes(monAnnonce.monTrajet.villeDepart, monAnnonce.monTrajet.villeArrivee);
+		for(int i = 0 ; i < villes.size()-1 ; i++){
+			Troncon troncon = Troncon.find("byVilleActuelle_idAndVilleSuivante_id", villes.get(i).id, villes.get(i+1)).first();
+			kmsTotal += troncon.nbKms;
+		}
+		// coefficient d'essence
+		System.out.println("nb km : "+kmsTotal);
+		if(monAnnonce.monUtilisateur.maVoiture.type.equals("petite"))
+			tarifTotal = (int)Math.ceil((kmsTotal/10)*1.1);
+		else if(monAnnonce.monUtilisateur.maVoiture.type == "moyenne")
+			tarifTotal = (int)Math.ceil((kmsTotal/10)*1.2);
+		else if(monAnnonce.monUtilisateur.maVoiture.type == "grande")
+			tarifTotal = (int)Math.ceil((kmsTotal/10)*1.3);		
+		System.out.println("tarif : "+tarifTotal);
+		return tarifTotal;
 	}
 }
