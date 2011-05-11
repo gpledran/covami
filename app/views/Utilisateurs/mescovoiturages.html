@@ -2,8 +2,9 @@
 #{set title:'Covami - Mes covoiturages' /}
 %{def couleur = 0}%
 
-<h1>Mes Annonces</h1>
+<h1>Mes covoiturages</h1>
 
+#{if mesCovoiturages}
 <table id="tableMesAnnonces">
   <tr class="tableEntete">
   	<td>Annonceur</td>
@@ -37,5 +38,8 @@
   #{/list}
   
   
-</table><br/>
-<a class="submit" style="margin-left:20px;" href="@{Annonces.creation()}">Proposer une nouvelle annonce</a>
+</table>
+#{/if}
+#{else}
+	<p>Vous ne participez &agrave; aucun covoiturage !</p>
+#{/else}
