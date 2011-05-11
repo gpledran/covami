@@ -6,19 +6,19 @@
 
 <div id="details">
 	<span class="nom_label">Annonceur</span>
-	<span class="nom">${annonce.monUtilisateur.prenom.capitalizeWords()}&nbsp;${annonce.monUtilisateur.nom.capitalizeWords()}</span>
+	<span class="nom">${annonce?.monUtilisateur?.prenom.capitalizeWords()}&nbsp;${annonce?.monUtilisateur?.nom.capitalizeWords()}</span>
 
 	<span class="nom_label">Date de depart</span>
-	<span class="nom">${annonce.monTrajet.dateDepart.format('dd MMMM yyyy hh:mm', 'fr')}</span>
+	<span class="nom">${annonce?.monTrajet?.dateDepart.format('dd MMMM yyyy hh:mm', 'fr')}</span>
 	
 	<span class="nom_label">Tarif par personne</span>
-	<span class="nom">${annonce.tarifParPersonne}&euro;</span>
+	<span class="nom">${annonce?.tarifParPersonne}&euro;</span>
 	
 	<span class="nom_label">Ville de depart</span>
-	<span class="nom">${annonce.monTrajet.villeDepart.nom}</span>
+	<span class="nom">${annonce?.monTrajet?.villeDepart?.nom}</span>
 	
 	<span class="nom_label">Ville d'arriv&eacute;e</span>
-	<span class="nom">${annonce.monTrajet.villeArrivee.nom}</span>
+	<span class="nom">${annonce?.monTrajet?.villeArrivee?.nom}</span>
 	
 	#{if annonce.monTrajet.mesEtapes}
 		<span class="nom_label">Escales</span>

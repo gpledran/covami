@@ -32,7 +32,7 @@ public class Bootstrap extends Job {
 		Pays france = Pays.find("byNom", "France").first();
 		try {
 			BufferedReader fichier = new BufferedReader(new FileReader(
-					"/home/philippe/covami_workspace/covami/public/csv/villes.csv"));
+					"public/csv/villes.csv"));
 			String chaine;
 			while ((chaine = fichier.readLine()) != null) {
 				// Sépare à l'aide du ; la ligne dans un tableau de chaines
@@ -55,12 +55,12 @@ public class Bootstrap extends Job {
 		String ville_precedente = "";
 		try {
 			BufferedReader fichier = new BufferedReader(new FileReader(
-					"/home/philippe/covami_workspace/covami/public/csv/autoroutes.csv"));
+					"public/csv/autoroutes.csv"));
 			String chaine;
 			while ((chaine = fichier.readLine()) != null) {
 				StringTokenizer st = new StringTokenizer(chaine, ";");
 				while (st.hasMoreTokens()) {
-					
+
 					if (autoroute == "") {
 						// Si c'est le premier champs, c'est le nom de
 						// l'autoroute
@@ -78,15 +78,14 @@ public class Bootstrap extends Job {
 								distanceVolOiseau(actuelle, suivante))).save();
 
 						ville_precedente = suivante.codeInsee;
-						
+
 					} else {
 						// Sinon c'est la ville à ajouter à un nouveau tronçon
-						Ville actuelle = Ville.find("byCodeInsee", ville_precedente)
-						.first();
-						
-						Ville suivante = Ville.find("byCodeInsee", st.nextToken())
-								.first();
-						
+						Ville actuelle = Ville.find("byCodeInsee",
+								ville_precedente).first();
+
+						Ville suivante = Ville.find("byCodeInsee",
+								st.nextToken()).first();
 
 						(new Troncon(autoroute, suivante, actuelle,
 								distanceVolOiseau(actuelle, suivante))).save();
@@ -103,10 +102,17 @@ public class Bootstrap extends Job {
 			e.printStackTrace();
 		}
 	}
-	public double distanceVolOiseau(Ville a , Ville b){
-		return 6367445*Math.acos(Math.sin(Math.PI*a.latitude/180)//6367445 = rayon de la terre
-				*Math.sin(Math.PI*b.latitude/180)+Math.cos(Math.PI*a.latitude/180)
-				*Math.cos(Math.PI*b.latitude/180)
-				*Math.cos((Math.PI*a.longitude/180)-(Math.PI*b.longitude/180)))/1000;
+
+	public double distanceVolOiseau(Ville a, Ville b) {
+		return 6367445 * Math.acos(Math.sin(Math.PI * a.latitude / 180)// 6367445
+																		// =
+																		// rayon
+																		// de la
+																		// terre
+				* Math.sin(Math.PI * b.latitude / 180)
+				+ Math.cos(Math.PI * a.latitude / 180)
+				* Math.cos(Math.PI * b.latitude / 180)
+				* Math.cos((Math.PI * a.longitude / 180)
+						- (Math.PI * b.longitude / 180))) / 1000;
 	}
 }
