@@ -282,11 +282,14 @@ public class Annonces extends Controller {
 
 	public static void chercheretapes(Long depart, Long arrivee,
 			String mesAnciennesEtapes) {
-		StringTokenizer st = new StringTokenizer(mesAnciennesEtapes, "-");
 		List<Long> mesAnciennes = new ArrayList<Long>();
-		while (st.hasMoreTokens()) {
-			mesAnciennes.add(Long.parseLong(st.nextToken()));
+		if (mesAnciennesEtapes == "") {
+			StringTokenizer st = new StringTokenizer(mesAnciennesEtapes, "-");
+			while (st.hasMoreTokens()) {
+				mesAnciennes.add(Long.parseLong(st.nextToken()));
+			}
 		}
+
 		// Création de la liste des étapes
 		List<Ville> mesEtapes = new ArrayList<Ville>();
 		// Recuperation des villes
@@ -298,24 +301,27 @@ public class Annonces extends Controller {
 
 		render(mesEtapes, depart, arrivee, mesAnciennes);
 	}
-	
-	public static int calculerTarifTotal(Annonce monAnnonce){
+
+	public static int calculerTarifTotal(Annonce monAnnonce) {
 		// tester si l'utilisateur à une voiture ?
 		int tarifTotal = 0, kmsTotal = 0;
-		List<Ville> villes = toutesLesEtapes(monAnnonce.monTrajet.villeDepart, monAnnonce.monTrajet.villeArrivee);
-		for(int i = 0 ; i < villes.size()-1 ; i++){
-			Troncon troncon = Troncon.find("byVilleActuelle_idAndVilleSuivante_id", villes.get(i).id, villes.get(i+1)).first();
+		List<Ville> villes = toutesLesEtapes(monAnnonce.monTrajet.villeDepart,
+				monAnnonce.monTrajet.villeArrivee);
+		for (int i = 0; i < villes.size() - 1; i++) {
+			Troncon troncon = Troncon.find(
+					"byVilleActuelle_idAndVilleSuivante_id", villes.get(i).id,
+					villes.get(i + 1)).first();
 			kmsTotal += troncon.nbKms;
 		}
 		// coefficient d'essence
-		System.out.println("nb km : "+kmsTotal);
-		if(monAnnonce.monUtilisateur.maVoiture.type.equals("petite"))
-			tarifTotal = (int)Math.ceil((kmsTotal/10)*1.1);
-		else if(monAnnonce.monUtilisateur.maVoiture.type == "moyenne")
-			tarifTotal = (int)Math.ceil((kmsTotal/10)*1.2);
-		else if(monAnnonce.monUtilisateur.maVoiture.type == "grande")
-			tarifTotal = (int)Math.ceil((kmsTotal/10)*1.3);		
-		System.out.println("tarif : "+tarifTotal);
+		System.out.println("nb km : " + kmsTotal);
+		if (monAnnonce.monUtilisateur.maVoiture.type.equals("petite"))
+			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.1);
+		else if (monAnnonce.monUtilisateur.maVoiture.type == "moyenne")
+			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.2);
+		else if (monAnnonce.monUtilisateur.maVoiture.type == "grande")
+			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.3);
+		System.out.println("tarif : " + tarifTotal);
 		return tarifTotal;
 	}
 }

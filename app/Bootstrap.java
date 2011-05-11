@@ -32,7 +32,7 @@ public class Bootstrap extends Job {
 		Pays france = Pays.find("byNom", "France").first();
 		try {
 			BufferedReader fichier = new BufferedReader(new FileReader(
-					"/home/philippe/covami_workspace/covami/public/csv/villes.csv"));
+					"public/csv/villes.csv"));
 			String chaine;
 			while ((chaine = fichier.readLine()) != null) {
 				// Sépare à l'aide du ; la ligne dans un tableau de chaines
@@ -55,7 +55,7 @@ public class Bootstrap extends Job {
 		String ville_precedente = "";
 		try {
 			BufferedReader fichier = new BufferedReader(new FileReader(
-					"/home/philippe/covami_workspace/covami/public/csv/autoroutes.csv"));
+					"public/csv/autoroutes.csv"));
 			String chaine;
 			while ((chaine = fichier.readLine()) != null) {
 				StringTokenizer st = new StringTokenizer(chaine, ";");
