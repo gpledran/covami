@@ -7,8 +7,9 @@
         ${flash.error}
     </p>
 #{/if}
+#{else}
 <form action="@{Annonces.enregistrerannonce()}" method="POST">
-	<input type="hidden" name="annonce.id" value="${annonce.id}" />
+	<input type="hidden" name="annonce.id" value="${annonce?.id}" />
 	<p> 
 		<label for="depart">Ville de d&eacute;part</label> 
 		<select id="villeDepart" class="etape" name="depart" style="width:280px;">
@@ -29,7 +30,7 @@
 	</p> 
 	<p> 
 		<label for="tarifTotal" id="lbltarif"></label>
-		<input type="hidden" id="tarifTotal" name="annonce.tarifParPersonne" value="${annonce.tarifParPersonne}" />
+		<input type="hidden" id="tarifTotal" name="annonce.tarifParPersonne" value="${annonce?.tarifParPersonne}" />
 		
 	</p>
 		<div id="tarif-slider" style="margin-left: 150px; margin-top: 27px; width: 280px;"></div>
@@ -55,7 +56,7 @@
 	    <input id="submit" type="submit" value="Créer annonce" />
 	</p>
 </form>
-  		
+#{/else}  		
 <script type="text/javascript" charset="utf-8">
 	
 	

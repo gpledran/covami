@@ -43,11 +43,17 @@ public class Annonces extends Controller {
 	}
 
 	@Before
-	static void mesDemandes() {
+	static void nbDemandes() {
 		if (Security.isConnected()) {
 			Utilisateur user = Utilisateur
 					.find("byEmail", Security.connected()).first();
 			int nbDemandes = user.mesDemandes.size();
+
+			List<Annonce> mesAnnonces = Annonce.find("byMonUtilisateur_id",
+					user.id).fetch();
+			for (Annonce a : mesAnnonces) {
+				nbDemandes += a.mesDemandePassagers.size();
+			}
 			renderArgs.put("nbDemandes", nbDemandes);
 		}
 	}
@@ -179,6 +185,12 @@ public class Annonces extends Controller {
 	public static void creation(Annonce annonce) {
 		if (Security.isConnected()) {
 			List<Ville> lesVilles = Ville.find("ORDER BY nom").fetch();
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			if (moi.maVoiture == null) {
+				flash.error("Merci d'enregistrer votre véhicule avant de poster une annonce.");
+				render();
+			}
 			render(annonce, lesVilles);
 		}
 		render();
@@ -188,7 +200,6 @@ public class Annonces extends Controller {
 			@Required Long depart, @Required Long arrivee,
 			@Required String dateDepart, @Required String heureDepart,
 			String mesEscales) throws ParseException {
-
 		validation.valid(dateDepart);
 		validation.valid(heureDepart);
 		if (validation.hasErrors()) {

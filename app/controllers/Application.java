@@ -23,11 +23,17 @@ public class Application extends Controller {
 	}
 
 	@Before
-	static void mesDemandes() {
+	static void nbDemandes() {
 		if (Security.isConnected()) {
 			Utilisateur user = Utilisateur
 					.find("byEmail", Security.connected()).first();
 			int nbDemandes = user.mesDemandes.size();
+
+			List<Annonce> mesAnnonces = Annonce.find("byMonUtilisateur_id",
+					user.id).fetch();
+			for (Annonce a : mesAnnonces) {
+				nbDemandes += a.mesDemandePassagers.size();
+			}
 			renderArgs.put("nbDemandes", nbDemandes);
 		}
 	}
