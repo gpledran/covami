@@ -34,6 +34,7 @@
 		
 	</p>
 		<div id="tarif-slider" style="margin-left: 150px; margin-top: 27px; width: 280px;"></div>
+		<div id="tarif"></div>
 	<p> 
 		<label for="dateDepart">Date de d&eacute;part</label>
 		<input id="datepicker" type="text" name="dateDepart" value=""/>
@@ -52,6 +53,7 @@
 			&nbsp;
 		</div>
 	<p>
+		<input id="typeVoiture" value="${moi?.maVoiture?.type}" type="hidden" />
 		<input id="mesEscales" name="mesEscales" type="hidden" /> 
 	    <input id="submit" type="submit" value="Créer annonce" />
 	</p>
@@ -93,10 +95,11 @@
 			var dep = $("#villeDepart option:selected").val();
 			var arr = $("#villeArrivee option:selected").val();
 			if (dep != "-" && arr != "-") {
-				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee') /}
+				var type =  $("#typeVoiture").val();
+				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee',':mesAnciennesEtapes', ':type_voiture') /}
 				$('#escales').load(
-					listeEscales({depart: dep, arrivee: arr})
-				)			
+					listeEscales({depart: dep, arrivee: arr, mesAnciennesEtapes: "", type_voiture: type})
+				)
 			}
 		});
 		
