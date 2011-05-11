@@ -10,6 +10,7 @@
 	#{/list}
 </div>
 
+
 <script type="text/javascript" charset="utf-8">
 	$(function() {
 		$(document).ready(function() {
@@ -18,5 +19,13 @@
 			$('.lesetapes:last').attr('checked', true);
 			$('.lesetapes:last').attr('disabled', true);
 		});
+		
+		$("#tarif-slider").slider({
+			min: ${tarif / 2},
+			max: ${tarif + (tarif / 2)},
+			step: 1,
+			value: ${tarif}
+		});
+		$("#lbltarif").html('Tarif total - ' + ${tarif} + ' &euro;');
 	});
 </script>
