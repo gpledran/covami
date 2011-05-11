@@ -235,6 +235,9 @@ public class Utilisateurs extends Controller {
 			for (Utilisateur ami : moi.mesAmis) {
 				mesAmis.remove(ami);
 			}
+			for (Utilisateur amis : moi.mesDemandes) {
+				mesAmis.remove(amis);
+			}
 			List<Utilisateur> listeDemandes = Utilisateur.findAll();
 			for (Utilisateur demande : listeDemandes) {
 				if (demande.mesDemandes.contains(moi)) {
