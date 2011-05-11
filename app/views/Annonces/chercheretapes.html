@@ -1,9 +1,8 @@
 <div style="margin-left: 150px;"> 
 	#{list items:mesEtapes, as:'etape' }
 		<input class="lesetapes" type="checkbox" value="${etape.id}" 
-		#{list items:mesAnciennesEtapes, as:'ancienne'}
-		ancienne
-			#{if ancienne == ${etape.id}}
+		#{list items:mesAnciennes, as:'ancienne'}
+			#{if ancienne == etape.id}
 				checked
 			#{/if}
 		#{/list}
