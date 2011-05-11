@@ -92,6 +92,7 @@ public class Bootstrap extends Job {
 						(new Troncon(autoroute, actuelle, suivante,
 								distanceVolOiseau(actuelle, suivante))).save();
 
+						ville_precedente = suivante.codeInsee;
 					}
 				}
 				// Reaffectation la var à null pour la prochaine ligne
