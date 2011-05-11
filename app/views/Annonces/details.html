@@ -1,6 +1,7 @@
 #{extends 'main.html' /}
 #{set title:'Covami - Détails annonce' /}
-
+%{def demandeEnCours = 0}%
+%{def dejaDemande = 0}%
 
 <h1>D&eacute;tails de l'annonce</h1>
 
@@ -33,8 +34,16 @@
 #{if moi == annonce.monUtilisateur}
 	<a class="submit" href="@{Annonces.editermonannonce(annonce.id)}">Editer</a>
 #{/if}
-#{if moi != annonce.monUtilisateur}
-	#{if dejaenvoye==false}	
-	<a class="submit" href="@{Annonces.demandeparticipation(annonce.id)}">Demande de participation</a>
+#{list items : annonce.mesDemandePassagers, as: 'demande'}
+	#{if demande.id == moi.id}
+		%{demandeEnCours = 1}%
 	#{/if}
+#{/list}
+#{list items : annonce.mesPassagers, as: 'passager'}
+	#{if passager.id == moi.id}
+		%{dejaDemande = 1}%
+	#{/if}
+#{/list}
+#{if demandeEnCours == 0 && dejaDemande == 0}
+	<a class="submit" href="@{Annonces.demandeparticipation(annonce.id)}">Demande de participation</a>
 #{/if}
