@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import models.Ville;
 
+
 @SuppressWarnings("rawtypes")
 public class Noeud implements Comparable {
 	private Ville ville;
