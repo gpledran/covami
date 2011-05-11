@@ -17,12 +17,16 @@ public class Commentaire extends Model {
 
 	@OneToOne
 	public Utilisateur monUtilisateur;
-
-	public Commentaire(String message, int note, Utilisateur monUtilisateur) {
+	
+	@OneToOne
+	public Utilisateur auteur;
+	
+	public Commentaire(String message, int note, Utilisateur monUtilisateur, Utilisateur auteur) {
 		super();
 		this.message = message;
 		this.note = note;
 		this.monUtilisateur = monUtilisateur;
+		this.auteur = auteur;
 	}
 
 }

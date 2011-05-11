@@ -858,6 +858,40 @@ a.lien:hover {
 div.ui-datepicker{
  font-size:10px;
 }
-.rouge{
-	color:red;	
+
+.bloccommentaire{
+	border: 1px solid #C1EA62;
+	width : 400px;
+	-webkit-border-radius : 7px;
+	padding : 15px;
+	background-color: #E9FDDB;
+	-webkit-box-shadow: 0 1px 0px #C1EA62;
+	font-weight : lighter; 
+	font-size : 0.8em;
+	text-align : justify;
+	color : #333;
+	margin: 21px 0 20px 0;
+	
+}
+
+.note{
+	color : #C9EA62;
+	font-size: 1.9em;
+	text-align:right;
+}
+		
+.rightArrow{
+	
+	font-size:0px;
+	line-height:0%;
+	width : 0px;
+	margin-left: 10px;
+	border-bottom : 12px solid #C1EA62;
+	border-left : 10px solid white;
+	border-right : 10px solid white;	
+}
+.auteurcom{
+	font-size: 0.75em;
+	color : #333;
+	
 }

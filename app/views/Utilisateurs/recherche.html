@@ -21,7 +21,9 @@
 	<hr>
 	#{list items:mesAmis, as:'ami' } 
 		<div class="content">
-			<div class="nom">${ami.prenom.capitalizeWords()}&nbsp;${ami.nom.capitalizeWords()}&nbsp;</div>
+			<div class="nom">${ami.prenom.capitalizeWords()}&nbsp;${ami.nom.capitalizeWords()}&nbsp;
+			<a href="@{Commentaires.commentaires(ami.id)}" title="Voir ses commentaires"><img src="/public/images/com.png" style="float:right; margin-top:-4px;"/></a>
+			</div>
 			<div class="bouton"><a class="submit" href="@{Utilisateurs.envoyerdemande(ami.id)}" >Envoyer une demande</a></div>
 		</div>
  	#{/list}

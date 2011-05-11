@@ -8,6 +8,7 @@ import java.util.ListIterator;
 import java.util.StringTokenizer;
 
 import models.Annonce;
+import models.Commentaire;
 import models.DemandeEnAttente;
 import models.Utilisateur;
 import models.Voiture;
@@ -289,7 +290,7 @@ public class Utilisateurs extends Controller {
 					moi.id).fetch();
 
 			flash.clear();
-			render(mesDemandes, mesAnnonces);
+			render(mesDemandes, mesAnnonces, moi);
 		}
 		render();
 	}

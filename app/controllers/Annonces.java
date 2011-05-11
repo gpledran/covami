@@ -155,7 +155,6 @@ public class Annonces extends Controller {
 			Annonce annonce = Annonce.find("byId", id_annonce).first();
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 					.first();
-			System.out.println(calculerTarifTotal(annonce));
 			render(moi, annonce);
 		}
 		render();

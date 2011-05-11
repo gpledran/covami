@@ -21,7 +21,11 @@
 	<hr>
 	#{list items:mesAmis, as:'ami' } 
 		<div class="content">
-			<div class="nom">${ami.prenom.capitalizeWords()}&nbsp;${ami.nom.capitalizeWords()}&nbsp;</div>
+					
+			<div class="nom">${ami.prenom.capitalizeWords()}&nbsp;${ami.nom.capitalizeWords()}&nbsp;
+			<a href="@{Commentaires.commentaires(ami.id)}" title="Voir ses commentaires"><img src="/public/images/com.png"/ style="margin-top: -4px; float: right;"></a>
+			</div>
+			
 			<div class="bouton"><a class="submit" href="@{Utilisateurs.supprimerami(ami.id)}" onclick="return(confirm('Etes-vous sur de vouloir supprimer votre ami ?'));">Supprimer</a></div>
 		</div>
  	#{/list}

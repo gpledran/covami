@@ -28,6 +28,9 @@ GET		/cherchertarif							Annonces.cherchertarif
 # Carte page
 GET		/carte									Carte.affichercarte
 
+# Commentaire
+GET 	/commentaires					Commentaires.commentaires
+
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
