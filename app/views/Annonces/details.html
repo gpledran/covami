@@ -12,7 +12,7 @@
 	<span class="nom_label">Date de depart</span>
 	<span class="nom">${annonce?.monTrajet?.dateDepart.format('dd MMMM yyyy hh:mm', 'fr')}</span>
 	
-	<span class="nom_label">Tarif par personne</span>
+	<span class="nom_label">Tarif total</span>
 	<span class="nom">${annonce?.tarifParPersonne}&euro;</span>
 	
 	<span class="nom_label">Ville de depart</span>
@@ -28,7 +28,24 @@
 				${etape.nom.capitalizeWords()}&nbsp;-&nbsp;
 	 	 	#{/list}
  	 	</span>
-	#{/if}&nbsp;	
+	#{/if}
+	#{if annonce.monUtilisateur.mesCriteres}
+		<span class="nom_label">Crit&egrave;res accept&eacute;s</span>
+		<span class="nom">-&nbsp;
+			#{list items:annonce.monUtilisateur.mesCriteres, as:'critere' } 
+				${critere.capitalizeWords()}&nbsp;-&nbsp;
+	 	 	#{/list}
+ 	 	</span>
+	#{/if}
+	#{if annonce.mesPassagers}
+		<span class="nom_label">Passagers</span>
+		<span class="nom">-&nbsp;
+			#{list items:annonce.mesPassagers, as:'passager' } 
+				${passager.prenom.capitalizeWords()}&nbsp;${passager.nom.capitalizeWords()}&nbsp;-&nbsp;
+	 	 	#{/list}
+ 	 	</span>
+	#{/if}
+	&nbsp;
 </div>
 <a class="submit" href="javascript:history.back()">Revenir &agrave; la liste</a>
 #{if moi == annonce.monUtilisateur}
@@ -44,6 +61,8 @@
 		%{dejaDemande = 1}%
 	#{/if}
 #{/list}
-#{if demandeEnCours == 0 && dejaDemande == 0}
-	<a class="submit" href="@{Annonces.demandeparticipation(annonce.id)}">Demande de participation</a>
+#{if annonce.monUtilisateur != moi}
+	#{if demandeEnCours == 0 || dejaDemande == 0}
+		<a class="submit" href="@{Annonces.demandeparticipation(annonce.id)}">Demande de participation</a>
+	#{/if}
 #{/if}

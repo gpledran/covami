@@ -48,6 +48,7 @@
 			&nbsp;
 		</div>
 	<p>
+		<input id="typeVoiture" value="${annonce?.monUtilisateur?.maVoiture?.type}" type="hidden" />
 		<input id="mesAnciennesEtapes" name="mesAnciennesEtapes" value="${annonce?.monTrajet?.mesEtapes?.id}" type="hidden"/>
 		<input id="mesEscales" name="mesEscales" type="hidden" />
 	    <input id="submit" type="submit" value="Sauvegarder" />
@@ -71,19 +72,23 @@
 			var arr = $("#villeArrivee option:selected").val();
 			var anciennes = $("#mesAnciennesEtapes").val();
 			anciennes = anciennes.substr(1, anciennes.length-2).split(', ').join('-');
+			alert(anciennes);
 			if (dep != "-" && arr != "-") {
-				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee', ':mesAnciennesEtapes') /}
+				$('#escales').html("<img src='/public/images/ajax-loader.gif' alt='chargement' />");
+				var type =  $("#typeVoiture").val();
+				var ancientarif = $("#tarifTotal").val();
+				var listeEscales = #{jsAction @chercheretapeschargement(':depart', ':arrivee',':mesAnciennesEtapes', ':type_voiture', ':ancien_tarif') /}
 				$('#escales').load(
-					listeEscales({depart: dep, arrivee: arr, mesAnciennesEtapes: anciennes})
+					listeEscales({depart: dep, arrivee: arr, mesAnciennesEtapes: anciennes, type_voiture: type, ancien_tarif: ancientarif})
 				)			
 			}
 		});
 		
 		$("#tarif-slider").slider({
-			min: 0,
-			max: 100,
+			min: parseInt(${annonce.tarifParPersonne / 2}, 10),
+			max: parseInt(${annonce.tarifParPersonne + ( annonce.tarifParPersonne / 2 )}, 10),
 			step: 1,
-			value: ${annonce.tarifParPersonne},
+			value: parseInt(${annonce.tarifParPersonne}, 10),
 			slide: function(event, ui) {
 				$("#lbltarif").html('Tarif total - ' + ui.value + ' &euro;');
 			},
@@ -92,7 +97,7 @@
 				$("#tarifTotal").attr("value", $("#tarif-slider").slider("values", 0));
 			}
 		});
-		$("#lbltarif").html('Tarif total - ' + $("#tarif-slider").slider("values", 0) + ' &euro;');
+		$("#lbltarif").html('Tarif total - ' + parseInt($("#tarif-slider").slider("values", 0), 10) + ' &euro;');
 		
 		$('#heureDepart').timepicker({});
 		
@@ -101,11 +106,13 @@
 			var arr = $("#villeArrivee option:selected").val();
 			var anciennes = $("#mesAnciennesEtapes").val();
 			anciennes = anciennes.substr(1, anciennes.length-2).split(', ').join('-');
+			$('#escales').html("<img src='/public/images/ajax-loader.gif' alt='chargement' />");
 			if (dep != "-" && arr != "-") {
-				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee', ':mesAnciennesEtapes') /}
+				var type =  $("#typeVoiture").val();
+				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee',':mesAnciennesEtapes', ':type_voiture') /}
 				$('#escales').load(
-					listeEscales({depart: dep, arrivee: arr, mesAnciennesEtapes: anciennes})
-				)			
+					listeEscales({depart: dep, arrivee: arr, mesAnciennesEtapes: anciennes, type_voiture: type})
+				)
 			}
 		});
 		

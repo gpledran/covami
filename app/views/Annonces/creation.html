@@ -87,7 +87,7 @@
 				$("#tarifTotal").attr("value", $("#tarif-slider").slider("values", 0));
 			}
 		});
-		$("#lbltarif").html('Tarif total - ' + $("#tarif-slider").slider("values", 0) + ' &euro;');
+		$("#lbltarif").html('Tarif total - ' + parseInt($("#tarif-slider").slider("values", 0), 10) + ' &euro;');
 		
 		$('#heureDepart').timepicker({});
 		
@@ -95,6 +95,7 @@
 			var dep = $("#villeDepart option:selected").val();
 			var arr = $("#villeArrivee option:selected").val();
 			if (dep != "-" && arr != "-") {
+				$('#escales').html("<img src='/public/images/ajax-loader.gif' alt='chargement' />");
 				var type =  $("#typeVoiture").val();
 				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee',':mesAnciennesEtapes', ':type_voiture') /}
 				$('#escales').load(
