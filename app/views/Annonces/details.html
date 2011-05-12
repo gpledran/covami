@@ -28,7 +28,15 @@
 				${etape.nom.capitalizeWords()}&nbsp;-&nbsp;
 	 	 	#{/list}
  	 	</span>
-	#{/if}&nbsp;	
+	#{/if}
+	#{if annonce.monUtilisateur.mesCriteres}
+		<span class="nom_label">Crit&egrave;res accept&eacute;s</span>
+		<span class="nom">-&nbsp;
+			#{list items:annonce.monUtilisateur.mesCriteres, as:'critere' } 
+				${critere.capitalizeWords()}&nbsp;-&nbsp;
+	 	 	#{/list}
+ 	 	</span>
+	#{/if}	&nbsp;
 </div>
 <a class="submit" href="javascript:history.back()">Revenir &agrave; la liste</a>
 #{if moi == annonce.monUtilisateur}
