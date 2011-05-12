@@ -87,7 +87,7 @@
 				$("#tarifTotal").attr("value", $("#tarif-slider").slider("values", 0));
 			}
 		});
-		$("#lbltarif").html('Tarif total - ' + $("#tarif-slider").slider("values", 0) + ' &euro;');
+		$("#lbltarif").html('Tarif total - ' + parseInt($("#tarif-slider").slider("values", 0), 10) + ' &euro;');
 		
 		$('#heureDepart').timepicker({});
 		

@@ -2,6 +2,7 @@
 	#{list items:mesEtapes, as:'etape' }
 		<input class="lesetapes" type="checkbox" value="${etape.id}" 
 		#{list items:mesAnciennes, as:'ancienne'}
+		ancienne
 			#{if ancienne == etape.id}
 				checked
 			#{/if}
@@ -23,9 +24,8 @@
 		$("#tarif-slider").slider({
 			min: parseInt(${tarif / 2}, 10),
 			max: parseInt(${tarif + (tarif / 2)}, 10),
-			step: 1,
-			value: parseInt(${tarif}, 10)
+			value: parseInt(${ancien_tarif}, 10)
 		});
-		$("#lbltarif").html('Tarif total - ' + parseInt(${tarif}, 10) + ' &euro;');
+		$("#lbltarif").html('Tarif total - ' + parseInt(${ancien_tarif}, 10) + ' &euro;');
 	});
 </script>
