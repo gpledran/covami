@@ -242,12 +242,60 @@ public class Annonces extends Controller {
 
 	public static void demandeparticipation(long id) {
 		Annonce annonce = Annonce.find("byId", id).first();
-		Utilisateur passager = Utilisateur
-				.find("byEmail", Security.connected()).first();
-		annonce.mesDemandePassagers.add(passager);
-		annonce.save();
-		flash.success("Demande envoyée");
-		details(id);
+		render(annonce);
+		// Utilisateur passager = Utilisateur
+		// .find("byEmail", Security.connected()).first();
+		// annonce.mesDemandePassagers.add(passager);
+		// annonce.save();
+		// flash.success("Demande envoyée");
+		// details(id);
+
+	}
+
+	public static void cherchervillesarrivees(Long depart, Long annonce_id) {
+		Annonce annonce = Annonce.findById(annonce_id);
+		List<Ville> villesSuivantes = annonce.monTrajet.mesEtapes;
+		Ville villeDepart = Ville.findById(depart);
+		int ville = villesSuivantes.lastIndexOf(villeDepart);
+		villesSuivantes.remove(ville);
+		for (int i = 0; i < ville; i++) {
+			villesSuivantes.remove(i);
+		}
+		render(villesSuivantes);
+	}
+
+	public static void calculertarifparpersonne(Long ville_depart,
+			Long ville_arrivee, int nb_personnes, String type_voiture,
+			Long tarif_base) {
+
+		int tarifTotal = 0, kmsTotal = 0;
+		Ville villeDepart = Ville.findById(ville_depart);
+		Ville villeArrivee = Ville.findById(ville_arrivee);
+		List<Ville> mesEtapes = toutesLesEtapes(villeDepart, villeArrivee);
+		for (int i = 0; i < mesEtapes.size() - 1; i++) {
+			Troncon troncon = Troncon.find(
+					"byVilleActuelle_idAndVilleSuivante_id",
+					mesEtapes.get(i).id, mesEtapes.get(i + 1)).first();
+			kmsTotal += troncon.nbKms;
+		}
+		// coefficient d'essence
+		if (type_voiture.equals("petite"))
+			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.1);
+		else if (type_voiture.equals("moyenne"))
+			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.2);
+		else if (type_voiture.equals("grande"))
+			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.3);
+
+		double coeff = (double) tarif_base / (double) tarifTotal;
+
+		tarifTotal = (int) Math.ceil(tarifTotal * coeff);
+
+		tarifTotal = tarifTotal / (nb_personnes + 1);
+
+		render(tarifTotal);
+	}
+
+	public static void sauvegarderparticipation(Long id) {
 
 	}
 
@@ -348,7 +396,6 @@ public class Annonces extends Controller {
 	}
 
 	public static int calculertarif(List<Ville> mesEtapes, String type_voiture) {
-		// tester si l'utilisateur à une voiture ?
 		int tarifTotal = 0, kmsTotal = 0;
 		for (int i = 0; i < mesEtapes.size() - 1; i++) {
 			Troncon troncon = Troncon.find(

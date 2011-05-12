@@ -1,0 +1,21 @@
+<p> 
+	<label for="arrivee">Ville d'arriv&eacute;e</label> 
+	<select id="villeArrivee" class="etape" name="arrivee">
+		<option value="-">------</option>
+		#{list items:villesSuivantes, as:'ville' } 
+			<option value="${ville.id}">${ville.nom}</option>
+		#{/list}
+	</select> 
+</p>
+
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$("#villeArrivee").change(function() {
+			$("#nb").css('visibility', 'visible');
+			$("#tarif").css('visibility', 'visible');
+			$("#nbParticipants").val('-');
+			$("#tarifparpersonne").val('');
+			$('#affichertarif').html('');
+		});
+	});
+</script>
