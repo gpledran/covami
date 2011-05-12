@@ -5,7 +5,7 @@
 <h1>Toutes les annonces</h1>
 #{form @recherche()}
 	<div id="blocaction"style="text-align :center;">
-	<span style="color:#333;">Zone de recherche</span>
+	<span style="cursor:pointer;" id="bouton-deroulant" style="color:#333;">Zone de recherche</span>
 	<div id="search-box" style="text-align:center;">
 		<p> 
 			<label for="villeDepart_id">Ville de d&eacute;part</label> 
@@ -89,21 +89,15 @@ $(function() {
 		
 	$('#heureDepart').timepicker({});
 	//quant on clique sur le div blocaction 
-	$("#blocaction").hover(function(){ 
+	$("#bouton-deroulant").click(function(){ 
 		//si le div deroulant est caché on le montre 
 		if($("#search-box").css("display")=="none") { 
 			$("#search-box").slideToggle(); 
+		}else{
+			$("#search-box").slideToggle();
 		} 
 	}); 
-	//quand on resort de déroulant 
-	$("#blocaction").hover(function(){ 
-		//rien 
-	},function(){ 
-		//si le div déroulant est visible, on le cache 
-		if($("#search-box").css("display")=="block") { 
-			$("#search-box").slideToggle(); 
-		} 
-	}); 
+	 
 	
 });		
 </script>
