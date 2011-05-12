@@ -43,9 +43,23 @@ public class Commentaires extends Controller {
 		if(Security.isConnected()){
 			flash.clear();
 			Utilisateur utilisateur = Utilisateur.findById(id_user);
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected()).first();
+			
 			List<Commentaire> commentaires = Commentaire.find("byMonUtilisateur_id", utilisateur.id).fetch();
 			Collections.reverse(commentaires);
-			render(commentaires, utilisateur);
+			String valide = "false";
+			// on verifie que 'moi' a deja effectué un trajet avec l'utilisateur
+			List<Annonce> user_annonces = Annonce.find("byMonUtilisateur_id", utilisateur.id).fetch();
+			for(Annonce annonce : user_annonces){
+				for(Utilisateur u : annonce.mesPassagers){
+					if(u.id == moi.id && annonce.monTrajet.dateDepart.compareTo(new Date()) < 0){
+						valide = "true";
+					}
+				}
+			}
+			System.out.println("valide = "+valide);
+			
+			render(commentaires, utilisateur, valide);
 		}
 		render();
 	}

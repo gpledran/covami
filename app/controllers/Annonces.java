@@ -63,9 +63,9 @@ public class Annonces extends Controller {
 		if (Security.isConnected()) {
 
 			List<Annonce> annonces = Annonce.findAll();
-
+			
 			flash.clear();
-			renderArgs.put("annonces", annonces);
+			render(annonces);
 
 		}
 		render();

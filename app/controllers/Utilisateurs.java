@@ -319,7 +319,7 @@ public class Utilisateurs extends Controller {
 			Annonce monAnnonce = Annonce.findById(annonce_id);
 
 			Utilisateur passager = Utilisateur.findById(id);
-
+			monAnnonce.placesRestantes -=1;
 			monAnnonce.mesPassagers.add(passager);
 
 			monAnnonce.mesDemandePassagers.remove(passager);

@@ -3,7 +3,7 @@
 
 <h1>Commentaire sur ${utilisateur.prenom}&nbsp;${utilisateur.nom}</h1>
 
-
+#{if valide == "true"}
 <form action="@{Commentaires.ajoutercommentaire()}" method="POST" style="text-align:center;">
 	<input type="hidden" name="id_user" value="${utilisateur?.id}"/>
 	<span class="error">#{error 'message' /}</span>
@@ -20,6 +20,7 @@
 	</select>
 	<input type="submit" class="submit" />
 </form>
+#{/if}
 #{list items : commentaires, as: 'com'}
 	<div style="height:25px;">
 		<div class="auteurcom">${com.auteur}</div><br/>

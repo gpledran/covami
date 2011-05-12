@@ -25,12 +25,15 @@ public class Annonce extends Model {
 	@JoinTable(name = "DemandeAnnonceEnAttente")
 	public List<Utilisateur> mesDemandePassagers;
 	
+	
+	public int placesRestantes;
 
 	public Annonce(int tarifParPersonne, Utilisateur monUtilisateur,
-			Trajet monTrajet) {
+			Trajet monTrajet, int placesRestantes) {
 		super();
 		this.tarifParPersonne = tarifParPersonne;
 		this.monUtilisateur = monUtilisateur;
 		this.monTrajet = monTrajet;
+		this.placesRestantes = placesRestantes;
 	}
 }
