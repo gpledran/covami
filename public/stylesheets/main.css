@@ -486,8 +486,8 @@ input[type=submit]:active,input[type=submit]:focus,a.submit:active,a.submit:focu
 }
 
 .error {
-	color: red;	
-	font-size: 10px;
+	color: #c00;	
+	font-size: 14px;
 }
 
 a{

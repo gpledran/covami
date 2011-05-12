@@ -1,0 +1,79 @@
+#{extends 'main.html' /}
+#{set title:'Covami - Demande de participation' /}
+
+
+<h1>Demande de participation &agrave; l'annonce ${annonce.monTrajet.villeDepart.nom} vers ${annonce.monTrajet.villeArrivee.nom}</h1>
+
+#{form @sauvegarderparticipation()}
+	<input id="annonce" type="hidden" name="annonce.id" value="${annonce.id}" />
+	<input id="typeVoiture" value="${annonce?.monUtilisateur?.maVoiture?.type}" type="hidden" /> 
+	<p> 
+		<label for="depart">Ville de d&eacute;part</label> 
+		<select id="villeDepart" class="etape" name="depart">
+			<option value="-">------</option>
+			#{list items:annonce.monTrajet.mesEtapes, as:'ville' } 
+				<option value="${ville.id}">${ville.nom}</option>
+			#{/list}
+		</select> 
+	</p> 
+	<div id="arrivee">
+
+	</div>
+	<div id="nb">
+		<p> 
+			<label for="depart">Nombre participants</label> 
+			<select id="nbParticipants" class="etape" name="depart">
+				<option value="-1">-----</option>
+				#{list items:1..annonce.placesRestantes, as:'place' } 
+					<option value="${place}">${place}</option>
+				#{/list}
+			</select> 
+		</p>
+	</div>
+	<div id="tarif">
+		
+	</div>
+	<p>
+		<input id="tarifBase" value="${annonce?.tarifParPersonne}" type="hidden" />
+		<input id="mesEscales" name="mesEscales" type="hidden" />
+	    <input id="submit" type="submit" value="Envoyer la demande" />
+	</p>
+#{/form}
+
+  		
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$("#nb").css('visibility', 'hidden');
+		$("#tarif").css('visibility', 'hidden');
+		$('#tarifparpersonne').attr('disabled', true);
+		
+		$("#villeDepart").change(function() {
+			var dep = $("#villeDepart option:selected").val();
+			$('#arrivee').html("<img src='/public/images/ajax-loader.gif' alt='chargement' />");
+			if (dep != "-") {
+				$("#nb").css('visibility', 'hidden');
+				$("#tarif").css('visibility', 'hidden');
+				var annonceId = $("#annonce").val();
+				var listeVillesArrivees = #{jsAction @cherchervillesarrivees(':depart', ':annonce_id') /}
+				$('#arrivee').load(
+					listeVillesArrivees({depart: dep, annonce_id: annonceId})
+				)
+			}
+		});
+		
+		$("#nbParticipants").change(function() {
+			$('#tarif').html("<img src='/public/images/ajax-loader.gif' alt='chargement' />");
+			var dep = $("#villeDepart option:selected").val();
+			var arr = $("#villeArrivee option:selected").val();
+			var nb = $("#nbParticipants option:selected").val();
+			var type = $("#typeVoiture").val();
+			var tarifBase = $("#tarifBase").val();
+			if (nb != "-" && dep != "-" && arr != "-") {
+				var tarif = #{jsAction @calculertarifparpersonne(':ville_depart', ':ville_arrivee', ':nb_personnes', ':type_voiture', ':tarif_base') /}
+				$("#tarif").load(
+					tarif({ville_depart: dep, ville_arrivee: arr, nb_personnes: nb, type_voiture: type, tarif_base: tarifBase})
+				)
+			}
+		});
+	});
+</script>
