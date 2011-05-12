@@ -74,6 +74,7 @@
 			anciennes = anciennes.substr(1, anciennes.length-2).split(', ').join('-');
 			alert(anciennes);
 			if (dep != "-" && arr != "-") {
+				$('#escales').html("<img src='/public/images/ajax-loader.gif' alt='chargement' />");
 				var type =  $("#typeVoiture").val();
 				var ancientarif = $("#tarifTotal").val();
 				var listeEscales = #{jsAction @chercheretapeschargement(':depart', ':arrivee',':mesAnciennesEtapes', ':type_voiture', ':ancien_tarif') /}
@@ -105,6 +106,7 @@
 			var arr = $("#villeArrivee option:selected").val();
 			var anciennes = $("#mesAnciennesEtapes").val();
 			anciennes = anciennes.substr(1, anciennes.length-2).split(', ').join('-');
+			$('#escales').html("<img src='/public/images/ajax-loader.gif' alt='chargement' />");
 			if (dep != "-" && arr != "-") {
 				var type =  $("#typeVoiture").val();
 				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee',':mesAnciennesEtapes', ':type_voiture') /}

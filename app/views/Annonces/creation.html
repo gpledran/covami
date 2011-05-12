@@ -95,6 +95,7 @@
 			var dep = $("#villeDepart option:selected").val();
 			var arr = $("#villeArrivee option:selected").val();
 			if (dep != "-" && arr != "-") {
+				$('#escales').html("<img src='/public/images/ajax-loader.gif' alt='chargement' />");
 				var type =  $("#typeVoiture").val();
 				var listeEscales = #{jsAction @chercheretapes(':depart', ':arrivee',':mesAnciennesEtapes', ':type_voiture') /}
 				$('#escales').load(
