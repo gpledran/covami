@@ -73,10 +73,10 @@ html, body {
     padding: 5px;
 }
 
-#login .error {
-    background: #c00 !important;
-}
+/* #login .error { */
+/*     background: #c00 !important; */
+/* } */
 
-#login .success {
-    background: #008800 !important;
+/* #login .success { */
+/*     background: #008800 !important; */
 }
