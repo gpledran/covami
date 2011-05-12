@@ -63,7 +63,7 @@ public class Annonces extends Controller {
 		if (Security.isConnected()) {
 
 			List<Annonce> annonces = Annonce.findAll();
-			
+
 			flash.clear();
 			render(annonces);
 
@@ -207,6 +207,9 @@ public class Annonces extends Controller {
 			validation.keep();
 			creation(annonce);
 		} else {
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+
 			Ville villeDepart = Ville.findById(depart);
 			Ville villeArrivee = Ville.findById(arrivee);
 
@@ -223,6 +226,7 @@ public class Annonces extends Controller {
 
 			Trajet monTrajet = new Trajet(madate, villeDepart, villeArrivee,
 					etapes);
+			annonce.placesRestantes = Integer.parseInt(moi.maVoiture.nbPlaces) - 1;
 			annonce.monTrajet = monTrajet;
 			annonce.monUtilisateur = Utilisateur.find("byEmail",
 					Security.connected()).first();

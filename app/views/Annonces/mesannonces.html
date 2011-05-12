@@ -31,7 +31,7 @@
  		<td style="width : 100px;">${annonce?.monTrajet?.dateDepart?.format('dd/MM/yyyy')}</td>
  		<td style="width : 100px;">${annonce?.monTrajet?.dateDepart?.format('HH:mm')}</td>
  		<td style="width : 90px;">${annonce?.tarifParPersonne}&euro;</td>
- 		<td style="width : 90px;">${annonces?.placesRestantes}</td>
+ 		<td style="width : 90px;">${annonce?.placesRestantes}</td>
  		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(annonce?.id)}">D&eacute;tails</a></td>
  	</tr> 
  #{/list}
