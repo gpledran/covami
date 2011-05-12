@@ -286,7 +286,7 @@ public class Annonces extends Controller {
 		else if (type_voiture.equals("grande"))
 			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.3);
 
-		double coeff = tarif_base / tarifTotal;
+		double coeff = (double) tarif_base / (double) tarifTotal;
 
 		tarifTotal = (int) Math.ceil(tarifTotal * coeff);
 
