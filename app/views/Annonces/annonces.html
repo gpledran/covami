@@ -3,10 +3,38 @@
 %{def couleur = 0}%
 
 <h1>Toutes les annonces</h1>
-#{form @recherche(field)}
-	<div style="text-align:center;">
-		<input type="text" name="field" value="Annonceur, Ville, Date de depart" style="text-align:center;" onClick="javascript:this.value=''"/>
+#{form @recherche()}
+	<div id="blocaction"style="text-align :center;">
+	<span style="cursor:pointer;" id="bouton-deroulant" style="color:#333;">Zone de recherche</span>
+	<div id="search-box" style="text-align:center;">
+		<p> 
+			<label for="villeDepart_id">Ville de d&eacute;part</label> 
+			<select id="villeDepart" class="etape" name="villeDepart_id" style="width : 275px;">
+				<option value="">------</option>
+				#{list items:lesVilles, as:'ville' } 
+					<option value="${ville.id}">${ville.nom}</option>
+				#{/list}
+			</select> 
+		</p>
+		<p> 
+			<label for="villeArrivee_id">Ville d'arriv&eacute;e</label> 
+			<select id="villeArrivee" class="etape" name="villeArrivee_id" style="width : 275px;">
+				<option value="">------</option>
+				#{list items:lesVilles, as:'ville' } 
+					<option value="${ville.id}" >${ville.nom}</option>
+				#{/list}
+			</select> 
+		</p>
+		<p> 
+			<label for="dateDepart">Date de d&eacute;part</label>
+			<input id="datepicker" type="text" name="dateDepart"/>
+		</p>
+		<p> 
+			<label for="heureDepart">Heure de d&eacute;part</label>
+			<input id="heureDepart" type="text" name="heureDepart" />
+		</p>
 		<input type="submit" value="Rechercher" style="margin: auto 0;"/>
+	</div>
 	</div>
 #{/form}
 <table id="tableMesAnnonces">
@@ -41,6 +69,35 @@
   		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(annonces.id)}">D&eacute;tails</a></td>
   	</tr> 
   #{/list} 
-  
-  
 </table>
+  		
+<script type="text/javascript" charset="utf-8">
+$(function() {
+	$(document).ready(function() {
+		$("#datepicker").datepicker({
+			dateFormat:'dd/mm/yy', 
+			showAnim:'fadeIn',
+			dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+			monthNames: ['Janvier','F&eacute;vrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','D&eacute;cembre'],
+			autoSize: true,
+			minDate: '0'
+		});
+		
+		$("#search-box").slideToggle();
+	
+	});
+		
+	$('#heureDepart').timepicker({});
+	//quant on clique sur le div blocaction 
+	$("#bouton-deroulant").click(function(){ 
+		//si le div deroulant est caché on le montre 
+		if($("#search-box").css("display")=="none") { 
+			$("#search-box").slideToggle(); 
+		}else{
+			$("#search-box").slideToggle();
+		} 
+	}); 
+	 
+	
+});		
+</script>
