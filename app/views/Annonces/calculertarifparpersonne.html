@@ -1,4 +1,10 @@
 <p>
 	<label for="tarifparpersonne">Tarif / Personne</label>
-	<input id="tarifparpersonne" value="${tarifTotal}" type="hidden"><label style="" id="affichertarif">${tarifTotal}&nbsp;&euro;</label>
+	<input id="tarifparpersonne" value="${tarifTotal}" type="hidden" name="prixParPassager"><label id="affichertarif">${tarifTotal}&nbsp;&euro;</label>
 </p> 
+
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$("#submit").css('visibility', 'visible');
+	});
+</script>

@@ -8,21 +8,20 @@ import play.db.jpa.*;
 import play.data.validation.*;
 
 @Entity
-public class DemandeAnnonceEnAttente extends Model {
-
-	@Required
+public class MesPassagers extends Model {
 	@OneToOne
+	@Required
 	public Annonce Annonce;
 
-	@Required
 	@OneToOne
-	public Utilisateur mesDemandePassagers;
+	@Required
+	public Utilisateur mesPassagers;
 
 	@Required
 	public int nbPassagers;
 
-	@Required
 	@OneToOne
+	@Required
 	public Ville villeDebut;
 
 	@OneToOne
@@ -32,12 +31,12 @@ public class DemandeAnnonceEnAttente extends Model {
 	@Required
 	public int prixParPassager;
 
-	public DemandeAnnonceEnAttente(models.Annonce annonce,
-			Utilisateur mesDemandePassagers, int nbPassagers, Ville villeDebut,
-			Ville villeFin, int prixParPassager) {
+	public MesPassagers(models.Annonce annonce, Utilisateur mesPassagers,
+			int nbPassagers, Ville villeDebut, Ville villeFin,
+			int prixParPassager) {
 		super();
 		Annonce = annonce;
-		this.mesDemandePassagers = mesDemandePassagers;
+		this.mesPassagers = mesPassagers;
 		this.nbPassagers = nbPassagers;
 		this.villeDebut = villeDebut;
 		this.villeFin = villeFin;

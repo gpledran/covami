@@ -23,6 +23,7 @@ import models.Utilisateur;
 import models.Annonce;
 import models.Ville;
 import models.Voiture;
+import models.DemandeAnnonceEnAttente;
 import play.*;
 import play.data.validation.Required;
 import play.data.validation.Valid;
@@ -295,8 +296,24 @@ public class Annonces extends Controller {
 		render(tarifTotal);
 	}
 
-	public static void sauvegarderparticipation() {
+	public static void sauvegarderparticipation(Long id, Long depart,
+			Long arrivee, int nbPassagers, int prixParPassager) {
 
+		Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+				.first();
+
+		Annonce annonce = Annonce.findById(id);
+		Ville villeDebut = Ville.findById(depart);
+		Ville villeFin = Ville.findById(arrivee);
+
+		DemandeAnnonceEnAttente demande = new DemandeAnnonceEnAttente(annonce,
+				moi, nbPassagers, villeDebut, villeFin, prixParPassager);
+		demande.save();
+		annonce.mesDemandePassagers.add(demande);
+		annonce.save();
+
+		flash.success("Demande de participation envoyée avec succès.");
+		details(id);
 	}
 
 	public static List<Ville> toutesLesEtapes(Ville villeDepart,

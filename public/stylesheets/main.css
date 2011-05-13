@@ -359,6 +359,25 @@ form p:hover label:after {
 	content: " :";
 }
 
+label .prix{
+	cursor: pointer;
+	display: block;
+	float: left;
+	font-size: 13px;
+	font-weight: bold;
+	line-height: 28px;
+	margin-bottom: 5px;
+	width: 150px;
+}
+
+form p:hover label#prix{ /*color: #0459b7;*/
+	color: #black;
+}
+
+form p:hover label#prix:after {
+	content: "";
+}
+
 input[type=text],input[type=password] {
 	background: rgba(255, 255, 255, 0.9);
 	background: -moz-linear-gradient(90deg, #fff, #eee); /* Firefox */
