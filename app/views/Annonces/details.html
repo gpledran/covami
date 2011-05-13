@@ -43,7 +43,7 @@
 	#{if annonce.mesPassagers}
 		<span class="nom_label">Passagers</span>
 		<span class="nom">-&nbsp;
-			#{list items:annonce.mesPassagers, as:'passager' } 
+			#{list items:annonce.mesPassagers.mesPassagers, as:'passager' } 
 				${passager.prenom.capitalizeWords()}&nbsp;${passager.nom.capitalizeWords()}&nbsp;-&nbsp;
 	 	 	#{/list}
  	 	</span>

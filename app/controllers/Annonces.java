@@ -17,6 +17,7 @@ import org.codehaus.groovy.runtime.ConvertedClosure;
 
 import com.sun.jmx.snmp.Timestamp;
 
+import models.Notification;
 import models.Trajet;
 import models.Troncon;
 import models.Utilisateur;
@@ -55,6 +56,12 @@ public class Annonces extends Controller {
 			for (Annonce a : mesAnnonces) {
 				nbDemandes += a.mesDemandePassagers.size();
 			}
+
+			List<Notification> mesNotifications = Notification.find(
+					"byMonUtilisateur_id", user.id).fetch();
+
+			nbDemandes += mesNotifications.size();
+
 			renderArgs.put("nbDemandes", nbDemandes);
 		}
 	}
