@@ -5,7 +5,7 @@
 <h1>Demande de participation &agrave; l'annonce ${annonce.monTrajet.villeDepart.nom} vers ${annonce.monTrajet.villeArrivee.nom}</h1>
 
 #{form @sauvegarderparticipation()}
-	<input id="annonce" type="hidden" name="annonce.id" value="${annonce.id}" />
+	<input id="annonce" type="hidden" name="id" value="${annonce.id}" />
 	<input id="typeVoiture" value="${annonce?.monUtilisateur?.maVoiture?.type}" type="hidden" /> 
 	<p> 
 		<label for="depart">Ville de d&eacute;part</label> 
@@ -22,8 +22,8 @@
 	<div id="nb">
 		<p> 
 			<label for="depart">Nombre participants</label> 
-			<select id="nbParticipants" class="etape" name="depart">
-				<option value="-1">-----</option>
+			<select id="nbParticipants" class="etape" name="nbPassagers">
+				<option value="-">-----</option>
 				#{list items:1..annonce.placesRestantes, as:'place' } 
 					<option value="${place}">${place}</option>
 				#{/list}
@@ -45,6 +45,7 @@
 	$(function() {
 		$("#nb").css('visibility', 'hidden');
 		$("#tarif").css('visibility', 'hidden');
+		$("#submit").css('visibility', 'hidden');
 		$('#tarifparpersonne').attr('disabled', true);
 		
 		$("#villeDepart").change(function() {
@@ -53,6 +54,7 @@
 			if (dep != "-") {
 				$("#nb").css('visibility', 'hidden');
 				$("#tarif").css('visibility', 'hidden');
+				$("#submit").css('visibility', 'hidden');
 				var annonceId = $("#annonce").val();
 				var listeVillesArrivees = #{jsAction @cherchervillesarrivees(':depart', ':annonce_id') /}
 				$('#arrivee').load(

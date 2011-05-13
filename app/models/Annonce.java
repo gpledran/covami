@@ -17,23 +17,26 @@ public class Annonce extends Model {
 
 	@OneToOne
 	public Trajet monTrajet;
-	
+
 	@OneToMany
-	public List<Utilisateur> mesPassagers;
-	
-	@ManyToMany
-	@JoinTable(name = "DemandeAnnonceEnAttente")
-	public List<Utilisateur> mesDemandePassagers;
-	
-	
+	public List<MesPassagers> mesPassagers;
+
+	@OneToMany
+	public List<DemandeAnnonceEnAttente> mesDemandePassagers;
+
 	public int placesRestantes;
 
 	public Annonce(int tarifParPersonne, Utilisateur monUtilisateur,
-			Trajet monTrajet, int placesRestantes) {
+			Trajet monTrajet, List<MesPassagers> mesPassagers,
+			List<DemandeAnnonceEnAttente> mesDemandePassagers,
+			int placesRestantes) {
 		super();
 		this.tarifParPersonne = tarifParPersonne;
 		this.monUtilisateur = monUtilisateur;
 		this.monTrajet = monTrajet;
+		this.mesPassagers = mesPassagers;
+		this.mesDemandePassagers = mesDemandePassagers;
 		this.placesRestantes = placesRestantes;
 	}
+
 }

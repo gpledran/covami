@@ -39,32 +39,39 @@ public class Commentaires extends Controller {
 		}
 	}
 
-	public static void commentaires(long id_user){
-		if(Security.isConnected()){
+	public static void commentaires(long id_user) {
+		if (Security.isConnected()) {
 			flash.clear();
 			Utilisateur utilisateur = Utilisateur.findById(id_user);
-			Utilisateur moi = Utilisateur.find("byEmail", Security.connected()).first();
-			
-			List<Commentaire> commentaires = Commentaire.find("byMonUtilisateur_id", utilisateur.id).fetch();
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+
+			List<Commentaire> commentaires = Commentaire.find(
+					"byMonUtilisateur_id", utilisateur.id).fetch();
 			Collections.reverse(commentaires);
 			String valide = "false";
 			// on verifie que 'moi' a deja effectué un trajet avec l'utilisateur
-			List<Annonce> user_annonces = Annonce.find("byMonUtilisateur_id", utilisateur.id).fetch();
-			for(Annonce annonce : user_annonces){
-				for(Utilisateur u : annonce.mesPassagers){
-					if(u.id == moi.id && annonce.monTrajet.dateDepart.compareTo(new Date()) < 0){
+			List<Annonce> user_annonces = Annonce.find("byMonUtilisateur_id",
+					utilisateur.id).fetch();
+			for (Annonce annonce : user_annonces) {
+				for (MesPassagers p : annonce.mesPassagers) {
+					if (p.mesPassagers.id == moi.id
+							&& annonce.monTrajet.dateDepart
+									.compareTo(new Date()) < 0) {
 						valide = "true";
 					}
 				}
 			}
-			System.out.println("valide = "+valide);
-			
+			System.out.println("valide = " + valide);
+
 			render(commentaires, utilisateur, valide);
 		}
 		render();
 	}
-	public static void ajoutercommentaire(@Required String message, @Required String note, long id_user){
-		if(Security.isConnected()){
+
+	public static void ajoutercommentaire(@Required String message,
+			@Required String note, long id_user) {
+		if (Security.isConnected()) {
 			validation.valid(message);
 			validation.valid(note);
 			if (validation.hasErrors()) {
@@ -72,13 +79,16 @@ public class Commentaires extends Controller {
 				validation.keep();
 				commentaires(id_user);
 			} else {
-				Utilisateur auteur = Utilisateur.find("byEmail", Security.connected()).first();
-				Utilisateur utilisateur = Utilisateur.find("byId", id_user).first();
-				
-				Commentaire com = new Commentaire(message, Integer.parseInt(note), utilisateur, auteur);
-	
+				Utilisateur auteur = Utilisateur.find("byEmail",
+						Security.connected()).first();
+				Utilisateur utilisateur = Utilisateur.find("byId", id_user)
+						.first();
+
+				Commentaire com = new Commentaire(message,
+						Integer.parseInt(note), utilisateur, auteur);
+
 				com.save();
-				
+
 				commentaires(id_user);
 			}
 		}

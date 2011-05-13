@@ -9,7 +9,9 @@ import java.util.StringTokenizer;
 
 import models.Annonce;
 import models.Commentaire;
+import models.DemandeAnnonceEnAttente;
 import models.DemandeEnAttente;
+import models.MesPassagers;
 import models.Utilisateur;
 import models.Voiture;
 import play.*;
@@ -311,36 +313,44 @@ public class Utilisateurs extends Controller {
 		render();
 	}
 
-	public static void accepterDemandeAnnonce(Long id, long annonce_id) {
+	public static void accepterDemandeAnnonce(Long id_demande) {
 		if (Security.isConnected()) {
-			// Utilisateur moi = Utilisateur.find("byEmail",
-			// Security.connected())
-			// .first();
-			Annonce monAnnonce = Annonce.findById(annonce_id);
+			DemandeAnnonceEnAttente demande = DemandeAnnonceEnAttente
+					.findById(id_demande);
 
-			Utilisateur passager = Utilisateur.findById(id);
-			monAnnonce.placesRestantes -=1;
-			monAnnonce.mesPassagers.add(passager);
+			Annonce monAnnonce = demande.Annonce;
+			Utilisateur passager = demande.mesDemandePassagers;
 
-			monAnnonce.mesDemandePassagers.remove(passager);
+			MesPassagers monPassager = new MesPassagers(monAnnonce, passager,
+					demande.nbPassagers, demande.villeDebut, demande.villeFin,
+					demande.prixParPassager);
+
+			monPassager.save();
+
+			monAnnonce.mesPassagers.add(monPassager);
+			monAnnonce.placesRestantes -= demande.nbPassagers;
+			monAnnonce.mesDemandePassagers.remove(demande);
+
 			monAnnonce.save();
+
+			demande.delete();
 			flash.success("Passager accepté");
 			mesdemandes();
 		}
 		render();
 	}
 
-	public static void refuserDemandeAnnonce(Long id, long annonce_id) {
+	public static void refuserDemandeAnnonce(Long id_demande) {
 		if (Security.isConnected()) {
-			// Utilisateur moi = Utilisateur.find("byEmail",
-			// Security.connected())
-			// .first();
-			Annonce monAnnonce = Annonce.findById(annonce_id);
+			DemandeAnnonceEnAttente demande = DemandeAnnonceEnAttente
+					.findById(id_demande);
 
-			Utilisateur passager = Utilisateur.findById(id);
+			Annonce monAnnonce = demande.Annonce;
 
-			monAnnonce.mesDemandePassagers.remove(passager);
+			monAnnonce.mesDemandePassagers.remove(demande);
+
 			monAnnonce.save();
+			demande.delete();
 			flash.success("Passager refusé");
 			mesdemandes();
 		}

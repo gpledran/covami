@@ -23,6 +23,7 @@ import models.Utilisateur;
 import models.Annonce;
 import models.Ville;
 import models.Voiture;
+import models.DemandeAnnonceEnAttente;
 import play.*;
 import play.data.validation.Required;
 import play.data.validation.Valid;
@@ -160,77 +161,106 @@ public class Annonces extends Controller {
 		render();
 	}
 
-	public static void recherche(String villeDepart_id, String villeArrivee_id, String dateDepart, String heureDepart) {
+	public static void recherche(String villeDepart_id, String villeArrivee_id,
+			String dateDepart, String heureDepart) {
 		if (Security.isConnected()) {
 			List<Annonce> pAnnonces = new ArrayList<Annonce>();
 			// tous les champs remplis
-			if(!villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty() && !dateDepart.isEmpty() && !heureDepart.isEmpty()){
+			if (!villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty()
+					&& !dateDepart.isEmpty() && !heureDepart.isEmpty()) {
 				Date searchDate;
 				try {
 					searchDate = retournerDate(dateDepart, heureDepart);
-					Trajet trajet = Trajet.find("villeDepart_id like ? and villeArrivee_id like ? and dateDepart like ?", Integer.parseInt(villeDepart_id), Integer.parseInt(villeArrivee_id), searchDate).first();
-					if(trajet!=null)
-						pAnnonces = Annonce.find("byMonTrajet_id", trajet.id).fetch();
+					Trajet trajet = Trajet
+							.find("villeDepart_id like ? and villeArrivee_id like ? and dateDepart like ?",
+									Integer.parseInt(villeDepart_id),
+									Integer.parseInt(villeArrivee_id),
+									searchDate).first();
+					if (trajet != null)
+						pAnnonces = Annonce.find("byMonTrajet_id", trajet.id)
+								.fetch();
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-			}else if(!villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty() && dateDepart.isEmpty() && heureDepart.isEmpty()){
+			} else if (!villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty()
+					&& dateDepart.isEmpty() && heureDepart.isEmpty()) {
 				// champs rempli : villeDepart + villeArrivee
-				Trajet trajet = Trajet.find("villeDepart_id like ? and villeArrivee_id like ? ", Integer.parseInt(villeDepart_id), Integer.parseInt(villeArrivee_id)).first();
-				if(trajet!=null)
-					pAnnonces = Annonce.find("byMonTrajet_id", trajet.id).fetch();
-				
-			}else if(!villeDepart_id.isEmpty() && villeArrivee_id.isEmpty() && dateDepart.isEmpty() && heureDepart.isEmpty()){
-				// champs rempli : villeDepart				
-				Trajet trajet = Trajet.find("villeDepart_id like ? ", Integer.parseInt(villeDepart_id)).first();
-				if(trajet!=null)
-					pAnnonces = Annonce.find("byMonTrajet_id", trajet.id).fetch();
-				
-			}else if(villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty() && dateDepart.isEmpty() && heureDepart.isEmpty()){
-				// champs rempli : villeArrivee				
-				Trajet trajet = Trajet.find("villeArrivee_id like ? ", Integer.parseInt(villeArrivee_id)).first();
-				if(trajet!=null)
-					pAnnonces = Annonce.find("byMonTrajet_id", trajet.id).fetch();
-			}else if(villeDepart_id.isEmpty() && villeArrivee_id.isEmpty() && !dateDepart.isEmpty() && heureDepart.isEmpty()){
-				// 	champs rempli : dateDepart
+				Trajet trajet = Trajet.find(
+						"villeDepart_id like ? and villeArrivee_id like ? ",
+						Integer.parseInt(villeDepart_id),
+						Integer.parseInt(villeArrivee_id)).first();
+				if (trajet != null)
+					pAnnonces = Annonce.find("byMonTrajet_id", trajet.id)
+							.fetch();
+
+			} else if (!villeDepart_id.isEmpty() && villeArrivee_id.isEmpty()
+					&& dateDepart.isEmpty() && heureDepart.isEmpty()) {
+				// champs rempli : villeDepart
+				Trajet trajet = Trajet.find("villeDepart_id like ? ",
+						Integer.parseInt(villeDepart_id)).first();
+				if (trajet != null)
+					pAnnonces = Annonce.find("byMonTrajet_id", trajet.id)
+							.fetch();
+
+			} else if (villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty()
+					&& dateDepart.isEmpty() && heureDepart.isEmpty()) {
+				// champs rempli : villeArrivee
+				Trajet trajet = Trajet.find("villeArrivee_id like ? ",
+						Integer.parseInt(villeArrivee_id)).first();
+				if (trajet != null)
+					pAnnonces = Annonce.find("byMonTrajet_id", trajet.id)
+							.fetch();
+			} else if (villeDepart_id.isEmpty() && villeArrivee_id.isEmpty()
+					&& !dateDepart.isEmpty() && heureDepart.isEmpty()) {
+				// champs rempli : dateDepart
 				Date dateDebut, dateFin;
 				try {
 					dateDebut = retournerDate(dateDepart, "00:00");
 					dateFin = retournerDate(dateDepart, "23:59");
-					Trajet trajet = Trajet.find("dateDepart > ? and dateDepart < ?", dateDebut, dateFin).first();
-					if(trajet!=null)
-						pAnnonces = Annonce.find("byMonTrajet_id", trajet.id).fetch();
+					Trajet trajet = Trajet.find(
+							"dateDepart > ? and dateDepart < ?", dateDebut,
+							dateFin).first();
+					if (trajet != null)
+						pAnnonces = Annonce.find("byMonTrajet_id", trajet.id)
+								.fetch();
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-			//champs rempli : dateDepart + heure
-			}else if(villeDepart_id.isEmpty() && villeArrivee_id.isEmpty() && !dateDepart.isEmpty() && !heureDepart.isEmpty()){
+				// champs rempli : dateDepart + heure
+			} else if (villeDepart_id.isEmpty() && villeArrivee_id.isEmpty()
+					&& !dateDepart.isEmpty() && !heureDepart.isEmpty()) {
 				Date date;
 				try {
 					date = retournerDate(dateDepart, heureDepart);
-					Trajet trajet = Trajet.find("dateDepart like ? ", date).first();
-					if(trajet!=null)
-						pAnnonces = Annonce.find("byMonTrajet_id", trajet.id).fetch();
+					Trajet trajet = Trajet.find("dateDepart like ? ", date)
+							.first();
+					if (trajet != null)
+						pAnnonces = Annonce.find("byMonTrajet_id", trajet.id)
+								.fetch();
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-			}else if(!villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty() && !dateDepart.isEmpty() && heureDepart.isEmpty()){
-//			 	champs rempli : dateDepart + ville arrivee + ville depart
+			} else if (!villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty()
+					&& !dateDepart.isEmpty() && heureDepart.isEmpty()) {
+				// champs rempli : dateDepart + ville arrivee + ville depart
 				Date dateDebut, dateFin;
 				try {
 					dateDebut = retournerDate(dateDepart, "00:00");
 					dateFin = retournerDate(dateDepart, "23:59");
-					Trajet trajet = Trajet.find("villeDepart_id like ? and villeArrivee_id like ? and dateDepart > ? and dateDepart < ?", villeDepart_id,villeArrivee_id,dateDebut, dateFin).first();
-					if(trajet!=null)
-						pAnnonces = Annonce.find("byMonTrajet_id", trajet.id).fetch();
+					Trajet trajet = Trajet
+							.find("villeDepart_id like ? and villeArrivee_id like ? and dateDepart > ? and dateDepart < ?",
+									villeDepart_id, villeArrivee_id, dateDebut,
+									dateFin).first();
+					if (trajet != null)
+						pAnnonces = Annonce.find("byMonTrajet_id", trajet.id)
+								.fetch();
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-			}else{
+			} else {
 				pAnnonces = Annonce.findAll();
 			}
-		
-			
+
 			renderArgs.put("lesVilles", Ville.find("ORDER BY nom").fetch());
 			renderArgs.put("annonces", pAnnonces);
 			renderTemplate("Annonces/annonces.html");
@@ -351,8 +381,25 @@ public class Annonces extends Controller {
 
 		render(tarifTotal);
 	}
-	public static void sauvegarderparticipation(){
-		
+
+	public static void sauvegarderparticipation(Long id, Long depart,
+			Long arrivee, int nbPassagers, int prixParPassager) {
+
+		Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+				.first();
+
+		Annonce annonce = Annonce.findById(id);
+		Ville villeDebut = Ville.findById(depart);
+		Ville villeFin = Ville.findById(arrivee);
+
+		DemandeAnnonceEnAttente demande = new DemandeAnnonceEnAttente(annonce,
+				moi, nbPassagers, villeDebut, villeFin, prixParPassager);
+		demande.save();
+		annonce.mesDemandePassagers.add(demande);
+		annonce.save();
+
+		flash.success("Demande de participation envoyée avec succès.");
+		details(id);
 	}
 
 	public static List<Ville> toutesLesEtapes(Ville villeDepart,

@@ -2,7 +2,6 @@
 	#{list items:mesEtapes, as:'etape' }
 		<input class="lesetapes" type="checkbox" value="${etape.id}" 
 		#{list items:mesAnciennes, as:'ancienne'}
-		ancienne
 			#{if ancienne == etape.id}
 				checked
 			#{/if}
