@@ -468,4 +468,11 @@ public class Annonces extends Controller {
 			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.3);
 		return tarifTotal;
 	}
+	public static void profil(long id){
+		if(Security.isConnected()){
+			Utilisateur user = Utilisateur.find("byId", id).first();
+			render(user);
+		}
+		render();
+	}
 }

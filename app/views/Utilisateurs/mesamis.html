@@ -22,7 +22,7 @@
 	#{list items:mesAmis, as:'ami' } 
 		<div class="content">
 					
-			<div class="nom">${ami.prenom.capitalizeWords()}&nbsp;${ami.nom.capitalizeWords()}&nbsp;
+			<div class="nom"><a href="">${ami.prenom.capitalizeWords()}&nbsp;${ami.nom.capitalizeWords()}</a>&nbsp;
 			<a href="@{Commentaires.commentaires(ami.id)}" title="Voir ses commentaires"><img src="/public/images/com.png"/ style="margin-top: -4px; float: right;"></a>
 			</div>
 			

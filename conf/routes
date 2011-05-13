@@ -14,7 +14,7 @@ POST	/enregistrerinscription					Utilisateurs.enregistrerinscription
 GET		/mesamis								Utilisateurs.mesamis
 GET		/mesamis/recherche/{field}				Utilisateurs.recherche
 GET		/mesamis/demandes						Utilisateurs.mesdemandes	
-
+GET 	/profil/{id}							Utilisateurs.profil
 # Annonce page
 GET 	/annonces								Annonces.annonces
 GET		/annonces/details/{id_annonce}			Annonces.details
