@@ -35,7 +35,7 @@ public class Ville extends Model {
 		this.longitude = longitude;
 		this.monPays = monPays;
 	}
-
+	public Ville(){}
 	public double calculerDistanceVers(Ville v) {
 		// The haversine formula
 		return (int) (6371 * Math.acos(Math.cos(Math.toRadians(this.latitude))

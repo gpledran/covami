@@ -1,0 +1,49 @@
+#{extends 'main.html' /}
+#{set title:'Covami - Profil utilisateur' /}
+
+<h1>Profil</h1>
+
+#{if flash.success}
+    <p>
+        ${flash.success}
+    </p>
+#{/if}
+
+<div id="details">
+	<span class="nom_label">E-mail</span>
+	<span class="nom">${user.email}</span>
+	<span class="nom_label">Mot de passe</span>
+	<span class="nom">${user.password}</span>
+	<span class="nom_label">Nom</span>
+	<span class="nom">${user.nom}</span>
+	<span class="nom_label">Pr&eacute;nom</span>
+	<span class="nom">${user.prenom}</span>
+	<span class="nom_label">T&eacute;l. mobile</span>
+	<span class="nom">${user.telephoneMobile}</span>
+	<span class="nom_label">T&eacute;l. personnel</span>
+	<span class="nom">${user.telephonePerso}</span>
+	<span class="nom_label">Date de naissance</span>
+	<span class="nom">${user.dateNaissance.format('dd MMMM yyyy', 'fr')}</span>
+	<span class="nom_label">Rue</span>
+	<span class="nom">${user.rue}</span>
+	<span class="nom_label">Code postal</span>
+	<span class="nom">${user.cp}</span>
+	<span class="nom_label">Ville</span>
+	<span class="nom">${user.ville}</span>
+	<span class="nom_label">Pays</span>
+	<span class="nom">${user.pays}</span>
+	#{if user.maVoiture}
+		<span class="nom_label">Type de voiture</span>
+		<span class="nom">${user.maVoiture.type.capitalizeWords()}</span>
+		<span class="nom_label">Nombre de places</span>
+		<span class="nom">${user.maVoiture.nbPlaces}</span>
+	#{/if}
+	#{if user.mesCriteres}
+		<span class="nom_label">Crit&egrave;res accept&eacute;s</span>
+		<span class="nom">-&nbsp;
+			#{list items:user.mesCriteres, as:'critere' } 
+				${critere.capitalizeWords()}&nbsp;-&nbsp;
+	 	 	#{/list}
+ 	 	</span>
+	#{/if}
+

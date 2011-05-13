@@ -313,9 +313,17 @@ public class Utilisateurs extends Controller {
 			
 			Notification notif = Notification.findById(id);
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected()).first();
+			for(Notification no : moi.mesNotifications){
+				System.out.println("Av  "+no.id);
+			}
 			moi.mesNotifications.remove(notif);
 			
+			for(Notification notif2 : moi.mesNotifications){
+				System.out.println("Ap "+notif2.id);
+			}
+			
 			moi.save();
+			
 			mesdemandes();
 		}
 		render();
