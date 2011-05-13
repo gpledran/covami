@@ -17,24 +17,26 @@
   	
   	
   </tr>
-  #{list items:mescovoiturages, as:'annonces' }  
-  	#{if couleur == 0}
-  		<tr class="tableBody" style="background-color : #C4C4C4">
-  		%{couleur = 1}%
-  	#{/if}
-  	#{else}
-  		<tr class="tableBody" style="background-color : white">
-  		%{couleur = 0}%
-  	#{/else}
-		<td style="text-align:left;">${annonces.monUtilisateur.prenom}&nbsp;${annonces.monUtilisateur.nom}</td>
-  		<td>${annonces.monTrajet.villeDepart.nom}</td>
-  		<td>${annonces.monTrajet.villeArrivee.nom}</td>
-  		<td style="width : 100px;">${annonces.monTrajet.dateDepart?.format('dd/MM/yyyy')}</td>
-  		<td style="width : 100px;">${annonces.monTrajet.dateDepart?.format('HH:mm')}</td>
-  		<td style="width : 90px;">${annonces.tarifParPersonne}&euro;</td>
-  		<td style="width : 90px;">${annonces.placesRestantes}</td>
-  		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(annonces.id)}">D&eacute;tails</a></td>
-  	</tr> 
+  #{list items:mescovoiturages, as:'a' }
+  	#{list items:a.mesPassagers, as:'p' }  
+	  	#{if couleur == 0}
+	  		<tr class="tableBody" style="background-color : #C4C4C4">
+	  		%{couleur = 1}%
+	  	#{/if}
+	  	#{else}
+	  		<tr class="tableBody" style="background-color : white">
+	  		%{couleur = 0}%
+	  	#{/else}
+			<td style="text-align:left;">${p.mesPassagers.prenom}&nbsp;${p.mesPassagers.nom}</td>
+	  		<td>${p.villeDebut.nom}</td>
+	  		<td>${p.villeFin.nom}</td>
+	  		<td style="width : 100px;">${a.monTrajet.dateDepart?.format('dd/MM/yyyy')}</td>
+	  		<td style="width : 100px;">${a.monTrajet.dateDepart?.format('HH:mm')}</td>
+	  		<td style="width : 90px;">${p.prixParPassager}&euro;</td>
+	  		<td style="width : 90px;">${a.placesRestantes}</td>
+	  		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(annonces.id)}">D&eacute;tails</a></td>
+	  	</tr> 
+	#{/list}
   #{/list}
   
   

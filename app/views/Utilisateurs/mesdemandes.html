@@ -41,7 +41,7 @@
  	#{list items:mesNotifications, as:'notif' }
  		#{if notif.accepter == 1}
 			<div class="content"> 
-				<div class="nom">${notif.monUtilisateur.prenom.capitalizeWords()}&nbsp;${notif.monUtilisateur.nom.capitalizeWords()}&nbsp;a accept&eacute; votre demande de participation.</div>
+				<div class="nom">${notif.monNotifieur.prenom.capitalizeWords()}&nbsp;${notif.monNotifieur.nom.capitalizeWords()}&nbsp;a accept&eacute; votre demande de participation.</div>
 				<div class="bouton">
 					<a class="submit" href="@{Utilisateurs.supprimernotification(notif.id)}" >Supprimer</a>
 				</div>
@@ -49,7 +49,7 @@
 		#{/if}
 		#{if notif.accepter == 0}
 			<div class="content"> 
-				<div class="nom">${notif.monUtilisateur.prenom.capitalizeWords()}&nbsp;${notif.monUtilisateur.nom.capitalizeWords()}&nbsp;a refus&eacute; votre demande de participation.</div>
+				<div class="nom">${notif.monNotifieur.prenom.capitalizeWords()}&nbsp;${notif.monNotifieur.nom.capitalizeWords()}&nbsp;a refus&eacute; votre demande de participation.</div>
 				<div class="bouton">
 					<a class="submit" href="@{Utilisateurs.supprimernotification(notif.id)}" >Supprimer</a>
 				</div>
