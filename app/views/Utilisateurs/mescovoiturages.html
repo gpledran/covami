@@ -4,7 +4,7 @@
 
 <h1>Mes covoiturages</h1>
 
-#{if mesCovoiturages}
+#{if mescovoiturages}
 <table id="tableMesAnnonces">
   <tr class="tableEntete">
   	<td>Annonceur</td>
@@ -27,14 +27,14 @@
 	  		<tr class="tableBody" style="background-color : white">
 	  		%{couleur = 0}%
 	  	#{/else}
-			<td style="text-align:left;">${p.mesPassagers.prenom}&nbsp;${p.mesPassagers.nom}</td>
+			<td style="text-align:left;">${a.monUtilisateur.prenom}&nbsp;${a.monUtilisateur.nom}</td>
 	  		<td>${p.villeDebut.nom}</td>
 	  		<td>${p.villeFin.nom}</td>
 	  		<td style="width : 100px;">${a.monTrajet.dateDepart?.format('dd/MM/yyyy')}</td>
 	  		<td style="width : 100px;">${a.monTrajet.dateDepart?.format('HH:mm')}</td>
 	  		<td style="width : 90px;">${p.prixParPassager}&euro;</td>
 	  		<td style="width : 90px;">${a.placesRestantes}</td>
-	  		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(annonces.id)}">D&eacute;tails</a></td>
+	  		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(a.id)}">D&eacute;tails</a></td>
 	  	</tr> 
 	#{/list}
   #{/list}

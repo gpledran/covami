@@ -267,14 +267,13 @@ public class Utilisateurs extends Controller {
 			List<Annonce> mescovoiturages = new ArrayList<Annonce>();
 			for (Annonce a : annonces) {
 				for (MesPassagers p : a.mesPassagers) {
-					if (p.mesPassagers.equals(moi)) {
+					if (p.mesPassagers.id == moi.id) {
 						mescovoiturages.add(a);
 					}
 				}
 			}
 			flash.clear();
 			render(mescovoiturages);
-
 		}
 		render();
 	}
