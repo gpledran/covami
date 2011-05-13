@@ -211,11 +211,14 @@ public class Annonces extends Controller {
 				} else if (villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty()
 						&& dateDepart.isEmpty() && heureDepart.isEmpty()) {
 					// champs rempli : villeArrivee
-					Trajet trajet = Trajet.find("villeArrivee_id like ? ",
-							Integer.parseInt(villeArrivee_id)).first();
-					if (trajet != null)
-						pAnnonces = Annonce.find("byMonTrajet_id", trajet.id)
-								.fetch();
+					List<Trajet> trajet = Trajet.find("villeArrivee_id like ? ",
+							Integer.parseInt(villeArrivee_id)).fetch();
+					if (trajet != null){
+						for(Trajet t : trajet){
+						//pAnnonces.add(Annonce.find("byMonTrajet_id", t.id).first());
+								
+						}
+					}
 				} else if (villeDepart_id.isEmpty() && villeArrivee_id.isEmpty()
 						&& !dateDepart.isEmpty() && heureDepart.isEmpty()) {
 					// champs rempli : dateDepart

@@ -308,7 +308,16 @@ public class Utilisateurs extends Controller {
 	}
 
 	public static void supprimernotification(Long id) {
-
+		if(Security.isConnected()){
+			
+			Notification notif = Notification.findById(id);
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected()).first();
+			moi.mesNotifications.remove(notif);
+			
+			moi.save();
+			mesdemandes();
+		}
+		render();
 	}
 
 	public static void accepterdemande(Long id) {
