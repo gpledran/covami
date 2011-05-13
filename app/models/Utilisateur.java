@@ -54,6 +54,9 @@ public class Utilisateur extends Model {
 	@JoinTable(name = "DemandeEnAttente")
 	public List<Utilisateur> mesDemandes;
 
+	@OneToMany
+	public List<Notification> mesNotifications;
+
 	public ArrayList<String> mesCriteres;
 
 	public Utilisateur(String email, String password, String nom,

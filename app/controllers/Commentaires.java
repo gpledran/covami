@@ -35,6 +35,12 @@ public class Commentaires extends Controller {
 			for (Annonce a : mesAnnonces) {
 				nbDemandes += a.mesDemandePassagers.size();
 			}
+
+			List<Notification> mesNotifications = Notification.find(
+					"byMonUtilisateur_id", user.id).fetch();
+
+			nbDemandes += mesNotifications.size();
+
 			renderArgs.put("nbDemandes", nbDemandes);
 		}
 	}

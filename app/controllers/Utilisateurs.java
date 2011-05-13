@@ -12,6 +12,7 @@ import models.Commentaire;
 import models.DemandeAnnonceEnAttente;
 import models.DemandeEnAttente;
 import models.MesPassagers;
+import models.Notification;
 import models.Utilisateur;
 import models.Voiture;
 import play.*;
@@ -44,6 +45,12 @@ public class Utilisateurs extends Controller {
 			for (Annonce a : mesAnnonces) {
 				nbDemandes += a.mesDemandePassagers.size();
 			}
+
+			List<Notification> mesNotifications = Notification.find(
+					"byMonUtilisateur_id", user.id).fetch();
+
+			nbDemandes += mesNotifications.size();
+
 			renderArgs.put("nbDemandes", nbDemandes);
 		}
 	}
@@ -291,10 +298,17 @@ public class Utilisateurs extends Controller {
 			List<Annonce> mesAnnonces = Annonce.find("byMonUtilisateur_id",
 					moi.id).fetch();
 
+			List<Notification> mesNotifications = Notification.find(
+					"byMonUtilisateur_id", moi.id).fetch();
+
 			flash.clear();
-			render(mesDemandes, mesAnnonces, moi);
+			render(mesDemandes, mesAnnonces, moi, mesNotifications);
 		}
 		render();
+	}
+
+	public static void supprimernotification(Long id) {
+
 	}
 
 	public static void accepterdemande(Long id) {
@@ -333,6 +347,12 @@ public class Utilisateurs extends Controller {
 
 			monAnnonce.save();
 
+			Notification notif = new Notification(monAnnonce, passager, 1);
+			notif.save();
+
+			passager.mesNotifications.add(notif);
+			passager.save();
+
 			demande.delete();
 			flash.success("Passager accepté");
 			mesdemandes();
@@ -345,11 +365,20 @@ public class Utilisateurs extends Controller {
 			DemandeAnnonceEnAttente demande = DemandeAnnonceEnAttente
 					.findById(id_demande);
 
+			Utilisateur passager = demande.mesDemandePassagers;
+
 			Annonce monAnnonce = demande.Annonce;
 
 			monAnnonce.mesDemandePassagers.remove(demande);
 
 			monAnnonce.save();
+
+			Notification notif = new Notification(monAnnonce, passager, 0);
+			notif.save();
+
+			passager.mesNotifications.add(notif);
+			passager.save();
+
 			demande.delete();
 			flash.success("Passager refusé");
 			mesdemandes();

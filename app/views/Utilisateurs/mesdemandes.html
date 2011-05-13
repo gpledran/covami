@@ -8,8 +8,8 @@
         ${flash.error}
     </p>
 #{/if}
-<a href="@{Commentaires.commentaires(moi.id)}" class="submit">Voir mes commentaires</a>
-#{if mesDemandes || mesAnnonces}
+
+#{if mesDemandes || mesAnnonces || mesNotifications}
 	<div id="ami">
 	<hr>
 	#{list items:mesDemandes, as:'ami' }
@@ -38,9 +38,29 @@
 		</div>
 		#{/list}
  	#{/list}
+ 	#{list items:mesNotifications, as:'notif' }
+ 		#{if notif.accepter == 1}
+			<div class="content"> 
+				<div class="nom">${notif.monUtilisateur.prenom.capitalizeWords()}&nbsp;${notif.monUtilisateur.nom.capitalizeWords()}&nbsp;a accept&eacute; votre demande de participation.</div>
+				<div class="bouton">
+					<a class="submit" href="@{Utilisateurs.supprimernotification(notif.id)}" >Supprimer</a>
+				</div>
+			</div>
+		#{/if}
+		#{if notif.accepter == 0}
+			<div class="content"> 
+				<div class="nom">${notif.monUtilisateur.prenom.capitalizeWords()}&nbsp;${notif.monUtilisateur.nom.capitalizeWords()}&nbsp;a refus&eacute; votre demande de participation.</div>
+				<div class="bouton">
+					<a class="submit" href="@{Utilisateurs.supprimernotification(notif.id)}" >Supprimer</a>
+				</div>
+			</div>
+		#{/if}
+ 	#{/list}
  	</div>&nbsp;
 #{/if}
 #{else}
 	<p>Aucune demande !</p>
 #{/else}
+
+<a href="@{Commentaires.commentaires(moi.id)}" class="submit">Voir mes commentaires</a>
  

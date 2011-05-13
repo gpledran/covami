@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import models.Annonce;
+import models.Notification;
 import models.Utilisateur;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -30,6 +31,12 @@ public class Carte extends Controller {
 			for (Annonce a : mesAnnonces) {
 				nbDemandes += a.mesDemandePassagers.size();
 			}
+
+			List<Notification> mesNotifications = Notification.find(
+					"byMonUtilisateur_id", user.id).fetch();
+
+			nbDemandes += mesNotifications.size();
+
 			renderArgs.put("nbDemandes", nbDemandes);
 		}
 	}
