@@ -55,17 +55,19 @@
 	<a class="submit" href="@{Annonces.editermonannonce(annonce.id)}">Editer</a>
 #{/if}
 #{list items : annonce.mesDemandePassagers, as: 'demande'}
-	#{if demande.id == moi.id}
-		%{demandeEnCours = 1}%
-	#{/if}
+	#{list items : demande.mesDemandePassagers, as: 'd'}
+		#{if d.id == moi.id}
+			%{demandeEnCours = 1}%
+		#{/if}
+	#{/list}
 #{/list}
 #{list items : annonce.mesPassagers, as: 'passager'}
-	#{if passager.id == moi.id}
-		%{dejaDemande = 1}%
-	#{/if}
+	#{list items : passager.mesPassagers, as: 'p'}
+		#{if p.id == moi.id}
+			%{dejaDemande = 1}%
+		#{/if}
+	#{/list}
 #{/list}
-#{if annonce.monUtilisateur != moi}
-	#{if demandeEnCours == 0 || dejaDemande == 0}
+	#{if demandeEnCours == 0 && dejaDemande == 0}
 		<a class="submit" href="@{Annonces.demandeparticipation(annonce.id)}">Demande de participation</a>
 	#{/if}
-#{/if}

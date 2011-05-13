@@ -163,6 +163,7 @@ public class Annonces extends Controller {
 			Annonce annonce = Annonce.find("byId", id_annonce).first();
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 					.first();
+			flash.clear();
 			render(moi, annonce);
 		}
 		render();

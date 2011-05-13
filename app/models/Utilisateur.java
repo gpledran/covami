@@ -47,7 +47,7 @@ public class Utilisateur extends Model {
 	@OneToOne
 	public Voiture maVoiture;
 
-	@OneToMany
+	@ManyToMany
 	public List<Utilisateur> mesAmis;
 
 	@ManyToMany

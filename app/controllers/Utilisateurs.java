@@ -266,13 +266,14 @@ public class Utilisateurs extends Controller {
 			List<Annonce> annonces = Annonce.findAll();
 			List<Annonce> mescovoiturages = new ArrayList<Annonce>();
 			for (Annonce a : annonces) {
-				if (a.mesPassagers.contains(moi)) {
-					mescovoiturages.add(a);
+				for (MesPassagers p : a.mesPassagers) {
+					if (p.mesPassagers.id == moi.id) {
+						mescovoiturages.add(a);
+					}
 				}
 			}
 			flash.clear();
 			render(mescovoiturages);
-
 		}
 		render();
 	}
@@ -356,7 +357,11 @@ public class Utilisateurs extends Controller {
 
 			monAnnonce.save();
 
-			Notification notif = new Notification(monAnnonce, passager, 1);
+			Utilisateur notifieur = Utilisateur.find("byEmail",
+					Security.connected()).first();
+
+			Notification notif = new Notification(monAnnonce, passager,
+					notifieur, 1);
 			notif.save();
 
 			passager.mesNotifications.add(notif);
@@ -382,7 +387,11 @@ public class Utilisateurs extends Controller {
 
 			monAnnonce.save();
 
-			Notification notif = new Notification(monAnnonce, passager, 0);
+			Utilisateur notifieur = Utilisateur.find("byEmail",
+					Security.connected()).first();
+
+			Notification notif = new Notification(monAnnonce, passager,
+					notifieur, 0);
 			notif.save();
 
 			passager.mesNotifications.add(notif);

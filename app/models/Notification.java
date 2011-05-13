@@ -19,14 +19,18 @@ public class Notification extends Model {
 	public Utilisateur monUtilisateur;
 
 	@Required
+	@OneToOne
+	public Utilisateur monNotifieur;
+
+	@Required
 	public int accepter;
 
 	public Notification(Annonce monAnnonce, Utilisateur monUtilisateur,
-			int accepter) {
+			Utilisateur monNotifieur, int accepter) {
 		super();
 		this.monAnnonce = monAnnonce;
 		this.monUtilisateur = monUtilisateur;
+		this.monNotifieur = monNotifieur;
 		this.accepter = accepter;
 	}
-
 }

@@ -68,7 +68,7 @@ public class Commentaires extends Controller {
 					}
 				}
 			}
-			System.out.println("valide = " + valide);
+			// System.out.println("valide = " + valide);
 
 			render(commentaires, utilisateur, valide);
 		}
