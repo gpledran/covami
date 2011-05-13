@@ -555,6 +555,7 @@ a{
 	width: 860px;
 	-webkit-border-radius: 16px;
 	-moz-border-radius: 16px;
+	
 	position: relative;
 }
 
@@ -571,6 +572,7 @@ a{
 /* 	border-bottom: 2px dashed #828282; */
 	border-bottom: 1px solid #CCC;
 	margin-bottom: 15px;
+	
 }
 
 #ami .nom {
