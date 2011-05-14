@@ -7,7 +7,7 @@
 
 <div id="details">
 	<span class="nom_label">Annonceur</span>
-	<span class="nom">${annonce?.monUtilisateur?.prenom.capitalizeWords()}&nbsp;${annonce?.monUtilisateur?.nom.capitalizeWords()}</span>
+	<span class="nom"><a href="@{Utilisateurs.profil(annonce?.monUtilisateur.id)}">${annonce?.monUtilisateur?.prenom.capitalizeWords()}&nbsp;${annonce?.monUtilisateur?.nom.capitalizeWords()}</a></span>
 
 	<span class="nom_label">Date de depart</span>
 	<span class="nom">${annonce?.monTrajet?.dateDepart.format('dd MMMM yyyy hh:mm', 'fr')}</span>

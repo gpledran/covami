@@ -434,4 +434,12 @@ public class Utilisateurs extends Controller {
 		}
 		render();
 	}
+	
+	public static void profil(long id){
+		if(Security.isConnected()){
+			flash.clear();
+			Utilisateur u = Utilisateur.findById(id);
+			render(u);
+		}
+	}
 }
