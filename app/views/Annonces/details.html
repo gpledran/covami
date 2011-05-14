@@ -71,3 +71,6 @@
 	#{if demandeEnCours == 0 && dejaDemande == 0}
 		<a class="submit" href="@{Annonces.demandeparticipation(annonce.id)}">Demande de participation</a>
 	#{/if}
+	#{if dejaDemande == 1}
+		<a class="submit" href="@{Annonces.annulerparticipation(annonce.id)}">Je ne veux plus participer</a>
+	#{/if}

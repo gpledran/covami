@@ -19,6 +19,7 @@ import play.*;
 import play.data.validation.Required;
 import play.data.validation.Valid;
 import play.mvc.*;
+import play.mvc.Scope.RenderArgs;
 
 public class Utilisateurs extends Controller {
 
@@ -273,6 +274,7 @@ public class Utilisateurs extends Controller {
 				}
 			}
 			flash.clear();
+			renderArgs.put("moi_id",moi.id);
 			render(mescovoiturages);
 		}
 		render();
@@ -310,17 +312,11 @@ public class Utilisateurs extends Controller {
 
 	public static void supprimernotification(Long id) {
 		if(Security.isConnected()){
-			
+			System.out.println("Av test");
 			Notification notif = Notification.findById(id);
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected()).first();
-			for(Notification no : moi.mesNotifications){
-				System.out.println("Av  "+no.id);
-			}
-			moi.mesNotifications.remove(notif);
 			
-			for(Notification notif2 : moi.mesNotifications){
-				System.out.println("Ap "+notif2.id);
-			}
+			moi.mesNotifications.remove(notif);
 			
 			moi.save();
 			

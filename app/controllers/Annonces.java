@@ -17,6 +17,7 @@ import org.codehaus.groovy.runtime.ConvertedClosure;
 
 import com.sun.jmx.snmp.Timestamp;
 
+import models.MesPassagers;
 import models.Notification;
 import models.Trajet;
 import models.Troncon;
@@ -357,6 +358,19 @@ public class Annonces extends Controller {
 		// flash.success("Demande envoyée");
 		// details(id);
 
+	}
+	public static void annulerparticipation(long id){
+		if(Security.isConnected()){
+			Annonce annonce = Annonce.findById(id);
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected()).first();
+			MesPassagers p = MesPassagers.find("byMesPassagers_idAndAnnonce_id",moi.id, annonce.id).first();
+			
+			annonce.placesRestantes += p.nbPassagers;
+			annonce.mesPassagers.remove(p);
+			
+			annonce.save();
+			details(annonce.id);
+		}
 	}
 
 	public static void cherchervillesarrivees(Long depart, Long annonce_id) {
