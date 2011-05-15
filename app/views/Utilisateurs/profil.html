@@ -16,20 +16,22 @@
 	<span class="nom">${u.nom}</span>
 	<span class="nom_label">Pr&eacute;nom</span>
 	<span class="nom">${u.prenom}</span>
-	<span class="nom_label">T&eacute;l. mobile</span>
-	<span class="nom">${u.telephoneMobile}</span>
-	<span class="nom_label">T&eacute;l. personnel</span>
-	<span class="nom">${u.telephonePerso}</span>
-	<span class="nom_label">Date de naissance</span>
-	<span class="nom">${u.dateNaissance.format('dd MMMM yyyy', 'fr')}</span>
-	<span class="nom_label">Rue</span>
-	<span class="nom">${u.rue}</span>
-	<span class="nom_label">Code postal</span>
-	<span class="nom">${u.cp}</span>
-	<span class="nom_label">Ville</span>
-	<span class="nom">${u.ville}</span>
-	<span class="nom_label">Pays</span>
-	<span class="nom">${u.pays}</span>
+	#{if estPresentDansListeAmi}
+		<span class="nom_label">T&eacute;l. mobile</span>
+		<span class="nom">${u.telephoneMobile}</span>
+		<span class="nom_label">T&eacute;l. personnel</span>
+		<span class="nom">${u.telephonePerso}</span>
+		<span class="nom_label">Date de naissance</span>
+		<span class="nom">${u.dateNaissance.format('dd MMMM yyyy', 'fr')}</span>
+		<span class="nom_label">Rue</span>
+		<span class="nom">${u.rue}</span>
+		<span class="nom_label">Code postal</span>
+		<span class="nom">${u.cp}</span>
+		<span class="nom_label">Ville</span>
+		<span class="nom">${u.ville}</span>
+		<span class="nom_label">Pays</span>
+		<span class="nom">${u.pays}</span>
+	#{/if}
 	#{if u.maVoiture}
 		<span class="nom_label">Type de voiture</span>
 		<span class="nom">${u.maVoiture.type.capitalizeWords()}</span>

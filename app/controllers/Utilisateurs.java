@@ -312,14 +312,11 @@ public class Utilisateurs extends Controller {
 
 	public static void supprimernotification(Long id) {
 		if(Security.isConnected()){
-			System.out.println("Av test");
 			Notification notif = Notification.findById(id);
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected()).first();
-			
 			moi.mesNotifications.remove(notif);
-			
 			moi.save();
-			
+			Notification.delete("id like ?", id);
 			mesdemandes();
 		}
 		render();
@@ -439,7 +436,15 @@ public class Utilisateurs extends Controller {
 		if(Security.isConnected()){
 			flash.clear();
 			Utilisateur u = Utilisateur.findById(id);
-			render(u);
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected()).first();
+			//on verifie si l'utilisateur est dans ma liste d'ami
+			boolean estPresentDansListeAmi = false;
+			for(Utilisateur ami : u.mesAmis){
+				if(ami.id == moi.id){
+					estPresentDansListeAmi = true;
+				}
+			}
+			render(u, estPresentDansListeAmi);
 		}
 	}
 }

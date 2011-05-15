@@ -165,7 +165,12 @@ public class Annonces extends Controller {
 			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
 					.first();
 			flash.clear();
-			render(moi, annonce);
+			// on test si l'annonce est terminée
+			boolean dateok = false;
+			if(new Date().compareTo(annonce.monTrajet.dateDepart) < 0){
+				dateok = true;
+			}
+			render(moi, annonce, dateok);
 		}
 		render();
 	}

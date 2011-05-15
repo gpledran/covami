@@ -68,9 +68,9 @@
 		#{/if}
 	#{/list}
 #{/list}
-	#{if demandeEnCours == 0 && dejaDemande == 0}
+	#{if demandeEnCours == 0 && dejaDemande == 0 && dateok}
 		<a class="submit" href="@{Annonces.demandeparticipation(annonce.id)}">Demande de participation</a>
 	#{/if}
-	#{if dejaDemande == 1}
-		<a class="submit" href="@{Annonces.annulerparticipation(annonce.id)}">Je ne veux plus participer</a>
+	#{if dejaDemande == 1 && dateok}
+		<a class="submit" href="@{Annonces.annulerparticipation(annonce.id)}" onclick="return(confirm('Etes-vous sur de vouloir annuler votre participation ?'));">Je ne veux plus participer</a>
 	#{/if}
