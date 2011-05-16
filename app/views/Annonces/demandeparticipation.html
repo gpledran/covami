@@ -70,10 +70,11 @@
 			var nb = $("#nbParticipants option:selected").val();
 			var type = $("#typeVoiture").val();
 			var tarifBase = $("#tarifBase").val();
+			var idannonce= $("#annonce").val();
 			if (nb != "-" && dep != "-" && arr != "-") {
-				var tarif = #{jsAction @calculertarifparpersonne(':ville_depart', ':ville_arrivee', ':nb_personnes', ':type_voiture', ':tarif_base') /}
+				var tarif = #{jsAction @calculertarifparpersonne(':ville_depart', ':ville_arrivee', ':nb_personnes', ':type_voiture', ':tarif_base', ':id_annonce') /}
 				$("#tarif").load(
-					tarif({ville_depart: dep, ville_arrivee: arr, nb_personnes: nb, type_voiture: type, tarif_base: tarifBase})
+					tarif({ville_depart: dep, ville_arrivee: arr, nb_personnes: nb, type_voiture: type, tarif_base: tarifBase, id_annonce: idannonce})
 				)
 			}
 		});

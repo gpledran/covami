@@ -74,6 +74,6 @@
 	#{if dejaDemande == 1 && dateok}
 		<a class="submit" href="@{Annonces.annulerparticipation(annonce.id)}" onclick="return(confirm('Etes-vous sur de vouloir annuler votre participation ?'));">Je ne veux plus participer</a>
 	#{/if}
-	#{if dateok}
+	#{if dateok && isMonAnnonce}
 		<a class="submit" href="@{Annonces.supprimerannonce(annonce.id)}" onclick="return(confirm('Etes-vous sur de vouloir annuler votre participation ?'));">Annuler cette annonce</a>
 	#{/if}
