@@ -1,9 +1,15 @@
 package controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import org.joda.time.DateTime;
 
 import models.Annonce;
 import models.Notification;
+import models.Trajet;
 import models.Utilisateur;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -42,6 +48,21 @@ public class Carte extends Controller {
 	}
 
 	public static void affichercarte() {
-		render();
+		Date d = new Date();
+
+		List<Trajet> lesTrajets = Trajet.find("dateDepart > ?", d).fetch();
+
+		String lesVilles = "";
+		boolean premier = true;
+		for (Trajet t : lesTrajets) {
+			if (premier) {
+				lesVilles += t.villeDepart.nom + ", " + t.villeArrivee.nom;
+				premier = false;
+			} else {
+				lesVilles += ", " + t.villeDepart.nom + ", "
+						+ t.villeArrivee.nom;
+			}
+		}
+		render(lesVilles);
 	}
 }
