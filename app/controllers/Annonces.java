@@ -74,8 +74,8 @@ public class Annonces extends Controller {
 			List<Annonce> annonces = Annonce.findAll();
 			List<Ville> lesVilles = Ville.find("ORDER BY nom").fetch();
 			flash.clear();
-			for(Annonce a : annonces){
-				if(new Date().compareTo(a.monTrajet.dateDepart)>0){
+			for (Annonce a : annonces) {
+				if (new Date().compareTo(a.monTrajet.dateDepart) > 0) {
 					annonces.remove(a);
 				}
 			}
@@ -171,11 +171,11 @@ public class Annonces extends Controller {
 					.first();
 			flash.clear();
 			// on test si l'annonce est terminée
-			boolean dateok = false, isMonAnnonce =false;
-			if(new Date().compareTo(annonce.monTrajet.dateDepart) < 0){
+			boolean dateok = false, isMonAnnonce = false;
+			if (new Date().compareTo(annonce.monTrajet.dateDepart) < 0) {
 				dateok = true;
 			}
-			if(annonce.monUtilisateur.id == moi.id){
+			if (annonce.monUtilisateur.id == moi.id) {
 				isMonAnnonce = true;
 			}
 			render(moi, annonce, dateok, isMonAnnonce);
@@ -189,57 +189,63 @@ public class Annonces extends Controller {
 			List<Annonce> pAnnonces = new ArrayList<Annonce>();
 			List<Trajet> trajets = Trajet.findAll();
 			List<Trajet> trajets_trouves = new ArrayList<Trajet>();
-			
-			try{
+
+			try {
 				// tous les champs remplis (ok)
-				if (!villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty() 
+				if (!villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty()
 						&& !dateDepart.isEmpty() && !heureDepart.isEmpty()) {
 					Date searchDate;
-					
+
 					searchDate = retournerDate(dateDepart, heureDepart);
 					trajets_trouves = Trajet
 							.find("villeDepart_id like ? and villeArrivee_id like ? and dateDepart like ?",
 									Integer.parseInt(villeDepart_id),
 									Integer.parseInt(villeArrivee_id),
 									searchDate).fetch();
-				
-				} else if (!villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty()
-						&& dateDepart.isEmpty() && heureDepart.isEmpty()) {
+
+				} else if (!villeDepart_id.isEmpty()
+						&& !villeArrivee_id.isEmpty() && dateDepart.isEmpty()
+						&& heureDepart.isEmpty()) {
 					// champs rempli : villeDepart + villeArrivee (ok)
 					Ville villeA = new Ville(), villeB = new Ville();
-					for(Trajet t : trajets){
-						
-						for(Ville v :t.mesEtapes){
-							if(v.id == Integer.parseInt(villeDepart_id)){
+					for (Trajet t : trajets) {
+
+						for (Ville v : t.mesEtapes) {
+							if (v.id == Integer.parseInt(villeDepart_id)) {
 								villeA = v;
-							}
-							else if(v.id == Integer.parseInt(villeArrivee_id))
+							} else if (v.id == Integer
+									.parseInt(villeArrivee_id))
 								villeB = v;
 						}
-						if(villeA != null && villeB != null  && t.mesEtapes.indexOf(villeA) < t.mesEtapes.indexOf(villeB))
+						if (villeA != null
+								&& villeB != null
+								&& t.mesEtapes.indexOf(villeA) < t.mesEtapes
+										.indexOf(villeB))
 							trajets_trouves.add(t);
 					}
-					
-	
-				} else if (!villeDepart_id.isEmpty() && villeArrivee_id.isEmpty()
-						&& dateDepart.isEmpty() && heureDepart.isEmpty()) {
+
+				} else if (!villeDepart_id.isEmpty()
+						&& villeArrivee_id.isEmpty() && dateDepart.isEmpty()
+						&& heureDepart.isEmpty()) {
 					// champs rempli : villeDepart (ok)
-					
-					for(Trajet t : trajets)
-						for(Ville v :t.mesEtapes)
-							if(v.id == Integer.parseInt(villeDepart_id))
+
+					for (Trajet t : trajets)
+						for (Ville v : t.mesEtapes)
+							if (v.id == Integer.parseInt(villeDepart_id))
 								trajets_trouves.add(t);
-						
-				} else if (villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty()
-						&& dateDepart.isEmpty() && heureDepart.isEmpty()) {
+
+				} else if (villeDepart_id.isEmpty()
+						&& !villeArrivee_id.isEmpty() && dateDepart.isEmpty()
+						&& heureDepart.isEmpty()) {
 					// champs rempli : villeArrivee (ok)
-					for(Trajet t : trajets)
-						for(Ville v :t.mesEtapes)
-							if(v.id == Integer.parseInt(villeArrivee_id))
+					for (Trajet t : trajets)
+						for (Ville v : t.mesEtapes)
+							if (v.id == Integer.parseInt(villeArrivee_id))
 								trajets_trouves.add(t);
-					
-				} else if (villeDepart_id.isEmpty() && villeArrivee_id.isEmpty()
-						&& !dateDepart.isEmpty() && heureDepart.isEmpty()) {
+
+				} else if (villeDepart_id.isEmpty()
+						&& villeArrivee_id.isEmpty() && !dateDepart.isEmpty()
+						&& heureDepart.isEmpty()) {
 					// champs rempli : dateDepart (ok)
 					Date dateDebut, dateFin;
 					dateDebut = retournerDate(dateDepart, "00:00");
@@ -247,54 +253,60 @@ public class Annonces extends Controller {
 					trajets_trouves = Trajet.find(
 							"dateDepart > ? and dateDepart < ?", dateDebut,
 							dateFin).fetch();
-			
+
 					// champs rempli : dateDepart + heure (ok)
-				} else if (villeDepart_id.isEmpty() && villeArrivee_id.isEmpty()
-						&& !dateDepart.isEmpty() && !heureDepart.isEmpty()) {
+				} else if (villeDepart_id.isEmpty()
+						&& villeArrivee_id.isEmpty() && !dateDepart.isEmpty()
+						&& !heureDepart.isEmpty()) {
 					Date date;
-			
+
 					date = retournerDate(dateDepart, heureDepart);
 					trajets_trouves = Trajet.find("dateDepart like ? ", date)
 							.fetch();
-					
-				
-				} else if (!villeDepart_id.isEmpty() && !villeArrivee_id.isEmpty()
-						&& !dateDepart.isEmpty() && heureDepart.isEmpty()) {
-					// champs rempli : dateDepart + ville arrivee + ville depart(ok)
+
+				} else if (!villeDepart_id.isEmpty()
+						&& !villeArrivee_id.isEmpty() && !dateDepart.isEmpty()
+						&& heureDepart.isEmpty()) {
+					// champs rempli : dateDepart + ville arrivee + ville
+					// depart(ok)
 					Date dateDebut, dateFin;
-					
+
 					dateDebut = retournerDate(dateDepart, "00:00");
 					dateFin = retournerDate(dateDepart, "23:59");
-					List<Trajet> trajets_temp = Trajet.find("dateDepart > ? and dateDepart < ?", dateDebut, dateFin).fetch();
+					List<Trajet> trajets_temp = Trajet.find(
+							"dateDepart > ? and dateDepart < ?", dateDebut,
+							dateFin).fetch();
 					Ville villeA = new Ville(), villeB = new Ville();
-					for(Trajet t : trajets_temp){
-						
-						for(Ville v :t.mesEtapes){
-							if(v.id == Integer.parseInt(villeDepart_id)){
+					for (Trajet t : trajets_temp) {
+
+						for (Ville v : t.mesEtapes) {
+							if (v.id == Integer.parseInt(villeDepart_id)) {
 								villeA = v;
-							}
-							else if(v.id == Integer.parseInt(villeArrivee_id))
+							} else if (v.id == Integer
+									.parseInt(villeArrivee_id))
 								villeB = v;
 						}
-						if(villeA != null && villeB != null  && t.mesEtapes.indexOf(villeA) < t.mesEtapes.indexOf(villeB))
+						if (villeA != null
+								&& villeB != null
+								&& t.mesEtapes.indexOf(villeA) < t.mesEtapes
+										.indexOf(villeB))
 							trajets_trouves.add(t);
 					}
-					
+
 				} else {
 					pAnnonces = Annonce.findAll();
 				}
-			}catch (ParseException e) {
+			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			
-			if (trajets_trouves != null){
-				for(Trajet t : trajets_trouves){
+
+			if (trajets_trouves != null) {
+				for (Trajet t : trajets_trouves) {
 					Annonce a = Annonce.find("byMonTrajet_id", t.id).first();
 					pAnnonces.add(a);
 				}
 			}
-				
-			
+
 			renderArgs.put("lesVilles", Ville.find("ORDER BY nom").fetch());
 			renderArgs.put("annonces", pAnnonces);
 			renderTemplate("Annonces/annonces.html");
@@ -372,15 +384,19 @@ public class Annonces extends Controller {
 		// details(id);
 
 	}
-	public static void annulerparticipation(long id){
-		if(Security.isConnected()){
+
+	public static void annulerparticipation(long id) {
+		if (Security.isConnected()) {
 			Annonce annonce = Annonce.findById(id);
-			Utilisateur moi = Utilisateur.find("byEmail", Security.connected()).first();
-			List<MesPassagers> m = MesPassagers.find("byMesPassagers_idAndAnnonce_id", moi.id, annonce.id).fetch();
-			MesPassagers dernier = m.get(m.size()-1);
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
+			List<MesPassagers> m = MesPassagers.find(
+					"byMesPassagers_idAndAnnonce_id", moi.id, annonce.id)
+					.fetch();
+			MesPassagers dernier = m.get(m.size() - 1);
 			annonce.placesRestantes += dernier.nbPassagers;
 			annonce.mesPassagers.remove(dernier);
-			
+
 			annonce.save();
 			details(annonce.id);
 		}
@@ -562,16 +578,17 @@ public class Annonces extends Controller {
 			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.55);
 		return tarifTotal;
 	}
-	public static void profil(long id){
-		if(Security.isConnected()){
+
+	public static void profil(long id) {
+		if (Security.isConnected()) {
 			Utilisateur user = Utilisateur.find("byId", id).first();
 			render(user);
 		}
 		render();
 	}
-	
-	public static void supprimerannonce(long id){
-		if(Security.isConnected()){
+
+	public static void supprimerannonce(long id) {
+		if (Security.isConnected()) {
 			Annonce annonce = Annonce.findById(id);
 			annonce.mesDemandePassagers.clear();
 			annonce.save();
@@ -579,7 +596,7 @@ public class Annonces extends Controller {
 			annonce.save();
 			MesPassagers.delete("annonce_id like ?", id);
 			Annonce.delete("id like ?", id);
-			
+
 		}
 	}
 }

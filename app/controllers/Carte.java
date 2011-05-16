@@ -1,6 +1,11 @@
 package controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import org.joda.time.DateTime;
 
 import models.Annonce;
 import models.Notification;
@@ -43,9 +48,10 @@ public class Carte extends Controller {
 	}
 
 	public static void affichercarte() {
-		// List<Trajet> lesTrajets = Trajet.find("WHERE dateDepart > CURTIME()")
-		// .fetch();
-		List<Trajet> lesTrajets = Trajet.findAll();
+		Date d = new Date();
+
+		List<Trajet> lesTrajets = Trajet.find("dateDepart > ?", d).fetch();
+
 		String lesVilles = "";
 		boolean premier = true;
 		for (Trajet t : lesTrajets) {
