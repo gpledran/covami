@@ -377,6 +377,7 @@ public class Utilisateurs extends Controller {
 
 	public static void refuserDemandeAnnonce(Long id_demande) {
 		if (Security.isConnected()) {
+			flash.clear();
 			DemandeAnnonceEnAttente demande = DemandeAnnonceEnAttente
 					.findById(id_demande);
 

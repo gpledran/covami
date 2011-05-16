@@ -50,6 +50,7 @@
   	
   </tr>
   #{list items:annonces, as:'annonces' }  
+  #{if annonces.placesRestantes > 0}
   	#{if couleur == 0}
   		<tr class="tableBody" style="background-color : #C4C4C4">
   		%{couleur = 1}%
@@ -68,6 +69,7 @@
   		<td style="width : 90px;">${annonces?.placesRestantes}</td>
   		<td style="width: 80px;"><a class="lien" href="@{Annonces.details(annonces.id)}">D&eacute;tails</a></td>
   	</tr> 
+  	#{/if}
   #{/list} 
 </table>
   		

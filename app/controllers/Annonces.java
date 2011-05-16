@@ -74,6 +74,11 @@ public class Annonces extends Controller {
 			List<Annonce> annonces = Annonce.findAll();
 			List<Ville> lesVilles = Ville.find("ORDER BY nom").fetch();
 			flash.clear();
+			for(Annonce a : annonces){
+				if(new Date().compareTo(a.monTrajet.dateDepart)>0){
+					annonces.remove(a);
+				}
+			}
 			render(annonces, lesVilles);
 
 		}
@@ -550,11 +555,11 @@ public class Annonces extends Controller {
 		}
 		// coefficient d'essence
 		if (type_voiture.equals("petite"))
-			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.1);
+			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.25);
 		else if (type_voiture.equals("moyenne"))
-			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.2);
+			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.40);
 		else if (type_voiture.equals("grande"))
-			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.3);
+			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.55);
 		return tarifTotal;
 	}
 	public static void profil(long id){
@@ -563,5 +568,18 @@ public class Annonces extends Controller {
 			render(user);
 		}
 		render();
+	}
+	
+	public static void supprimerannonce(long id){
+		if(Security.isConnected()){
+			Annonce annonce = Annonce.findById(id);
+			annonce.mesDemandePassagers.clear();
+			annonce.save();
+			annonce.mesPassagers.clear();
+			annonce.save();
+			MesPassagers.delete("annonce_id like ?", id);
+			Annonce.delete("id like ?", id);
+			
+		}
 	}
 }

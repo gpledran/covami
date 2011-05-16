@@ -14,7 +14,7 @@
 	<hr>
 	#{list items:mesDemandes, as:'ami' }
 		<div class="content"> 
-			<div class="nom"><a href="@{Utilisateurs.profil(ami.id)}">${ami.prenom.capitalizeWords()}&nbsp;${ami.nom.capitalizeWords()}</a>&nbsp;(demande d'amititi&eacute;)</div>
+			<div class="nom"><a href="@{Utilisateurs.profil(ami.id)}">${ami.prenom.capitalizeWords()}&nbsp;${ami.nom.capitalizeWords()}</a>&nbsp;(demande d'amiti&eacute;)</div>
 			<div class="bouton">
 				<a class="submit" href="@{Utilisateurs.accepterdemande(ami.id)}" >Accepter</a>
 				<a class="submit" href="@{Utilisateurs.refuserdemande(ami.id)}" >Refuser</a>
@@ -24,7 +24,7 @@
  	#{list items:mesAnnonces, as:'a' }
  		#{list items:a.mesDemandePassagers, as:'p' }
 		<div class="content"> 
-			<div class="nom"><a href="@{Utilisateurs.profil(p.id)}">${p.mesDemandePassagers.prenom.capitalizeWords()}&nbsp;${p.mesDemandePassagers.nom.capitalizeWords()}</a>
+			<div class="nom"><a href="@{Utilisateurs.profil(p.mesDemandePassagers.id)}">${p.mesDemandePassagers.prenom.capitalizeWords()}&nbsp;${p.mesDemandePassagers.nom.capitalizeWords()}</a>
 			(${p.nbPassagers} personne${p.nbPassagers.pluralize()})
 			veut participer au trajet ${a.monTrajet.villeDepart.nom} - ${a.monTrajet.villeArrivee.nom}
 			de ${p.villeDebut.nom} &agrave; ${p.villeFin.nom}
@@ -51,7 +51,7 @@
 			<div class="content"> 
 				<div class="nom">${notif.monNotifieur.prenom.capitalizeWords()}&nbsp;${notif.monNotifieur.nom.capitalizeWords()}&nbsp;a refus&eacute; votre demande de participation.</div>
 				<div class="bouton">
-					<a class="submit" href="@{Utilisateurs.supprimernotification(notif.id)}" >Supprimer</a>
+					<a class="submit" href="@{Utilisateurs.supprimernotification(notif.id)}" >OK</a>
 				</div>
 			</div>
 		#{/if}
