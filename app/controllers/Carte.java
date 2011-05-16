@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.Annonce;
 import models.Notification;
+import models.Trajet;
 import models.Utilisateur;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -42,6 +43,20 @@ public class Carte extends Controller {
 	}
 
 	public static void affichercarte() {
-		render();
+		// List<Trajet> lesTrajets = Trajet.find("WHERE dateDepart > CURTIME()")
+		// .fetch();
+		List<Trajet> lesTrajets = Trajet.findAll();
+		String lesVilles = "";
+		boolean premier = true;
+		for (Trajet t : lesTrajets) {
+			if (premier) {
+				lesVilles += t.villeDepart.nom + ", " + t.villeArrivee.nom;
+				premier = false;
+			} else {
+				lesVilles += ", " + t.villeDepart.nom + ", "
+						+ t.villeArrivee.nom;
+			}
+		}
+		render(lesVilles);
 	}
 }

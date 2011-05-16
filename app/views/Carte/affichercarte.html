@@ -2,8 +2,12 @@
 #{set title:'Covami - Accueil' /}
 
 <h1>Carte des covoiturages en cours</h1>
+${lesVilles}
 
 <div style="margin-left: 50px;">
 <!-- 	<applet code="Covoiturage.class" codebase="/public/applet/bin" width="754" height="800" alt="Carte des covoiturages en cours">Carte de France</applet> -->
-<applet code="Covoiturage.class" codebase="." archive="@{'/public/applet/covoiturage.jar'}" width="754" height="800" alt="Carte des covoiturages en cours">Carte de France</applet>
+<applet code="Covoiturage.class" codebase="." archive="@{'/public/applet/covoiturage.jar'}" width="754" height="800" alt="Carte des covoiturages en cours">
+	<PARAM name="lesVilles" value="${lesVilles}">
+	Carte de France
+</applet>
 </div>
