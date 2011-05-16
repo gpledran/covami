@@ -166,11 +166,14 @@ public class Annonces extends Controller {
 					.first();
 			flash.clear();
 			// on test si l'annonce est terminée
-			boolean dateok = false;
+			boolean dateok = false, isMonAnnonce =false;
 			if(new Date().compareTo(annonce.monTrajet.dateDepart) < 0){
 				dateok = true;
 			}
-			render(moi, annonce, dateok);
+			if(annonce.monUtilisateur.id == moi.id){
+				isMonAnnonce = true;
+			}
+			render(moi, annonce, dateok, isMonAnnonce);
 		}
 		render();
 	}

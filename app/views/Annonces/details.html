@@ -68,7 +68,7 @@
 		#{/if}
 	#{/list}
 #{/list}
-	#{if demandeEnCours == 0 && dejaDemande == 0 && dateok}
+	#{if demandeEnCours == 0 && dejaDemande == 0 && dateok && !isMonAnnonce}
 		<a class="submit" href="@{Annonces.demandeparticipation(annonce.id)}">Demande de participation</a>
 	#{/if}
 	#{if dejaDemande == 1 && dateok}
