@@ -2,6 +2,7 @@ package controllers;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,21 +49,45 @@ public class Carte extends Controller {
 	}
 
 	public static void affichercarte() {
-		Date d = new Date();
+		if (Security.isConnected()) {
+			// List<Trajet> lesTrajets = Trajet.find("dateDepart > ?", new
+			// Date())
+			// .fetch();
+			List<Trajet> lesTrajets = new ArrayList<Trajet>();
 
-		List<Trajet> lesTrajets = Trajet.find("dateDepart > ?", d).fetch();
+			Utilisateur moi = Utilisateur.find("byEmail", Security.connected())
+					.first();
 
-		String lesVilles = "";
-		boolean premier = true;
-		for (Trajet t : lesTrajets) {
-			if (premier) {
-				lesVilles += t.villeDepart.nom + ", " + t.villeArrivee.nom;
-				premier = false;
-			} else {
-				lesVilles += ", " + t.villeDepart.nom + ", "
-						+ t.villeArrivee.nom;
+			List<Utilisateur> mesAmis = moi.mesAmis;
+
+			List<Annonce> lesAnnonces = new ArrayList<Annonce>();
+
+			for (Utilisateur u : mesAmis) {
+				List<Annonce> annonces = Annonce.find("byMonUtilisateur", u)
+						.fetch();
+				for (Annonce annonce : annonces) {
+					lesAnnonces.add(annonce);
+				}
 			}
+
+			for (Annonce annonce : lesAnnonces) {
+				if (new Date().compareTo(annonce.monTrajet.dateDepart) < 0)
+					lesTrajets.add(annonce.monTrajet);
+			}
+
+			String lesVilles = "";
+			boolean premier = true;
+			for (Trajet t : lesTrajets) {
+				if (premier) {
+					lesVilles += t.villeDepart.nom + ", " + t.villeArrivee.nom;
+					premier = false;
+				} else {
+					lesVilles += ", " + t.villeDepart.nom + ", "
+							+ t.villeArrivee.nom;
+				}
+			}
+			render(lesVilles);
 		}
-		render(lesVilles);
+		render();
 	}
 }
