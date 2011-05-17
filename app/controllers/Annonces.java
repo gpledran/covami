@@ -74,11 +74,11 @@ public class Annonces extends Controller {
 			List<Annonce> annonces = Annonce.findAll();
 			List<Ville> lesVilles = Ville.find("ORDER BY nom").fetch();
 			flash.clear();
-			for (Annonce a : annonces) {
-				if (new Date().compareTo(a.monTrajet.dateDepart) > 0) {
-					annonces.remove(a);
-				}
-			}
+			// for (Annonce a : annonces) {
+			// if (new Date().compareTo(a.monTrajet.dateDepart) > 0) {
+			// annonces.remove(a);
+			// }
+			// }
 			render(annonces, lesVilles);
 
 		}
@@ -413,7 +413,7 @@ public class Annonces extends Controller {
 		}
 		render(villesSuivantes);
 	}
-	
+
 	public static void calculertarifparpersonne(Long ville_depart,
 			Long ville_arrivee, int nb_personnes, String type_voiture,
 			Long tarif_base, Long id_annonce) {
@@ -429,23 +429,24 @@ public class Annonces extends Controller {
 			kmsTotal += troncon.nbKms;
 		}
 		// coefficient d'essence
-		
+
 		if (type_voiture.equals("petite"))
 			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.20);
 		else if (type_voiture.equals("moyenne"))
 			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.35);
 		else if (type_voiture.equals("grande"))
 			tarifTotal = (int) Math.ceil((kmsTotal / 10) * 1.50);
-		
+
 		int nbPersonneTotalSurTroncon = 0;
 		Annonce annonce = Annonce.findById(id_annonce);
-		for(MesPassagers p : annonce.mesPassagers){
-			if(p.villeDebut.id == ville_depart){
+		for (MesPassagers p : annonce.mesPassagers) {
+			if (p.villeDebut.id == ville_depart) {
 				nbPersonneTotalSurTroncon += p.nbPassagers;
 			}
 		}
-		
-		tarifTotal = tarifTotal / (nbPersonneTotalSurTroncon + nb_personnes + 1);
+
+		tarifTotal = tarifTotal
+				/ (nbPersonneTotalSurTroncon + nb_personnes + 1);
 
 		render(tarifTotal);
 	}
