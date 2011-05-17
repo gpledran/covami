@@ -375,6 +375,8 @@ public class Annonces extends Controller {
 
 	public static void demandeparticipation(long id) {
 		Annonce annonce = Annonce.find("byId", id).first();
+		int derniereVille = annonce.monTrajet.mesEtapes.size() - 1;
+		annonce.monTrajet.mesEtapes.remove(derniereVille);
 		render(annonce);
 		// Utilisateur passager = Utilisateur
 		// .find("byEmail", Security.connected()).first();
@@ -405,12 +407,14 @@ public class Annonces extends Controller {
 	public static void cherchervillesarrivees(Long depart, Long annonce_id) {
 		Annonce annonce = Annonce.findById(annonce_id);
 		List<Ville> villesSuivantes = annonce.monTrajet.mesEtapes;
+		Collections.reverse(villesSuivantes);
 		Ville villeDepart = Ville.findById(depart);
 		int ville = villesSuivantes.lastIndexOf(villeDepart);
-		villesSuivantes.remove(ville);
-		for (int i = 0; i < ville; i++) {
+		int villeFin = villesSuivantes.size() - 1;
+		for (int i = villeFin; i >= ville; i--) {
 			villesSuivantes.remove(i);
 		}
+		Collections.reverse(villesSuivantes);
 		render(villesSuivantes);
 	}
 
